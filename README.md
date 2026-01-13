@@ -134,6 +134,12 @@ HLDocS はあくまで
 
 ---
 
+## Documents
+
+- [目次](./docs/ja-JP/目次.md)
+
+---
+
 ## License
 
 MIT License
