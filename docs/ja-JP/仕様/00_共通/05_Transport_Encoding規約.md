@@ -5,7 +5,7 @@ lang: ja-JP
 canonical_title: Transport Encoding 規約
 document_type: spec
 canonical_document: true
-transport: [true_out]
+transport: [download, ui_copy]
 -->
 
 [目次](../../目次.md) > 仕様 > 共通 > Transport Encoding 規約
@@ -84,9 +84,23 @@ transport: [true_out]
 
 **LLM の動作**
 - UI で崩れやすい表現を考慮した提示を行う。
-- コードフェンス等、UI が破壊しやすい要素については、
+- コードフェンス等、UI が破壊しやすい要素については、  
   **ui_copy の責務として回避・代替してよい**（roundtrip を前提とする）。
 - 意味・構造の変更は禁止。
+
+#### ui_copy 標準整形方式（MUST）
+
+ui_copy が適用される場合、LLM は以下の **標準整形方式を必ず使用**しなければならない。
+
+- 出力は **単一のコードブロックのみ**とする。
+- コードブロック **外に一切の文字列を出力してはならない**。
+- コードブロック内には、**復元可能（roundtrip）な Markdown 全文**を格納する。
+- 見出し・箇条書き・区切り線・コメント等は、正規内容を保持したまま記載する。
+- 整形の目的は UI 上での安定したコピーであり、  
+  **意味・構造・論理階層を変更してはならない**。
+
+この標準整形方式は **1 方式固定**とし、  
+LLM の裁量による別形式の ui_copy 出力を禁止する。
 
 ### transport = download
 **意味**
