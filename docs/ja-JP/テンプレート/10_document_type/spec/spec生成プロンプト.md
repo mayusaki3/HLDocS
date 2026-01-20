@@ -42,6 +42,36 @@ transport: [true_out]
 
 ---
 
+## 2.x Traceability 記法（任意・形式定義）
+
+本プロンプトは、Traceability 規約に基づく記法を  
+**「任意機能」かつ「形式定義のみ」**として扱う。
+
+ユーザー指示、または入力文書内に既存の Traceability 記法が存在する場合に限り、  
+以下の形式を使用してよい。
+
+### sec_id（章単位ID）
+
+- 章見出し直下に **HTML コメント**として記載する
+- 形式：`<!-- hldocs:sec_id=<sec_id> -->`
+- sec_id の付与は必須ではない
+- 既存の sec_id は **変更してはならない**
+- 新規 sec_id は、ユーザー指示がある場合にのみ付与してよい
+
+### ref（章単位参照）
+
+- 参照識別子の形式：`doc_id#sec_id`
+- 人間向け参照として Markdown の相対パスリンクを使用してよい
+- 機械向け情報として、リンク直後に HTML コメントで ref を記載してよい
+- 形式：`<!-- hldocs:ref=<doc_id>#<sec_id> -->`
+
+（例）
+
+- [章タイトル](./path/to/doc.md)  
+  <!-- hldocs:ref=doc-YYYYMMDD-HHMMSSZ-XXXX#abc123 -->
+
+---
+
 ## 3. LLM-MANAGED 値決定規則（MUST）
 
 - `doc_id`
@@ -58,6 +88,7 @@ transport: [true_out]
 - 本文が宣言文主体であること
 - 禁止事項が含まれていないこと
 - 共通ドキュメント構造を満たすこと
+- sec_id / ref を **勝手に追加・変更していないこと**
 
 ---
 
