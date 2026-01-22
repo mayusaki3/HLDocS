@@ -109,7 +109,7 @@ transport: [download, ui_copy]
 
 #### 記載例
 
-```markdown
+```
 ## 3. 認証トークンの失効
 <!-- hldocs:sec_id=spc_9f3a7c2e -->
 ```
@@ -136,7 +136,7 @@ transport: [download, ui_copy]
 
 #### 表記例
 
-```text
+```
 doc-20260120-000000Z-SPC1#spc_9f3a7c2e
 ```
 
@@ -151,7 +151,7 @@ doc-20260120-000000Z-SPC1#spc_9f3a7c2e
 
 ### 7.2 規定形式
 
-```markdown
+```
 - [認証トークンの失効](../../仕様/auth/session.md)
   <!-- hldocs:ref=doc-20260120-000000Z-SPC1#spc_9f3a7c2e -->
 ```
@@ -162,7 +162,7 @@ doc-20260120-000000Z-SPC1#spc_9f3a7c2e
 
 ### 8.1 タグ形式
 
-```text
+```
 @hldocs.ref doc-20260120-000000Z-SPC1#spc_9f3a7c2e
 ```
 
@@ -209,6 +209,54 @@ doc-20260120-000000Z-SPC1#spc_9f3a7c2e
 - 一意性が `(doc_id, sec_id)` で成立していること  
 - 恒久参照形式のみが使用されていること  
 - 生成・修正指示が含まれていないこと  
+
+---
+
+## 12. minutes ⇔ spec の任意トレーサビリティ（派生・根拠）（MAY）
+
+本節は、document_type: minutes（議事録）と document_type: spec（仕様）の間で、  
+**任意に**関連付けを行うための規定である。
+
+### 12.1 位置付け（重要）
+
+- 本節のトレーサビリティは **検証関係ではない**。  
+- spec ⇔ testspec の必須トレーサビリティを代替してはならない。  
+- minutes ⇔ spec の関連付けは、議論・決定の経緯を追跡し、  
+  仕様再構成時の根拠として参照できるようにする目的でのみ使用する。
+
+### 12.2 参照形式（MUST）
+
+- minutes ⇔ spec の関連付けは、参照先を **doc_id または doc_id#sec_id** で指定する。  
+- `doc_id#sec_id` を使用する場合、sec_id は本規約（第4章）に従い、  
+  testspec 起点で確定した検証単位でなければならない。  
+- minutes 側に `sec_id` を新設してはならない（MUST NOT）。
+
+### 12.3 記載形式（MAY）
+
+minutes 文書内の該当箇所（人間可読の見出し・箇条書き等）に対し、  
+HTML コメントとして参照を付与してよい。
+
+- `hldocs:ref` は参照先（spec）を表す  
+- `hldocs:rel` は関係種別を表す（必須）
+
+関係種別（hldocs:rel の許容値）：
+
+- `rationale`：根拠（議論・判断理由）  
+- `derivation`：派生（議事録の結論を仕様化した）  
+
+#### 記載例（minutes → spec）
+
+```
+- 決定事項：セッション失効は tv による全失効を前提とする
+  <!-- hldocs:ref=doc-20260120-000000Z-SPC1#spc_9f3a7c2e hldocs:rel=derivation -->
+```
+
+### 12.4 禁止事項（MUST NOT）
+
+- minutes ⇔ spec の関連付けを、テスト網羅性の証明として扱ってはならない。  
+- minutes ⇔ spec の欠落を理由に、spec を不完全と判断してはならない。  
+- 参照先が不明な場合に、LLM が推測で `doc_id` や `sec_id` を生成してはならない。  
+- `hldocs:ref` に `doc_id#sec_id` 以外の形式を使用してはならない。  
 
 ---
 
