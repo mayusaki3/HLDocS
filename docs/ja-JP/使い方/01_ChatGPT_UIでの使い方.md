@@ -102,10 +102,12 @@ transport: [ui_copy]
 ```
 添付したテンプレートおよび生成プロンプトに従い、以下の条件で指示を実行すること。
 - ドキュメント作成を指示されたら、新規作成として作成する
-- transport は ui_copy
+- 出力（提示）は ui_copy 方式で行う（ChatGPT UI 制約）
+- LLM-MANAGED ブロックの transport 値は、仕様に基づき決定し、勝手に変更しない
 - document_type は以降のチャット内容から判断し、問い合わせて承認を得る
 
 （ここに作成したい内容・背景・目的を記載する）
+
 例：
 これからプロンプト合成ツールの要件検討を行う予定である。
 現時点では結論は出ていないため、
@@ -124,14 +126,15 @@ transport: [ui_copy]
 - 対象 document_type のテンプレート
 - 対象 document_type の生成プロンプト
 
-**指示文**
+**指示文（雛形）**
 
 ```
 添付したテンプレートおよび生成プロンプトに従い、以下の指示を実行すること。
 - 添付した既存ファイルを正として再作成する
 - doc_id は変更しない
-- transport は ui_copy
+- 出力（提示）は ui_copy 方式で行う（ChatGPT UI 制約）
 - document_type は既存文書と同一とする
+- LLM-MANAGED ブロックの transport 値は変更しない
 ```
 
 **補足**
@@ -154,13 +157,13 @@ transport: [ui_copy]
 - spec テンプレート
 - spec 生成プロンプト
 
-**指示文**
+**指示文（雛形）**
 
 ```
 添付したテンプレートおよび生成プロンプトに従い、以下の指示を実行すること。
 - 添付した minutes の該当章を基に spec を作成する
 - 元の minutes は変更しない
-- transport は ui_copy
+- 出力（提示）は ui_copy 方式で行う（ChatGPT UI 制約）
 - document_type は spec
 ```
 
@@ -170,7 +173,7 @@ transport: [ui_copy]
 
 **用途**
 
-- 既存 spec が確定した後、
+- 既存 spec が確定した後、  
   テスト観点・期待結果・境界条件を整理する。
 
 **添付するもの**
@@ -181,13 +184,13 @@ transport: [ui_copy]
 - testspec テンプレート
 - testspec 生成プロンプト
 
-**指示文**
+**指示文（雛形）**
 
 ```
 添付したテンプレートおよび生成プロンプトに従い、以下の指示を実行すること。
 - 添付した spec を正として testspec を新規作成する
 - spec との対応関係（doc_id / sec_id）を明示する
-- transport は ui_copy
+- 出力（提示）は ui_copy 方式で行う（ChatGPT UI 制約）
 - document_type は testspec
 ```
 
@@ -211,14 +214,14 @@ transport: [ui_copy]
 - spec テンプレート
 - spec 生成プロンプト
 
-**指示文（最小例）**
+**指示文（雛形）**
 
 ```
 添付したテンプレートおよび生成プロンプトに従い、以下の指示を実行すること。
 - 添付した testspec を基に、spec 側の関連付け情報のみを更新する
 - spec の本文構造・意味は変更しない
 - doc_id は変更しない
-- transport は ui_copy
+- 出力（提示）は ui_copy 方式で行う（ChatGPT UI 制約）
 - document_type は spec
 ```
 
@@ -252,7 +255,7 @@ transport: [ui_copy]
 - 添付した既存文書は参考資料として扱う
 - HLDocS 準拠の新規文書として作成する
 - 既存文書の構成・表現に拘らず、内容を再整理してよい
-- transport は ui_copy
+- 出力（提示）は ui_copy 方式で行う（ChatGPT UI 制約）
 - document_type は以降のチャット内容から判断し、問い合わせて承認を得る
 ```
 
@@ -260,16 +263,17 @@ transport: [ui_copy]
 
 - 元文書は **正（source of truth）ではない**
 - doc_id は **新規発行**する
-- 旧文書との対応関係が必要な場合は、
+- 旧文書との対応関係が必要な場合は、  
   note もしくは minutes として補足を残す
 
 ---
 
-## 5. transport について（参考）
+## 5. ChatGPT UI 制約（補足・重要）
 
-- ChatGPT UI では **ui_copy を前提**
-- download はファイル取得が必要な場合のみ使用
-- true_out は API 利用時の値であり、UI 操作では使用しない
+- ChatGPT UI では **取得（コピー）目的の場合、ui_copy を前提**とする
+- ui_copy は **提示方式**であり、文書の意味論を変えない
+- LLM-MANAGED ブロックの transport 値は **既存文書を正として維持**する
+- true_out は UI 上の取得用途には用いない（表示用途）
 
 ---
 
