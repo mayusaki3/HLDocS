@@ -5,7 +5,6 @@ lang: ja-JP
 canonical_title: Traceability（仕様・テスト・コード紐づけ）規約
 document_type: spec
 canonical_document: true
-transport: [download, ui_copy]
 -->
 
 [目次](../../目次.md) > 仕様 > 共通 > Traceability規約
@@ -18,11 +17,11 @@ transport: [download, ui_copy]
 
 本規約は、以下の共通仕様を前提として成立する。
 
-- 前提条件
-- 共通ドキュメント構造
-- LLM-MANAGEDブロック規約
-- Transport Encoding 規約
-- 生成プロンプト運用規約
+- [前提条件](./01_前提条件.md)
+- [共通ドキュメント構造](./03_共通ドキュメント構造.md)
+- [LLM-MANAGEDブロック規約](./04_LLM-MANAGEDブロック規約.md)
+- [Transport Encoding 規約](./05_Transport_Encoding規約.md)
+- [生成プロンプト運用規約](./02_生成プロンプト運用規約.md)
 
 ---
 
