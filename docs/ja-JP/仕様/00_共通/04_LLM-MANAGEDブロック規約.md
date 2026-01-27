@@ -5,7 +5,6 @@ lang: ja-JP
 canonical_title: LLM-MANAGEDブロック規約
 document_type: spec
 canonical_document: true
-transport: [download, ui_copy]
 -->
 
 [目次](../../目次.md) > 仕様 > 共通 > LLM-MANAGEDブロック規約
@@ -49,8 +48,6 @@ transport: [download, ui_copy]
   - 運用上の都合で変更され得るため、**同一性の鍵ではない**。
 - `canonical_document`
   - 当該ドキュメントが **正規成果物**であるかを示す。
-- `transport`
-  - 提示・回収方法の候補を示す I/F 属性。
 
 ---
 
@@ -78,46 +75,17 @@ transport: [download, ui_copy]
 
 - document_type は **役割分類**であり、論理同一性の鍵ではない。
 
-### 4.3 transport
-
-- 許容値（ENUM）：
-  - true_out
-  - ui_copy
-  - download
-
-- transport は **配列**で指定する。
-- 配列でない指定、または値域外の要素を含む場合は NG とする。
-- transport は **判断規則を含まない**。
-
 ---
 
-## 5. transport 値の意味（I/F 定義）
+## 5. 管理責務（MUST）
 
-### true_out
-
-- ドキュメント本文を **そのまま最終成果物として出力**する。
-- 主に API 経由の取得、ファイル生成、機械連携用途で使用する。
-
-### ui_copy
-
-- UI 表示用に加工された出力形式。
-- 加工が行われても、**利用者が全文をコピー可能であること**を保証する。
-
-### download
-
-- ドキュメントを **ファイルとしてダウンロード可能**な形で提供する。
-
----
-
-## 6. 管理責務（MUST）
-
-### 6.1 LLM の責務
+### 5.1 LLM の責務
 
 - doc_id の生成および維持
-- canonical_document / transport の設定
+- canonical_document の設定
 - 既に指定されている document_type の維持
 
-### 6.2 人間の責務（例外規定）（MAY）
+### 5.2 人間の責務（例外規定）（MAY）
 
 以下の場合に限り、人間が document_type を追加・変更する行為を許容する。
 
@@ -131,14 +99,14 @@ transport: [download, ui_copy]
 
 ---
 
-## 7. doc_id の定義と維持（MUST）
+## 6. doc_id の定義と維持（MUST）
 
 - doc_id は恒久的ドキュメント識別子である。
 - 以下と完全に独立である：ファイル名 / ディレクトリ構成 / 言語 / 番号 / 内容・意味
 - 内容更新・移動・改名でも doc_id は変更しない。
 - 翻訳版は原文と同一 doc_id を使用する。
 
-### 7.1 新規生成規則
+### 6.1 新規生成規則
 
 - 値が空、または `__AUTO__` の場合は新規生成を行う。
 - 形式：doc-YYYYMMDD-HHMMSSZ-XXXX
@@ -146,7 +114,7 @@ transport: [download, ui_copy]
 - XXXX：4桁 base36
 - 衝突時：再生成
 
-### 7.2 doc_id を変更してよい条件（MAY）
+### 6.2 doc_id を変更してよい条件（MAY）
 
 以下は **論理的に別ドキュメント**とみなすため、新しい doc_id を割り当ててよい。
 
@@ -155,7 +123,7 @@ transport: [download, ui_copy]
 - **置換**（内容の継承を行わない）
 - **新規作成**
 
-### 7.3 禁止（MUST NOT）
+### 6.3 禁止（MUST NOT）
 
 - 生成や差し替えの都合で doc_id を再生成してはならない。
 - 可読性のために意味語を doc_id に含めてはならない。
