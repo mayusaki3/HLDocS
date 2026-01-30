@@ -130,4 +130,118 @@ canonical_document: true
 
 ---
 
+## 7. document_type 対応 mode 定義（SUPPORTED MODES）（MUST）
+
+本章は、各 `document_type` が **対応可能な mode** を定義する。  
+ここで定義されていない mode の組み合わせは **仕様違反**とする。
+
+### 7.1 判定規則
+
+- `(mode, document_type)` の組が `supported_modes` に含まれない場合、
+  - required inputs の判定を行う前に **FAIL-FAST** とする。
+- 本章は、**required inputs 判定の前段制約**である。
+
+### 7.2 document_type 別 supported_modes（正本）
+
+- `spec`
+  - supported_modes: { meta, apply }
+
+- `template`
+  - supported_modes: { meta, apply }
+
+- `prompt`
+  - supported_modes: { meta, apply }
+
+- `testspec`
+  - supported_modes: { apply }
+
+- `index`
+  - supported_modes: { apply }
+
+- `note`
+  - supported_modes: { apply }
+
+- `minutes`
+  - supported_modes: { apply }
+
+- `usage`
+  - supported_modes: { apply }
+
+---
+
+## 8. document_type 付随メタ情報（REQUIRED INPUTS）（MUST）
+
+本章は、各 `document_type` が  
+**生成時に要求する追加入力（テンプレート／生成プロンプト）**を  
+**mode 別に機械判定可能な形で定義**する。
+
+ここで定義される情報は、  
+**不足チェックの正本**として使用される。
+
+### 8.1 判定軸
+
+required inputs は、以下の組で決定される。
+
+- `mode`：`meta` / `apply`
+- `document_type`
+
+### 8.2 定義項目
+
+- `requires_body_template_by_mode`
+- `requires_type_prompt_by_mode`
+
+各項目は boolean 値を持ち、  
+`true` の場合は当該入力が **必須**であることを示す。
+
+---
+
+### 8.3 document_type 別定義（正本）
+
+#### spec
+
+- `requires_body_template_by_mode`
+  - `meta`: false
+  - `apply`: true
+- `requires_type_prompt_by_mode`
+  - `meta`: false
+  - `apply`: true
+
+※ `meta` モードでは、HLDocS 自身の仕様（共通仕様群）を対象とするため、  
+個別テンプレート／個別生成プロンプトを要求しない。
+
+---
+
+#### template / prompt
+
+- `requires_body_template_by_mode`
+  - `meta`: false
+  - `apply`: false
+- `requires_type_prompt_by_mode`
+  - `meta`: false
+  - `apply`: false
+
+---
+
+#### testspec / index / note / minutes / usage
+
+- `requires_body_template_by_mode`
+  - `meta`: true
+  - `apply`: true
+- `requires_type_prompt_by_mode`
+  - `meta`: true
+  - `apply`: true
+
+---
+
+## 9. 運用上の制約（MUST）
+
+- mode 対応可否の判定は **第7章**を正本とする。
+- required inputs の判定は **第8章**を正本とする。
+- 生成プロンプト・運用規約・ツール実装は、  
+  これらの判定結果を **機械的に適用**しなければならない。
+- 不足入力が存在する場合、  
+  推測・補完・代替生成を行ってはならない。
+
+---
+
 [目次](../../目次.md) > 仕様 > 共通 > LLM-MANAGEDブロック規約
