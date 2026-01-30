@@ -53,11 +53,42 @@ canonical_document: true
 
 - Transport Encoding は **提示・回収のための表現上の取り決め**である。
 - Transport Encoding は **ドキュメントの意味・構造を変更してはならない**。
-- Transport Encoding は復元可能（roundtrip）でなければならない。
+- Transport Encoding は **復元可能（roundtrip）**でなければならない。
 
 ---
 
-## 3. transport タグ一覧と意味（MUST）
+## 3. 責務境界（Scope & Boundary）（MUST）
+
+本章は、Transport Encoding が **関与する範囲** と **関与しない範囲** を明確に定義する。
+
+### 3.1 Transport Encoding の責務（MUST）
+
+- Transport Encoding は、**生成済みのドキュメント内容**を  
+  **どの形式で提示・回収するか**のみを定義する。
+- Transport Encoding は、UI 制約下での **安全な提示・回収**を目的とする。
+
+### 3.2 Transport Encoding が関与しない事項（MUST NOT）
+
+Transport Encoding は、以下の事項に **一切関与してはならない**。
+
+- document_type の意味論
+- spec / template / prompt の責務・内容
+- meta / apply を含む生成フロー
+- LLM の判断・生成内容・正規性
+
+### 3.3 他仕様との関係（MUST）
+
+- Transport Encoding は、以下の仕様を **上書き・補完・再解釈してはならない**。
+  - 前提条件
+  - 生成プロンプト運用規約
+  - 共通ドキュメント構造
+  - document_type 別仕様
+- transport の指定は、**提示方式の選択**にのみ影響し、  
+  **ドキュメントの意味・構造・生成可否条件に影響を与えてはならない**。
+
+---
+
+## 4. transport タグ一覧と意味（MUST）
 
 本章は、Transport Encoding において使用可能な  
 **transport 指定値（ENUM）**と、その意味・制約を定義する。
@@ -113,9 +144,9 @@ ui_copy 標準整形方式における「単一コードブロック」の外側
 
 ##### 外側フェンスの決定（MUST）
 
-- 本文中に出現する「連続バッククォート（`）の最大連続数」を `M` とする。
-- 外側フェンスのバッククォート連続数 `N` は **必ず `M + 1`** とする。
-- 本文中にバッククォートが一切出現しない場合は `M = 0` とみなし、`N = 3` とする。
+- 本文中に出現する「連続バッククォートの最大連続数」を M とする。
+- 外側フェンスのバッククォート連続数 N は **必ず M + 1** とする。
+- 本文中にバッククォートが一切出現しない場合は M = 0 とみなし、N = 3 とする。
 - 外側フェンスの開始行・終了行は **フェンス記号のみ**の1行とし、  
   言語指定や追加文字列を付けてはならない。
 
@@ -141,7 +172,7 @@ ui_copy 標準整形方式における「単一コードブロック」の外側
 
 ---
 
-## 4. 禁止事項（MUST NOT）
+## 5. 禁止事項（MUST NOT）
 
 - Transport Encoding により、ドキュメントの意味や構造を変更してはならない。
 - 本規約で定義されていない transport 値を使用してはならない。
