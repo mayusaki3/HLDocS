@@ -59,6 +59,12 @@ ENUM の再掲は、
   - document_type 判定  
   - Transport Encoding 判定  
 
+### 3.1 Transport Encoding 判定に使用される ENUM（参照先の明示）
+
+本規約における「Transport Encoding 判定に使用される ENUM」は、
+Transport Encoding 規約の「transport タグ一覧」に記載された transport 値を指す。
+生成プロンプトは、当該 transport 値を判断材料として逐語再掲しなければならない。
+
 ---
 
 ## 4. 再掲の方法に関する制約（MUST）
