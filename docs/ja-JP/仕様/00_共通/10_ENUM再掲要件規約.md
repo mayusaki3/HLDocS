@@ -2,14 +2,14 @@
 HLDocS:LLM-MANAGED
 doc_id: doc-20260202-000003Z-r2d2
 lang: ja-JP
-canonical_title: ENUM 再掲要件規約（判断材料の再掲）
+canonical_title: ENUM 再掲要件規約
 document_type: spec
 canonical_document: true
 -->
 
-[目次](../../目次.md) > 仕様 > 共通 > ENUM 再掲要件規約（判断材料の再掲）
+[目次](../../目次.md) > 仕様 > 共通 > ENUM 再掲要件規約
 
-# ENUM 再掲要件規約（判断材料の再掲）
+# ENUM 再掲要件規約
 
 本書は、HLDocS において  
 **生成プロンプトを設計・生成する際に、仕様で定義された ENUM 値を再掲すべき条件**を定義する。
@@ -103,4 +103,4 @@ LLM は、再掲されていない ENUM を
 
 ---
 
-[目次](../../目次.md) > 仕様 > 共通 > ENUM 再掲要件規約（判断材料の再掲）
+[目次](../../目次.md) > 仕様 > 共通 > ENUM 再掲要件規約
