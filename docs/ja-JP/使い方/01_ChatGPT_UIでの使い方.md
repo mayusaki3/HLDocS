@@ -5,7 +5,6 @@ lang: ja-JP
 canonical_title: ChatGPT UIでの使い方
 document_type: note
 canonical_document: true
-transport: [ui_copy]
 -->
 
 [目次](../目次.md) > 使い方 > ChatGPT UIでの使い方
