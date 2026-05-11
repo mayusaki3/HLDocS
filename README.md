@@ -10,6 +10,29 @@ HLDocS は、人間（Human）と大規模言語モデル（LLM）が協調し�
 
 ---
 
+## Release Status
+
+HLDocS は現在、**Preview Release（v0.x 系）**として公開されている。
+
+現時点の状態：
+
+- コア仕様：利用可能
+- Traceability 基盤：利用可能
+- ChatGPT UI ベース運用：利用可能
+- 再生成・再構成運用：利用可能
+- prompt/template の完全自己完結生成：開発継続中
+
+現在の推奨利用方法：
+
+1. `docs/ja-JP/仕様` を LLM に提示
+2. HLDocS の生成プロンプト・テンプレートを利用
+3. HLDocS 規約に従って生成・検証・再構成を行う
+
+HLDocS は既に実プロジェクトで利用可能な状態にあるが、  
+一部の生成・検証・可視化ワークフローは継続的に改善中である。
+
+---
+
 ## What is HLDocS?
 
 HLDocS は、次の前提に基づくドキュメント仕様である。
@@ -118,6 +141,29 @@ HLDocS は以下を目的としない。
 
 HLDocS はあくまで  
 **技術的・設計上の共通仕様**である。
+
+---
+
+## Roadmap
+
+### v0.x Preview Series
+
+現在の主な開発対象：
+
+- 仕様再構成ワークフロー
+- Traceability migration
+- Markdown → HTML 可視化規約
+- 運用ワークフロー安定化
+- 検証フロー整備
+
+### Planned v1.0
+
+v1.0 では以下を目標とする。
+
+- prompt/template の完全自己完結生成
+- 安定した再構成ワークフロー
+- 完全な validation integration
+- production-grade generation pipeline
 
 ---
 

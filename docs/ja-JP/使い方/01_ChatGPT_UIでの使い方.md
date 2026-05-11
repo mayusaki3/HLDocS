@@ -19,6 +19,32 @@ canonical_document: true
 
 ---
 
+## 現時点の推奨運用（Preview Release）
+
+HLDocS は現在、Preview Release（v0.x 系）として公開されている。
+
+現時点では、共通テンプレート・共通生成プロンプトのみでの  
+完全自己完結生成は未完成である。
+
+そのため、現在は以下を推奨する。
+
+1. `docs/ja-JP/仕様` を LLM に提示する
+2. 共通生成プロンプト・共通テンプレートを利用する
+3. document_type 別テンプレート・生成プロンプトを利用する
+4. HLDocS 規約に従って生成・検証・再構成を行う
+
+現時点では、以下の URL を ChatGPT に提示することで、  
+添付を行わずに HLDocS 仕様を参照させることが可能。
+
+```text
+HLDocS仕様
+https://github.com/mayusaki3/HLDocS/tree/main/docs/ja-JP/仕様
+```
+
+将来的には、prompt/template のみで成立する構成を目標としている。
+
+---
+
 ## 1. 本書の位置付け（人間向け）
 
 - 本書は **人間の操作を支援するための UI 手順書**である
