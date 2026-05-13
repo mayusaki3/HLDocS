@@ -40,3 +40,9 @@ jobs:
           test -f docs/ja-JP/HTMLドキュメント/index.html
           test -f docs/ja-JP/HTMLドキュメント/overview/index.html
           test -f docs/ja-JP/HTMLドキュメント/manifest/site-manifest.json
+
+      - name: Upload generated HTML artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: hldocs-html-document-poc
+          path: docs/ja-JP/HTMLドキュメント
