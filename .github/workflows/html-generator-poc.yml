@@ -1,0 +1,42 @@
+name: HTML Generator PoC
+
+on:
+  push:
+    branches:
+      - feature/html-visualization-spec
+  pull_request:
+
+jobs:
+  html-generator-poc:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+
+      - name: Install pytest
+        run: |
+          python -m pip install --upgrade pip
+          pip install pytest
+
+      - name: Run tests
+        run: |
+          python -m pytest tools/html_generator
+
+      - name: Run HTML generator PoC
+        run: |
+          python tools/html_generator/generate_html.py \
+            --input docs/ja-JP \
+            --output docs/ja-JP/HTMLドキュメント \
+            --profile overview,reference
+
+      - name: Verify generated artifacts
+        run: |
+          test -f docs/ja-JP/HTMLドキュメント/index.html
+          test -f docs/ja-JP/HTMLドキュメント/overview/index.html
+          test -f docs/ja-JP/HTMLドキュメント/manifest/site-manifest.json
