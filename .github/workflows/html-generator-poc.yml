@@ -1,6 +1,7 @@
 name: HTML Generator PoC
 
 on:
+  workflow_dispatch:
   push:
     branches:
       - feature/html-visualization-spec
