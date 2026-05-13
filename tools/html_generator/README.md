@@ -28,10 +28,40 @@ HTML は Markdown 正本を置き換えるものではなく、read-only Operati
 
 リポジトリルートから以下を実行する。
 
+### 3.1 bash / Git Bash
+
 ```bash
 python tools/html_generator/generate_html.py \
   --input docs/ja-JP \
   --output docs/ja-JP/HTMLドキュメント \
+  --profile overview,reference
+```
+
+### 3.2 PowerShell
+
+PowerShell では、改行継続に `^` ではなくバッククォート `` ` `` を使用する。
+
+```powershell
+python tools/html_generator/generate_html.py `
+  --input docs/ja-JP `
+  --output docs/ja-JP/HTMLドキュメント `
+  --profile overview,reference
+```
+
+1行で実行してもよい。
+
+```powershell
+python tools/html_generator/generate_html.py --input docs/ja-JP --output docs/ja-JP/HTMLドキュメント --profile overview,reference
+```
+
+### 3.3 cmd.exe
+
+cmd.exe では、改行継続に `^` を使用する。
+
+```cmd
+python tools/html_generator/generate_html.py ^
+  --input docs/ja-JP ^
+  --output docs/ja-JP/HTMLドキュメント ^
   --profile overview,reference
 ```
 
