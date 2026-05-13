@@ -9,6 +9,7 @@ HLDocS HTML Generator PoC.
 注意点:
     - 本スクリプトは PoC 用の最小実装である。
     - Markdown 正本を canonical とし、HTML は read-only Operational Representation として生成する。
+    - Presentation Model は HTML 表示制御用の operational input として扱い、Markdown 正本を置換しない。
     - sec_id は Markdown 本文に存在する場合のみ抽出し、存在しない sec_id を推測生成しない。
     - Manifest に存在しないページへの HTML 内部リンクを生成しない。
 
@@ -38,11 +39,15 @@ import re
 import sys
 from dataclasses import dataclass
 from pathlib import Path
-from typing import Iterable
+from typing import Any
 
 
 SUPPORTED_PROFILES = {"overview", "reference"}
 DEFAULT_PROFILES = ["overview", "reference"]
+PRESENTATION_MODEL_DIR = "Presentation-Model"
+SUPPORTED_PRESENTATION_POLICIES = {"full_render", "overview_only", "link_only", "not_generated"}
+LEGACY_FALLBACK_POLICY = "full_render"
+PRESENTATION_MODEL_FALLBACK_POLICY = "overview_only"
 
 
 @dataclass(frozen=True)
@@ -67,6 +72,24 @@ class MarkdownDocument:
     headings: list[str]
     sec_ids: list[str]
     body: str
+
+
+@dataclass(frozen=True)
+class PresentationDocument:
+    """文書単位の表示構成モデルを保持する。
+
+    役割:
+        Markdown 正本を HTML 上でどのように扱うかを制御する。
+
+    注意点:
+        本情報は operational input であり、canonical specification ではない。
+    """
+
+    doc_id: str
+    presentation_policy: str
+    overview: str | None
+    policy_reason: str | None
+    source_path: str | None
 
 
 def parse_args(argv: list[str]) -> argparse.Namespace:
@@ -246,6 +269,105 @@ def load_markdown_documents(input_root: Path) -> list[MarkdownDocument]:
     return documents
 
 
+def presentation_model_root(input_root: Path) -> Path:
+    """表示構成モデルの配置ルートを返す。
+
+    引数:
+        input_root: 入力ルートディレクトリ。
+
+    戻り値:
+        Path: 表示構成モデルルート。
+    """
+
+    return input_root / "HTMLドキュメント" / PRESENTATION_MODEL_DIR
+
+
+def validate_presentation_policy(policy: str) -> str:
+    """presentation_policy を検証する。
+
+    引数:
+        policy: 検証対象 policy。
+
+    戻り値:
+        str: 検証済み policy。
+
+    例外:
+        ValueError: 未対応 policy が指定された場合。
+    """
+
+    if policy not in SUPPORTED_PRESENTATION_POLICIES:
+        supported = ", ".join(sorted(SUPPORTED_PRESENTATION_POLICIES))
+        raise ValueError(f"Unsupported presentation_policy: {policy}. Supported: {supported}")
+    return policy
+
+
+def load_presentation_documents(input_root: Path) -> tuple[dict[str, PresentationDocument], bool]:
+    """文書単位の表示構成モデルを読み込む。
+
+    引数:
+        input_root: 入力ルートディレクトリ。
+
+    戻り値:
+        tuple[dict[str, PresentationDocument], bool]:
+            doc_id keyed presentation documents と、Presentation Model ルートの存在有無。
+
+    注意点:
+        Presentation Model が存在しない場合は既存 PoC 互換の fallback として扱う。
+    """
+
+    root = presentation_model_root(input_root)
+    if not root.exists():
+        return {}, False
+
+    documents_dir = root / "documents"
+    if not documents_dir.exists():
+        return {}, True
+
+    presentation_documents: dict[str, PresentationDocument] = {}
+    for path in sorted(documents_dir.glob("*.json")):
+        raw: dict[str, Any] = json.loads(path.read_text(encoding="utf-8"))
+        doc_id = str(raw.get("doc_id", "")).strip()
+        if not doc_id:
+            raise ValueError(f"Presentation Model document missing doc_id: {path}")
+        policy = validate_presentation_policy(str(raw.get("presentation_policy", PRESENTATION_MODEL_FALLBACK_POLICY)))
+        presentation_documents[doc_id] = PresentationDocument(
+            doc_id=doc_id,
+            presentation_policy=policy,
+            overview=raw.get("overview") if raw.get("overview") is not None else None,
+            policy_reason=raw.get("policy_reason") if raw.get("policy_reason") is not None else None,
+            source_path=path.relative_to(input_root).as_posix(),
+        )
+    return presentation_documents, True
+
+
+def resolve_presentation_policy(
+    document: MarkdownDocument,
+    presentation_documents: dict[str, PresentationDocument],
+    has_presentation_model: bool,
+) -> str:
+    """文書の presentation_policy を決定する。
+
+    引数:
+        document: 対象 Markdown 文書。
+        presentation_documents: doc_id keyed 表示構成モデル。
+        has_presentation_model: Presentation Model ルートの存在有無。
+
+    戻り値:
+        str: 決定済み presentation_policy。
+
+    注意点:
+        Presentation Model が存在しない場合は既存 PoC 互換のため full_render とする。
+        Presentation Model が存在するが対象 doc_id が未指定の場合は overview_only とする。
+    """
+
+    presentation_document = presentation_documents.get(document.doc_id)
+    if presentation_document is not None:
+        return presentation_document.presentation_policy
+    if has_presentation_model:
+        return PRESENTATION_MODEL_FALLBACK_POLICY
+    return LEGACY_FALLBACK_POLICY
+
+
 def safe_slug(value: str) -> str:
     """HTML ファイル名に使う安全な slug を生成する。
 
@@ -350,6 +472,7 @@ def html_page(title: str, body_html: str) -> str:
     pre {{ padding: 1rem; overflow-x: auto; }}
     .meta {{ border: 1px solid #ddd; padding: 1rem; background: #fafafa; }}
     .warning {{ border: 1px solid #d99; padding: 1rem; background: #fff7f7; }}
+    .card {{ border: 1px solid #ddd; padding: 1rem; margin: 1rem 0; }}
     a {{ text-decoration: none; }}
   </style>
 </head>
@@ -360,28 +483,37 @@ def html_page(title: str, body_html: str) -> str:
 """
 
 
-def write_reference_pages(output_root: Path, input_root: Path, documents: list[MarkdownDocument]) -> list[dict[str, object]]:
-    """reference HTML と Manifest page entries を生成する。
+def markdown_source_link(document: MarkdownDocument) -> str:
+    """reference ページから Markdown 正本への相対リンクを生成する。
 
     引数:
-        output_root: 出力ルート。
-        input_root: 入力ルート。
-        documents: Markdown 文書一覧。
+        document: 対象 Markdown 文書。
 
     戻り値:
-        list[dict[str, object]]: Manifest page entries。
+        str: Markdown 正本への相対リンク。
     """
 
-    reference_dir = output_root / "reference"
-    reference_dir.mkdir(parents=True, exist_ok=True)
+    return (Path("../..") / document.relative_source_path).as_posix()
 
-    pages: list[dict[str, object]] = []
-    for document in documents:
-        output_name = reference_filename(document)
-        output_path = reference_dir / output_name
-        source_link = Path("../..") / document.relative_source_path
-        heading_items = "".join(f"<li>{html.escape(item)}</li>" for item in document.headings)
-        body_html = f"""
+
+def build_reference_body(document: MarkdownDocument, presentation_document: PresentationDocument | None, policy: str) -> str:
+    """presentation_policy に従い reference ページ本文を生成する。
+
+    引数:
+        document: 対象 Markdown 文書。
+        presentation_document: 対応する表示構成モデル。
+        policy: 決定済み presentation_policy。
+
+    戻り値:
+        str: reference ページ body HTML。
+    """
+
+    source_link = markdown_source_link(document)
+    heading_items = "".join(f"<li>{html.escape(item)}</li>" for item in document.headings)
+    overview = presentation_document.overview if presentation_document and presentation_document.overview else None
+    reason = presentation_document.policy_reason if presentation_document and presentation_document.policy_reason else None
+
+    common_html = f"""
 <header>
   <h1>{html.escape(document.canonical_title)}</h1>
   <p><a href="../index.html">HTMLドキュメント index</a></p>
@@ -391,8 +523,48 @@ def write_reference_pages(output_root: Path, input_root: Path, documents: list[M
     <p><strong>doc_id:</strong> {html.escape(document.doc_id)}</p>
     <p><strong>document_type:</strong> {html.escape(document.document_type)}</p>
     <p><strong>canonical_document:</strong> {html.escape(document.canonical_document)}</p>
-    <p><strong>Markdown正本:</strong> <a href="{html.escape(source_link.as_posix())}">{html.escape(document.canonical_title)}</a></p>
+    <p><strong>presentation_policy:</strong> {html.escape(policy)}</p>
+    <p><strong>Markdown正本:</strong> <a href="{html.escape(source_link)}">{html.escape(document.canonical_title)}</a></p>
   </section>
+"""
+    if overview:
+        common_html += f"""
+  <section>
+    <h2>概要</h2>
+    <p>{html.escape(overview)}</p>
+  </section>
+"""
+    if reason:
+        common_html += f"""
+  <section>
+    <h2>HTML表示方針の理由</h2>
+    <p>{html.escape(reason)}</p>
+  </section>
+"""
+
+    if policy == "link_only":
+        return common_html + """
+  <section>
+    <h2>本文</h2>
+    <p>本文は HTML 化せず、Markdown 正本リンクを参照します。</p>
+  </section>
+</main>
+"""
+
+    if policy == "overview_only":
+        return common_html + f"""
+  <section>
+    <h2>見出し一覧</h2>
+    <ul>{heading_items}</ul>
+  </section>
+  <section>
+    <h2>本文</h2>
+    <p>本文は HTML 化せず、概要と見出しのみ表示します。</p>
+  </section>
+</main>
+"""
+
+    return common_html + f"""
   <section>
     <h2>見出し一覧</h2>
     <ul>{heading_items}</ul>
@@ -403,6 +575,50 @@ def write_reference_pages(output_root: Path, input_root: Path, documents: list[M
   </section>
 </main>
 """
+
+
+def write_reference_pages(
+    output_root: Path,
+    documents: list[MarkdownDocument],
+    presentation_documents: dict[str, PresentationDocument],
+    has_presentation_model: bool,
+) -> tuple[list[dict[str, object]], list[dict[str, object]]]:
+    """reference HTML と Manifest page entries を生成する。
+
+    引数:
+        output_root: 出力ルート。
+        documents: Markdown 文書一覧。
+        presentation_documents: doc_id keyed 表示構成モデル。
+        has_presentation_model: Presentation Model ルートの存在有無。
+
+    戻り値:
+        tuple[list[dict[str, object]], list[dict[str, object]]]:
+            Manifest page entries と not generated entries。
+    """
+
+    reference_dir = output_root / "reference"
+    reference_dir.mkdir(parents=True, exist_ok=True)
+
+    pages: list[dict[str, object]] = []
+    not_generated: list[dict[str, object]] = []
+    for document in documents:
+        policy = resolve_presentation_policy(document, presentation_documents, has_presentation_model)
+        presentation_document = presentation_documents.get(document.doc_id)
+        if policy == "not_generated":
+            not_generated.append(
+                {
+                    "doc_id": document.doc_id,
+                    "canonical_title": document.canonical_title,
+                    "source_markdown": document.relative_source_path,
+                    "presentation_policy": policy,
+                    "reason": presentation_document.policy_reason if presentation_document else None,
+                }
+            )
+            continue
+
+        output_name = reference_filename(document)
+        output_path = reference_dir / output_name
+        body_html = build_reference_body(document, presentation_document, policy)
         output_path.write_text(html_page(document.canonical_title, body_html), encoding="utf-8")
         pages.append(
             {
@@ -416,9 +632,11 @@ def write_reference_pages(output_root: Path, input_root: Path, documents: list[M
                 "source_hash": document.source_hash,
                 "stale": False,
                 "link_targets": [],
+                "presentation_policy": policy,
+                "presentation_model": presentation_document.source_path if presentation_document else None,
             }
         )
-    return pages
+    return pages, not_generated
 
 
 def write_overview_page(output_root: Path, documents: list[MarkdownDocument]) -> dict[str, object]:
@@ -482,16 +700,24 @@ def write_overview_page(output_root: Path, documents: list[MarkdownDocument]) ->
         "source_hash": None,
         "stale": False,
         "link_targets": [],
+        "presentation_policy": "generated",
+        "presentation_model": None,
     }
 
 
-def write_index_page(output_root: Path, pages: list[dict[str, object]], generated_at: str) -> None:
+def write_index_page(
+    output_root: Path,
+    pages: list[dict[str, object]],
+    generated_at: str,
+    not_generated_documents: list[dict[str, object]],
+) -> None:
     """HTML ドキュメント入口 index.html を生成する。
 
     引数:
         output_root: 出力ルート。
         pages: Manifest page entries。
         generated_at: 生成日時。
+        not_generated_documents: HTML生成対象外の文書一覧。
     """
 
     reference_items: list[str] = []
@@ -500,7 +726,16 @@ def write_index_page(output_root: Path, pages: list[dict[str, object]], generate
             continue
         title = str(page["canonical_title"])
         path = str(page["output_html_path"])
-        reference_items.append(f"<li><a href=\"{html.escape(path)}\">{html.escape(title)}</a></li>")
+        policy = str(page.get("presentation_policy", ""))
+        reference_items.append(f"<li><a href=\"{html.escape(path)}\">{html.escape(title)}</a> [{html.escape(policy)}]</li>")
+
+    not_generated_items = ["<li>traceability</li>", "<li>test-report</li>"]
+    for item in not_generated_documents:
+        title = html.escape(str(item["canonical_title"]))
+        source = html.escape(str(item["source_markdown"]))
+        reason = item.get("reason")
+        reason_html = f" - {html.escape(str(reason))}" if reason else ""
+        not_generated_items.append(f"<li>{title} ({source}){reason_html}</li>")
 
     body_html = f"""
 <header>
@@ -521,17 +756,20 @@ def write_index_page(output_root: Path, pages: list[dict[str, object]], generate
   </section>
   <section>
     <h2>Not generated</h2>
-    <ul>
-      <li>traceability</li>
-      <li>test-report</li>
-    </ul>
+    <ul>{''.join(not_generated_items)}</ul>
   </section>
 </main>
 """
     (output_root / "index.html").write_text(html_page("HLDocS HTMLドキュメント", body_html), encoding="utf-8")
 
 
-def write_manifest(output_root: Path, profiles: list[str], pages: list[dict[str, object]], generated_at: str) -> None:
+def write_manifest(
+    output_root: Path,
+    profiles: list[str],
+    pages: list[dict[str, object]],
+    generated_at: str,
+    not_generated_documents: list[dict[str, object]],
+) -> None:
     """HTML Site Manifest を生成する。
 
     引数:
@@ -539,6 +777,7 @@ def write_manifest(output_root: Path, profiles: list[str], pages: list[dict[str,
         profiles: 生成 profile。
         pages: Manifest page entries。
         generated_at: 生成日時。
+        not_generated_documents: HTML生成対象外の文書一覧。
     """
 
     manifest_dir = output_root / "manifest"
@@ -551,7 +790,9 @@ def write_manifest(output_root: Path, profiles: list[str], pages: list[dict[str,
     manifest = {
         "generated_at": generated_at,
         "profile": profiles,
+        "presentation_policy_enum": sorted(SUPPORTED_PRESENTATION_POLICIES),
         "pages": pages,
+        "not_generated_documents": not_generated_documents,
     }
     (manifest_dir / "site-manifest.json").write_text(
         json.dumps(manifest, ensure_ascii=False, indent=2),
@@ -589,16 +830,24 @@ def generate(input_root: Path, output_root: Path, profiles: list[str]) -> None:
 
     output_root.mkdir(parents=True, exist_ok=True)
     documents = load_markdown_documents(input_root)
+    presentation_documents, has_presentation_model = load_presentation_documents(input_root)
     generated_at = _datetime.datetime.now(_datetime.UTC).isoformat()
 
     pages: list[dict[str, object]] = []
+    not_generated_documents: list[dict[str, object]] = []
     if "reference" in profiles:
-        pages.extend(write_reference_pages(output_root, input_root, documents))
+        reference_pages, not_generated_documents = write_reference_pages(
+            output_root,
+            documents,
+            presentation_documents,
+            has_presentation_model,
+        )
+        pages.extend(reference_pages)
     if "overview" in profiles:
         pages.append(write_overview_page(output_root, documents))
 
-    write_index_page(output_root, pages, generated_at)
-    write_manifest(output_root, profiles, pages, generated_at)
+    write_index_page(output_root, pages, generated_at, not_generated_documents)
+    write_manifest(output_root, profiles, pages, generated_at, not_generated_documents)
     ensure_no_space_paths(output_root)
 
 
