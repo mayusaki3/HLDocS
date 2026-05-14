@@ -27,7 +27,7 @@ jobs:
 
       - name: Run tests
         run: |
-          python -m pytest tools/html_generator
+          python -m pytest tools/html_generator/tests
 
       - name: Run HTML generator PoC
         run: |
