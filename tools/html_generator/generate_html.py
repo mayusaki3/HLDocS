@@ -226,8 +226,7 @@ def extract_sec_ids(text: str) -> list[str]:
         list[str]: 本文に存在する sec_id 一覧。
     """
 
-    return sorted(set(re.findall(r"\bsec_[A-Za-z0-9_-]+\b", text)))
-
+    return sorted(set(re.findall(r"\bsec_[A-Za-z0-9][A-Za-z0-9_-]*\b", text)))
 
 def load_markdown_documents(input_root: Path) -> list[MarkdownDocument]:
     """Markdown 正本文書を読み込み、metadata を抽出する。
