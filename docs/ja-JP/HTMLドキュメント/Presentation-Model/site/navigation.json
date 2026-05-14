@@ -1,0 +1,27 @@
+{
+  "navigation_model_version": "0.1.0-poc",
+  "role": "HTML の全体像から詳細へ誘導する navigation tree。Markdown 正本の階層を置換しない。",
+  "items": [
+    {
+      "title": "HTML生成PoC",
+      "children": [
+        {
+          "title": "HTMLドキュメント生成規約",
+          "doc_id": "doc-20260512-HtmlDocumentGeneration"
+        },
+        {
+          "title": "HTML Site Manifest規約",
+          "doc_id": "doc-20260512-HtmlSiteManifest"
+        },
+        {
+          "title": "HTML出力単位規約",
+          "doc_id": "doc-20260512-HtmlOutputUnit"
+        },
+        {
+          "title": "HTMLディレクトリ構成規約",
+          "doc_id": "doc-20260512-HtmlDirectoryStructure"
+        }
+      ]
+    }
+  ]
+}
