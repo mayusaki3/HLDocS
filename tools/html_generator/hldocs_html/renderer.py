@@ -16,6 +16,7 @@ import re
 from pathlib import Path
 from typing import Any
 
+from .markdown_viewer import markdown_viewer_link
 from .models import MarkdownDocument, PresentationDocument
 from .presentation_model import resolve_presentation_policy
 
@@ -81,10 +82,10 @@ def html_page(title: str, body_html: str) -> str:
 
     escaped_title = html.escape(title)
     return f"""<!doctype html>
-<html lang="ja">
+<html lang=\"ja\">
 <head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta charset=\"utf-8\">
+  <meta name=\"viewport\" content=\"width=device-width, initial-scale=1\">
   <title>{escaped_title}</title>
   <style>
     body {{ font-family: sans-serif; line-height: 1.7; margin: 2rem; max-width: 1080px; }}
@@ -108,9 +109,10 @@ def html_page(title: str, body_html: str) -> str:
 
 
 def markdown_source_link(document: MarkdownDocument) -> str:
-    """reference ページから Markdown 正本への相対リンクを生成する。"""
+    """reference ページから Markdown 正本 viewer への相対リンクを生成する。"""
 
-    return (Path("../..") / document.relative_source_path).as_posix()
+    markdown_path = (Path("../..") / document.relative_source_path).as_posix()
+    return markdown_viewer_link(markdown_path)
 
 
 def build_reference_body(
@@ -128,15 +130,15 @@ def build_reference_body(
     common_html = f"""
 <header>
   <h1>{html.escape(document.canonical_title)}</h1>
-  <p><a href="../index.html">HTMLドキュメント index</a></p>
+  <p><a href=\"../index.html\">HTMLドキュメント index</a></p>
 </header>
 <main>
-  <section class="meta">
+  <section class=\"meta\">
     <p><strong>doc_id:</strong> {html.escape(document.doc_id)}</p>
     <p><strong>document_type:</strong> {html.escape(document.document_type)}</p>
     <p><strong>canonical_document:</strong> {html.escape(document.canonical_document)}</p>
     <p><strong>presentation_policy:</strong> {html.escape(policy)}</p>
-    <p><strong>Markdown正本:</strong> <a href="{html.escape(source_link)}" target="_blank" rel="noopener noreferrer">{html.escape(document.canonical_title)}</a></p>
+    <p><strong>Markdown正本:</strong> <a href=\"{html.escape(source_link)}\" target=\"_blank\" rel=\"noopener noreferrer\">{html.escape(document.canonical_title)}</a></p>
   </section>
 """
 
@@ -272,7 +274,7 @@ def write_overview_page(
     body_html = f"""
 <header>
   <h1>HLDocS HTML Overview</h1>
-  <p><a href="../index.html">HTMLドキュメント index</a></p>
+  <p><a href=\"../index.html\">HTMLドキュメント index</a></p>
 </header>
 <main>
   <section>
@@ -292,7 +294,7 @@ def write_overview_page(
     <h2>document_type 集計</h2>
     <ul>{type_items}</ul>
   </section>
-  <section class="warning">
+  <section class=\"warning\">
     <h2>注意</h2>
     <p>HTML は read-only Operational Representation であり、Markdown 正本ではありません。</p>
   </section>
@@ -459,13 +461,13 @@ def write_index_page(
   <h1>HLDocS HTMLドキュメント</h1>
 </header>
 <main>
-  <section class="meta">
+  <section class=\"meta\">
     <p><strong>generated_at:</strong> {html.escape(generated_at)}</p>
     <p><strong>profile:</strong> overview, reference</p>
   </section>
   <section>
     <h2>Overview</h2>
-    <p><a href="overview/index.html">HLDocS HTML Overview</a></p>
+    <p><a href=\"overview/index.html\">HLDocS HTML Overview</a></p>
   </section>
   {navigation_html}
   {document_map_html}
