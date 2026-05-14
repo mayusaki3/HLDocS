@@ -1,0 +1,6 @@
+{
+  "doc_id": "doc-20260512-HtmlSiteManifest",
+  "presentation_policy": "overview_only",
+  "overview": "HTML Site Manifest の generated metadata 管理規約。",
+  "policy_reason": "概要と見出しのみを表示する PoC を検証するため。"
+}
