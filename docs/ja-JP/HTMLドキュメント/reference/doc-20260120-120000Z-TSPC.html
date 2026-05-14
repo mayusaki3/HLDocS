@@ -1,0 +1,211 @@
+<!doctype html>
+<html lang="ja">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>document_type:testspec 仕様</title>
+  <style>
+    body { font-family: sans-serif; line-height: 1.7; margin: 2rem; max-width: 1080px; }
+    header, nav, main, footer { margin-bottom: 1.5rem; }
+    code, pre { background: #f5f5f5; }
+    pre { padding: 1rem; overflow-x: auto; }
+    .meta { border: 1px solid #ddd; padding: 1rem; background: #fafafa; }
+    .warning { border: 1px solid #d99; padding: 1rem; background: #fff7f7; }
+    .card { border: 1px solid #ddd; padding: 1rem; margin: 1rem 0; }
+    a { text-decoration: none; }
+  </style>
+</head>
+<body>
+
+<header>
+  <h1>document_type:testspec 仕様</h1>
+  <p><a href="../index.html">HTMLドキュメント index</a></p>
+</header>
+<main>
+  <section class="meta">
+    <p><strong>doc_id:</strong> doc-20260120-120000Z-TSPC</p>
+    <p><strong>document_type:</strong> spec</p>
+    <p><strong>canonical_document:</strong> true</p>
+    <p><strong>presentation_policy:</strong> full_render</p>
+    <p><strong>Markdown正本:</strong> <a href="../../仕様/10_document_type/testspec/01_testspec_仕様.md" target="_blank" rel="noopener noreferrer">document_type:testspec 仕様</a></p>
+  </section>
+
+  <section>
+    <h2>見出し一覧</h2>
+    <ul><li>document_type:testspec 仕様</li><li>1. 役割（MUST）</li><li>2. 同一性と参照（MUST）</li><li>2.1 検証単位の同一性</li><li>2.2 テスト番号との関係</li><li>2.3 spec 参照</li><li>3. テスト番号（ラベル）の扱い</li><li>3.1 目的</li><li>3.2 基本フォーマット（推奨）</li><li>3.3 &lt;NNN&gt; の分割（MAY）</li><li>分割例（概念）</li><li>3.4 禁止事項（MUST NOT）</li><li>4. sec_id（検証単位識別子）</li><li>4.1 役割</li><li>4.2 形式（MUST）</li><li>4.3 管理原則（MUST）</li><li>5. testspec の構造要件（MUST）</li><li>記載例（概念）</li><li>ユーザー登録：正常系</li><li>前提条件</li><li>検証内容</li><li>6. コードとの紐づけ（MUST）</li><li>記載例（概念）</li><li>7. traceability に関する制約（要約・MUST）</li><li>8. LLM による内部自己検査（非出力・MUST）</li></ul>
+  </section>
+  <section>
+    <h2>本文</h2>
+    <p>&lt;!--</p>
+<p>HLDocS:LLM-MANAGED</p>
+<p>doc_id: doc-20260120-120000Z-TSPC</p>
+<p>lang: ja-JP</p>
+<p>canonical_title: document_type:testspec 仕様</p>
+<p>document_type: spec</p>
+<p>canonical_document: true</p>
+<p>transport: [download, ui_copy]</p>
+<p>--&gt;</p>
+
+<p>[目次](../../../目次.md) &gt; 仕様 &gt; document_type &gt; testspec &gt; 仕様</p>
+
+<h1>document_type:testspec 仕様</h1>
+
+<p>本書は、HLDocS における **testspec（テスト仕様）** の役割・構造・参照規約を定義する。</p>
+
+<p>---</p>
+
+<h2>1. 役割（MUST）</h2>
+
+<p>• testspec は **spec に従属**する検証仕様である。</p>
+<p>• testspec は「何を、どの観点で検証するか」を定義する。</p>
+<p>• testspec 自体は **実装コードやテストコードを含まない**。</p>
+<p>• 実装・テストコードは testspec を参照する側である。</p>
+
+<p>---</p>
+
+<h2>2. 同一性と参照（MUST）</h2>
+
+<h3>2.1 検証単位の同一性</h3>
+
+<p>• 各テストケース（検証単位）の恒久的同一性は **sec_id** により保証される。</p>
+<p>• sec_id は testspec において **初出・確定**する。</p>
+<p>• sec_id は表示用ではなく、traceability を構成する検証単位キーである。</p>
+
+<h3>2.2 テスト番号との関係</h3>
+
+<p>• テスト番号は **ラベル**であり、同一性を担保しない。</p>
+<p>• テスト番号は変更・再採番されてもよい。</p>
+<p>• sec_id をテスト番号の代替として使用してはならない。</p>
+
+<h3>2.3 spec 参照</h3>
+
+<p>• testspec から spec への参照は **`doc_id#sec_id` のみ許可**する。</p>
+<p>• 章名・章番号・テキスト位置等による参照は禁止する。</p>
+
+<p>---</p>
+
+<h2>3. テスト番号（ラベル）の扱い</h2>
+
+<h3>3.1 目的</h3>
+
+<p>• 人間が一覧・ログ・CI 結果から把握しやすくするための表示用識別子。</p>
+<p>• testspec → testcode 生成時の構造整理補助として使用してよい。</p>
+
+<h3>3.2 基本フォーマット（推奨）</h3>
+
+<pre><code>&lt;TARGET&gt;-&lt;LEVEL&gt;-&lt;PURPOSE&gt;-&lt;NNN&gt;</code></pre>
+
+<p>• `&lt;TARGET&gt;`：対象（人間可読・変更可）  </p>
+<p>  - UT：実装・クラス等（例：COMMON_AUTH）  </p>
+<p>  - IT / E2E：機能・ユースケース（例：USER_REGISTER）</p>
+<p>• `&lt;LEVEL&gt;`：UT / IT / E2E</p>
+<p>• `&lt;PURPOSE&gt;`：</p>
+<p>  - SPEC：仕様検証目的</p>
+<p>  - IMPL：実装・カバレッジ目的</p>
+<p>• `&lt;NNN&gt;`：連番（変更・再採番可）</p>
+
+<h3>3.3 &lt;NNN&gt; の分割（MAY）</h3>
+
+<p>• testspec → testcode 生成時の都合により、`&lt;NNN&gt;` を **複数セグメントに分割してよい**。</p>
+<p>• 分割後の各セグメントも **すべてラベル**であり、意味論的拘束や恒久性は持たない。</p>
+<p>• 分割・再構成を理由に sec_id を変更してはならない。</p>
+
+<h4>分割例（概念）</h4>
+
+<pre><code>&lt;TARGET&gt;-&lt;LEVEL&gt;-&lt;PURPOSE&gt;-&lt;AA&gt;-&lt;BB&gt;-&lt;CC&gt;</code></pre>
+
+<p>• `&lt;AA&gt;`：分類（ラベル）</p>
+<p>• `&lt;BB&gt;`：グループ（テストコード単位の整理用ラベル）</p>
+<p>• `&lt;CC&gt;`：連番（ラベル）</p>
+
+<p>※ `&lt;AA&gt; &lt;BB&gt; &lt;CC&gt;` の意味や桁数は testspec ごとに定めてよい。</p>
+
+<h3>3.4 禁止事項（MUST NOT）</h3>
+
+<p>• テスト番号（およびその分割セグメント）を恒久キーとして扱ってはならない。</p>
+<p>• テスト番号を spec 参照や traceability の基準として使用してはならない。</p>
+<p>• テスト番号の変更・再採番を理由に sec_id を変更してはならない。</p>
+
+<p>---</p>
+
+<h2>4. sec_id（検証単位識別子）</h2>
+
+<h3>4.1 役割</h3>
+
+<p>• sec_id は **検証単位の恒久識別子**である。</p>
+<p>• testspec と spec を結び付ける唯一の検証キーである。</p>
+
+<h3>4.2 形式（MUST）</h3>
+
+<p>• sec_id は **`sec_&lt;random&gt;` 形式のみ許可**する。</p>
+<p>• `&lt;random&gt;` は衝突確率が十分低い方式で生成されなければならない。</p>
+<p>• 以下を含めてはならない：</p>
+<p>  - 意味語・章名・番号</p>
+<p>  - テスト番号</p>
+<p>  - document_type・役割・用途を示す語</p>
+<p>• `tst_` / `spc_` 等の接頭辞付き形式は禁止する。</p>
+
+<h3>4.3 管理原則（MUST）</h3>
+
+<p>• sec_id は testspec 側でのみ生成・確定する。</p>
+<p>• spec 側で sec_id を新規生成してはならない。</p>
+<p>• 一度確定した sec_id は変更してはならない。</p>
+
+<p>---</p>
+
+<h2>5. testspec の構造要件（MUST）</h2>
+
+<p>• 各テストケースは **章（セクション）**として記述する。</p>
+<p>• 各章には **必ず sec_id を付与**する。</p>
+<p>• 各章には **対応する spec の参照**を明示する。</p>
+
+<h3>記載例（概念）</h3>
+
+<pre><code>## ユーザー登録：正常系
+&lt;!-- hldocs:sec_id=sec_ab12cd34 --&gt;
+&lt;!-- hldocs:ref=doc-YYYYMMDD-HHMMSSZ-XXXX#sec_ef56gh78 --&gt;
+
+### 前提条件
+...
+
+### 検証内容
+...</code></pre>
+
+<p>---</p>
+
+<h2>6. コードとの紐づけ（MUST）</h2>
+
+<p>• テストコード側には、**必ず**対応する testspec の `doc_id#sec_id` を記載する。</p>
+<p>• テスト番号は補助情報として併記してよい。</p>
+<p>• 記載形式はコメント等とし、言語依存はしない。</p>
+
+<h3>記載例（概念）</h3>
+
+<pre><code>@hldocs.ref doc-YYYYMMDD-HHMMSSZ-TSPC#sec_ab12cd34
+@hldocs.label &lt;TARGET&gt;-&lt;LEVEL&gt;-&lt;PURPOSE&gt;-&lt;...&gt;</code></pre>
+
+<p>---</p>
+
+<h2>7. traceability に関する制約（要約・MUST）</h2>
+
+<p>• 検証トレーサビリティは **`doc_id#sec_id`** により表現する。</p>
+<p>• sec_id は testspec 起点で確定し、spec 側はそれを受け取る。</p>
+<p>• testspec で minutes / note 用の ref_id を生成してはならない。</p>
+
+<p>---</p>
+
+<h2>8. LLM による内部自己検査（非出力・MUST）</h2>
+
+<p>• sec_id が `sec_&lt;random&gt;` 形式であること。</p>
+<p>• 同一 testspec 文書内で sec_id が重複していないこと。</p>
+<p>• spec 参照がすべて `doc_id#sec_id` 形式であること。</p>
+<p>• テスト番号（および分割セグメント）が同一性判定に使用されていないこと。</p>
+
+<p>---</p>
+
+<p>[目次](../../../目次.md) &gt; 仕様 &gt; document_type &gt; testspec &gt; 仕様</p>
+  </section>
+</main>
+
+</body>
+</html>

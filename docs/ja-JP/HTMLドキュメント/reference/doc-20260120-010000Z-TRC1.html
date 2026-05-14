@@ -1,0 +1,403 @@
+<!doctype html>
+<html lang="ja">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Traceability（仕様・テスト・コード紐づけ）規約</title>
+  <style>
+    body { font-family: sans-serif; line-height: 1.7; margin: 2rem; max-width: 1080px; }
+    header, nav, main, footer { margin-bottom: 1.5rem; }
+    code, pre { background: #f5f5f5; }
+    pre { padding: 1rem; overflow-x: auto; }
+    .meta { border: 1px solid #ddd; padding: 1rem; background: #fafafa; }
+    .warning { border: 1px solid #d99; padding: 1rem; background: #fff7f7; }
+    .card { border: 1px solid #ddd; padding: 1rem; margin: 1rem 0; }
+    a { text-decoration: none; }
+  </style>
+</head>
+<body>
+
+<header>
+  <h1>Traceability（仕様・テスト・コード紐づけ）規約</h1>
+  <p><a href="../index.html">HTMLドキュメント index</a></p>
+</header>
+<main>
+  <section class="meta">
+    <p><strong>doc_id:</strong> doc-20260120-010000Z-TRC1</p>
+    <p><strong>document_type:</strong> spec</p>
+    <p><strong>canonical_document:</strong> true</p>
+    <p><strong>presentation_policy:</strong> full_render</p>
+    <p><strong>Markdown正本:</strong> <a href="../../仕様/00_共通/06_Traceability規約.md" target="_blank" rel="noopener noreferrer">Traceability（仕様・テスト・コード紐づけ）規約</a></p>
+  </section>
+
+  <section>
+    <h2>見出し一覧</h2>
+    <ul><li>Traceability（仕様・テスト・コード紐づけ）規約</li><li>1. Purpose（目的）</li><li>2. Scope / Non-goals</li><li>2.1 Scope</li><li>2.2 Non-goals</li><li>3. 基本原則（MUST）</li><li>4. sec_id（検証単位識別子）</li><li>4.1 定義</li><li>4.2 形式（MUST）</li><li>4.3 確定原則（MUST）</li><li>4.4 役割分担（MUST）</li><li>4.5 許可・禁止事項</li><li>5. sec_id の記載方法（MUST）</li><li>5.1 記載形式</li><li>&lt;章タイトル&gt;</li><li>5.2 制約</li><li>6. 章単位参照形式（MUST）</li><li>6.1 成果物本文における参照形式制約（MUST）</li><li>7. 人間向けリンクと機械参照の分離（MUST）</li><li>8. ソースコード側の参照</li><li>8.1 記載形式</li><li>8.2 制約</li><li>9. 再構成・移行時の補足規定（MAY）</li><li>10. LLM による整合性検査</li><li>許可（MUST）</li><li>禁止（MUST NOT）</li><li>11. 内部自己検査（非出力・MUST）</li><li>12. minutes / note ⇔ spec の派生トレーサビリティ（MAY）</li><li>12.1 目的と位置付け</li><li>12.2 対象 document_type</li><li>12.3 ref_id（根拠アンカー識別子）</li><li>12.3.1 定義</li><li>12.3.2 形式（MUST）</li><li>12.3.3 一意性</li><li>12.4 ref_id の付与タイミング（MUST）</li><li>12.5 minutes / note 側の記載形式（MUST）</li><li>12.6 spec 側からの参照形式（MUST）</li><li>12.7 hldocs:rel（関係種別）</li><li>12.7.1 定義（MUST）</li><li>12.7.2 許容値（MUST）</li><li>12.7.3 付与判断（MUST）</li><li>12.8 機械参照の記載形式（MAY）</li><li>記載例（spec → minutes / note）</li><li>12.9 制約（MUST / MUST NOT）</li></ul>
+  </section>
+  <section>
+    <h2>本文</h2>
+    <p>&lt;!--</p>
+<p>HLDocS:LLM-MANAGED</p>
+<p>doc_id: doc-20260120-010000Z-TRC1</p>
+<p>lang: ja-JP</p>
+<p>canonical_title: Traceability（仕様・テスト・コード紐づけ）規約</p>
+<p>document_type: spec</p>
+<p>canonical_document: true</p>
+<p>--&gt;</p>
+
+<p>[目次](../../目次.md) &gt; 仕様 &gt; 共通 &gt; Traceability規約</p>
+
+<h1>Traceability（仕様・テスト・コード紐づけ）規約</h1>
+
+<p>本書は、HLDocS において  </p>
+<p>**仕様（spec）・テスト仕様（testspec）・ソースコード間の対応関係**を、  </p>
+<p>恒久的かつ再構成可能な形で管理するための **Traceability 規約**を定義する。</p>
+
+<p>本規約は、以下の共通仕様を前提として成立する。</p>
+
+<p>• [前提条件](./01_前提条件.md)</p>
+<p>• [共通ドキュメント構造](./03_共通ドキュメント構造.md)</p>
+<p>• [LLM-MANAGEDブロック規約](./04_LLM-MANAGEDブロック規約.md)</p>
+<p>• [Transport Encoding 規約](./05_Transport_Encoding規約.md)</p>
+<p>• [生成プロンプト運用規約](./02_生成プロンプト運用規約.md)</p>
+
+<p>本書は、「HLDocS 前提条件」という仕様が参照可能である場合にのみ適用される。</p>
+<p>• 「HLDocS 前提条件」が入力として与えられていない場合、  </p>
+<p>または当該仕様に基づく適用可否が確定していない場合、  </p>
+<p>本書に基づく判断・生成・再作成・工程実行を行ってはならない。</p>
+<p>• この場合、許可されるのは、  </p>
+<p>提示された文書の受理および存在確認、  </p>
+<p>ならびに前提条件が未参照または未確定である旨の通知のみとする。</p>
+<p>• 「HLDocS 前提条件」が入力文書一覧に含まれない場合、生成・再作成・成果物提示を一切行ってはならない。</p>
+
+<p>---</p>
+
+<h2>1. Purpose（目的）</h2>
+
+<p>• 仕様・テスト・実装間の対応関係を **恒久的に識別**可能にする  </p>
+<p>• ファイル名・章名・番号変更に影響されない **安定した紐づけ**を提供する  </p>
+<p>• 人間および LLM が **同一の識別子体系**で検証可能にする  </p>
+
+<p>---</p>
+
+<h2>2. Scope / Non-goals</h2>
+
+<h3>2.1 Scope</h3>
+
+<p>• spec / testspec / code 間の対応関係定義  </p>
+<p>• 章・検証単位レベルでの参照方式  </p>
+<p>• LLM による整合性検査の前提定義  </p>
+
+<h3>2.2 Non-goals</h3>
+
+<p>• テスト設計手法そのものの定義  </p>
+<p>• 自動生成・自動修正の実装  </p>
+<p>• 採番アルゴリズムの詳細規定  </p>
+
+<p>---</p>
+
+<h2>3. 基本原則（MUST）</h2>
+
+<p>• **文書単位の同一性**は `doc_id` のみによって保証される  </p>
+<p>• **検証単位の同一性**は `sec_id` によって表現される  </p>
+<p>• 一意性は **(doc_id, sec_id)** の組で成立する  </p>
+<p>• 意味語・構造情報と識別子を混在させてはならない  </p>
+<p>• HLDocS成果物生成時は、HLDocS仕様を最優先とし、</p>
+<p>  UI仕様・ツール仕様（file_search 等）よりも優先される（MUST）</p>
+
+<p>---</p>
+
+<h2>4. sec_id（検証単位識別子）</h2>
+
+<h3>4.1 定義</h3>
+
+<p>`sec_id` は、仕様要求・振る舞い・検証観点を識別する  </p>
+<p>**検証単位識別子**である。</p>
+
+<p>`sec_id` 単体では一意性を持たず、  </p>
+<p>`doc_id` と組み合わせることで初めて一意となる。</p>
+
+<p>---</p>
+
+<h3>4.2 形式（MUST）</h3>
+
+<p>• `sec_id` は **sec_&lt;random&gt; 形式のみ許可**する  </p>
+<p>• `&lt;random&gt;` は衝突確率が十分低い方式で生成されなければならない  </p>
+<p>• 以下を **含めてはならない（MUST NOT）**</p>
+<p>  - 意味語・章名・番号</p>
+<p>  - テスト番号</p>
+<p>  - document_type・役割・用途を示す語</p>
+<p>• spc_ / tst_ 等の **接頭辞付き形式は禁止**する  </p>
+
+<p>---</p>
+
+<h3>4.3 確定原則（MUST）</h3>
+
+<p>• `sec_id` は **testspec を起点として初出・確定**する  </p>
+<p>• spec 単体生成時に `sec_id` を付与してはならない  </p>
+<p>• 対応する testspec を持たない `sec_id` を定義してはならない  </p>
+
+<p>---</p>
+
+<h3>4.4 役割分担（MUST）</h3>
+
+<p>• **testspec**</p>
+<p>  - 検証観点単位で `sec_id` を初出・確定する主体</p>
+<p>• **spec**</p>
+<p>  - testspec 側で確定した `sec_id` を後追いで受け取る主体</p>
+<p>  - 推測・自動生成により `sec_id` を付与してはならない</p>
+
+<p>---</p>
+
+<h3>4.5 許可・禁止事項</h3>
+
+<p>**許可**</p>
+
+<p>• testspec 新規作成時の `sec_id` 付与  </p>
+<p>• 規格外 testspec を HLDocS 準拠に再構成する際の `sec_id` 付与  </p>
+
+<p>**禁止**</p>
+
+<p>• spec 生成時の自律的 `sec_id` 生成  </p>
+<p>• traceability 以外の目的での `sec_id` 利用  </p>
+
+<p>---</p>
+
+<h2>5. sec_id の記載方法（MUST）</h2>
+
+<h3>5.1 記載形式</h3>
+
+<p>`sec_id` は、対象章見出し直下に **HTML コメント**として記載する。</p>
+
+<pre><code>## &lt;章タイトル&gt;
+&lt;!-- hldocs:sec_id=sec_&lt;random&gt; --&gt;</code></pre>
+
+<h3>5.2 制約</h3>
+
+<p>• 一度確定した `sec_id` は変更してはならない  </p>
+<p>• 同一文書内で重複してはならない  </p>
+<p>• 人間可読性は要求しない  </p>
+
+<p>---</p>
+
+<h2>6. 章単位参照形式（MUST）</h2>
+
+<p>章・検証単位の参照は、以下の形式 **のみ許可**する。</p>
+
+<pre><code>doc_id#sec_id</code></pre>
+
+<h3>6.1 成果物本文における参照形式制約（MUST）</h3>
+
+<p>本規約における「参照」とは、</p>
+<p>機械的に識別可能な識別子形式（doc_id#sec_id 等）による</p>
+<p>リンク表現を指す。</p>
+
+<p>自然文による説明は参照に含めない。</p>
+
+<p>HLDocS成果物本文における参照は、以下の形式のみを許可する。</p>
+
+<p>• doc_id#sec_id</p>
+
+<p>上記以外のすべての参照形式の生成を禁止する（MUST NOT）。</p>
+
+<p>禁止対象には以下を含む（ただしこれに限らない）：</p>
+
+<p>• filecite</p>
+<p>• contentReference</p>
+<p>• URL（http/https）</p>
+<p>• 相対パス参照</p>
+<p>• UIリンク展開形式</p>
+<p>• ツール依存の参照形式</p>
+
+<p>参照が必要であるが sec_id が存在しない場合、</p>
+<p>LLMは参照形式（doc_id#sec_id）を生成してはならない（MUST）。</p>
+
+<p>この場合、当該内容は参照を伴わない自然文として記述してよい（MAY）。</p>
+
+<p>本制約は、説明文・出典表記・補足であっても例外なく適用される（MUST）。</p>
+
+<p>本制約は、HLDocS成果物本文およびテンプレート範囲内に適用される。</p>
+
+<p>人間向けナビゲーションリンク（Markdownリンク）は、</p>
+<p>機械参照とは別目的であるため、本制約の対象外とする。</p>
+
+<p>---</p>
+
+<h2>7. 人間向けリンクと機械参照の分離（MUST）</h2>
+
+<p>• 人間向けナビゲーションは Markdown リンクで行う  </p>
+<p>• 機械的同一性は HTML コメントで保持する  </p>
+
+<pre><code>- [章タイトル](../../path/to/doc.md)
+  &lt;!-- hldocs:ref=doc-XXXXXXXX-XXXX#sec_&lt;random&gt; --&gt;</code></pre>
+
+<p>---</p>
+
+<h2>8. ソースコード側の参照</h2>
+
+<h3>8.1 記載形式</h3>
+
+<pre><code>@hldocs.ref doc-XXXXXXXX-XXXX#sec_&lt;random&gt;</code></pre>
+
+<h3>8.2 制約</h3>
+
+<p>• 複数指定可  </p>
+<p>• 順序は問わない  </p>
+<p>• 言語固有のコメント規約に従う  </p>
+
+<p>---</p>
+
+<h2>9. 再構成・移行時の補足規定（MAY）</h2>
+
+<p>• traceability 再構築目的に限り、既存 `sec_id` を一旦除去し再付与してよい  </p>
+<p>• 恒久成果物公開前に再付与は完了していなければならない  </p>
+
+<p>---</p>
+
+<h2>10. LLM による整合性検査</h2>
+
+<h3>許可（MUST）</h3>
+
+<p>• `doc_id#sec_id` の存在確認  </p>
+<p>• spec / testspec / code 間の対応確認  </p>
+<p>• 未参照・孤立検証単位の検出  </p>
+
+<h3>禁止（MUST NOT）</h3>
+
+<p>• `sec_id` の新規生成・変更  </p>
+<p>• 本文・コメントの自動修正  </p>
+<p>• 規定外参照形式の生成  </p>
+
+<p>---</p>
+
+<h2>11. 内部自己検査（非出力・MUST）</h2>
+
+<p>• `sec_id` が sec_&lt;random&gt; 形式であること  </p>
+<p>• (doc_id, sec_id) で一意性が成立していること  </p>
+<p>• 参照形式が doc_id#sec_id のみであること  </p>
+
+<p>---</p>
+
+<h2>12. minutes / note ⇔ spec の派生トレーサビリティ（MAY）</h2>
+
+<h3>12.1 目的と位置付け</h3>
+
+<p>本節は、**spec の記述が minutes / note のどの記述を根拠として導出されたか**を  </p>
+<p>追跡可能にするための **派生（derivation）トレーサビリティ**を定義する。</p>
+
+<p>本トレーサビリティは：</p>
+
+<p>• **検証関係ではない**</p>
+<p>• spec ⇔ testspec の必須トレーサビリティを **代替しない**</p>
+<p>• spec 確定前後の段階で、根拠の追跡・説明責務を支える目的で使用する</p>
+
+<p>---</p>
+
+<h3>12.2 対象 document_type</h3>
+
+<p>• minutes</p>
+<p>• note</p>
+
+<p>---</p>
+
+<h3>12.3 ref_id（根拠アンカー識別子）</h3>
+
+<h4>12.3.1 定義</h4>
+
+<p>`ref_id` は、minutes / note 内の **根拠となる記述位置**を識別するための  </p>
+<p>**根拠アンカー識別子**である。</p>
+
+<p>`ref_id` は検証単位ではなく、`sec_id` の代替ではない。</p>
+
+<h4>12.3.2 形式（MUST）</h4>
+
+<p>• `ref_id` は **ref_&lt;random&gt; 形式のみ許可**する  </p>
+<p>• `&lt;random&gt;` は衝突確率が十分低い方式で生成されなければならない  </p>
+<p>• `ref_id` に意味語・章名・番号・用途語を含めてはならない（MUST NOT）</p>
+
+<h4>12.3.3 一意性</h4>
+
+<p>• 一意性は **(doc_id, ref_id)** の組で成立する  </p>
+<p>• `ref_id` 単体のグローバル一意性は要求しない  </p>
+
+<p>---</p>
+
+<h3>12.4 ref_id の付与タイミング（MUST）</h3>
+
+<p>• `ref_id` は、minutes / note 作成時点で必須ではない  </p>
+<p>• `ref_id` は、minutes / note を根拠として **spec を作成（派生を確定）する工程**において、  </p>
+<p>  根拠として採用した minutes / note の該当箇所へ **後付けで付与してよい**  </p>
+<p>• 既に存在する `ref_id` は変更してはならない（MUST NOT）</p>
+
+<p>---</p>
+
+<h3>12.5 minutes / note 側の記載形式（MUST）</h3>
+
+<p>minutes / note の根拠箇所（見出し直下、または箇条書き直下等）に  </p>
+<p>HTML コメントとして付与する。</p>
+
+<pre><code>&lt;!-- hldocs:ref_id=ref_&lt;random&gt; --&gt;</code></pre>
+
+<p>---</p>
+
+<h3>12.6 spec 側からの参照形式（MUST）</h3>
+
+<p>minutes / note の根拠箇所を参照する場合、以下の形式のみ許可する。</p>
+
+<p>• `doc_id#ref_id`</p>
+
+<p>`sec_id` は本用途で使用してはならない（MUST NOT）。</p>
+
+<p>---</p>
+
+<h3>12.7 hldocs:rel（関係種別）</h3>
+
+<h4>12.7.1 定義（MUST）</h4>
+
+<p>spec 側で minutes / note を参照する場合、参照コメントには必ず `hldocs:rel` を付与する。</p>
+
+<h4>12.7.2 許容値（MUST）</h4>
+
+<p>• `rationale`：判断理由・背景・採用理由（根拠）として参照する</p>
+<p>• `derivation`：参照元記述の内容を仕様として取り込んだ（仕様化した）ことを示す</p>
+
+<h4>12.7.3 付与判断（MUST）</h4>
+
+<p>`ref_id` を生成・付与する工程において、LLM は参照の性質を判断し、  </p>
+<p>以下に従って `hldocs:rel` を決定しなければならない。</p>
+
+<p>• spec の内容が参照元記述の内容から **直接仕様化された**場合：`derivation`</p>
+<p>• 参照元記述が spec の判断理由・背景説明として **用いられたのみ**の場合：`rationale`</p>
+
+<p>---</p>
+
+<h3>12.8 機械参照の記載形式（MAY）</h3>
+
+<p>spec 側の該当箇所に対し、HTML コメントとして参照を付与してよい。</p>
+
+<p>• `hldocs:ref` は参照先（minutes / note）を表す  </p>
+<p>• `hldocs:rel` は関係種別を表す（必須）</p>
+
+<h4>記載例（spec → minutes / note）</h4>
+
+<pre><code>&lt;!-- hldocs:ref=doc-YYYYMMDD-HHMMSSZ-XXXX#ref_ab12cd34 hldocs:rel=derivation --&gt;</code></pre>
+
+<p>---</p>
+
+<h3>12.9 制約（MUST / MUST NOT）</h3>
+
+<p>• 本派生トレーサビリティは **根拠の追跡目的に限定**する  </p>
+<p>• 検証完了を意味してはならない  </p>
+<p>• testspec 作成前に存在してよい  </p>
+<p>• spec ⇔ testspec の検証トレーサビリティと混同してはならない  </p>
+<p>• minutes / note 側で `sec_id` を新設してはならない（MUST NOT）  </p>
+<p>• minutes / note 側で検証単位を表す意図の識別子を生成してはならない（MUST NOT）</p>
+
+<p>---</p>
+
+<p>[目次](../../目次.md) &gt; 仕様 &gt; 共通 &gt; Traceability規約</p>
+  </section>
+</main>
+
+</body>
+</html>

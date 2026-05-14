@@ -1,0 +1,214 @@
+<!doctype html>
+<html lang="ja">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>共通ドキュメント生成プロンプト</title>
+  <style>
+    body { font-family: sans-serif; line-height: 1.7; margin: 2rem; max-width: 1080px; }
+    header, nav, main, footer { margin-bottom: 1.5rem; }
+    code, pre { background: #f5f5f5; }
+    pre { padding: 1rem; overflow-x: auto; }
+    .meta { border: 1px solid #ddd; padding: 1rem; background: #fafafa; }
+    .warning { border: 1px solid #d99; padding: 1rem; background: #fff7f7; }
+    .card { border: 1px solid #ddd; padding: 1rem; margin: 1rem 0; }
+    a { text-decoration: none; }
+  </style>
+</head>
+<body>
+
+<header>
+  <h1>共通ドキュメント生成プロンプト</h1>
+  <p><a href="../index.html">HTMLドキュメント index</a></p>
+</header>
+<main>
+  <section class="meta">
+    <p><strong>doc_id:</strong> doc-20260204-000001Z-a7k3</p>
+    <p><strong>document_type:</strong> prompt</p>
+    <p><strong>canonical_document:</strong> true</p>
+    <p><strong>presentation_policy:</strong> full_render</p>
+    <p><strong>Markdown正本:</strong> <a href="../../テンプレート/00_共通/共通ドキュメント生成プロンプト_new.md" target="_blank" rel="noopener noreferrer">共通ドキュメント生成プロンプト</a></p>
+  </section>
+
+  <section>
+    <h2>見出し一覧</h2>
+    <ul><li>共通ドキュメント生成プロンプト</li><li>0. 適用条件（MUST）</li><li>1. 生成フェーズ実行順序（MUST）</li><li>2. Phase 0: 入力検証（FAIL-FAST / MUST）</li><li>2.1 supported_modes 判定テーブル（再掲・正本）</li><li>2.2 required inputs 判定テーブル（再掲・正本）</li><li>2.3 Transport Encoding ENUM（再掲・正本）</li><li>3. テンプレート合成規則（MUST）</li><li>4. document_type = prompt における判断制約（MUST）</li><li>5. 不変条件の遵守（MUST）</li><li>6. Transport Encoding = ui_copy の適用（MUST）</li><li>7. 最終検証（非出力 / MUST）</li></ul>
+  </section>
+  <section>
+    <h2>本文</h2>
+    <p>&lt;!--</p>
+<p>HLDocS:LLM-MANAGED</p>
+<p>doc_id: doc-20260204-000001Z-a7k3</p>
+<p>lang: ja-JP</p>
+<p>canonical_title: 共通ドキュメント生成プロンプト</p>
+<p>document_type: prompt</p>
+<p>canonical_document: true</p>
+<p>--&gt;</p>
+
+<p>[目次](../../目次.md) &gt; 仕様 &gt; 共通 &gt; 共通ドキュメント生成プロンプト</p>
+
+<h1>共通ドキュメント生成プロンプト</h1>
+
+<p>本プロンプトは、HLDocS において  </p>
+<p>**共通ドキュメントテンプレートおよび document_type 別テンプレートを用いて  </p>
+<p>ドキュメントを新規生成・再作成する際に、LLM が従わなければならない判断規範および内部実行規則**を定義する。</p>
+
+<p>本プロンプトは **document_type = prompt / mode = meta** として生成されており、  </p>
+<p>HLDocS 自身の仕様・テンプレート・生成プロンプトを生成・再作成するためにのみ使用される。</p>
+
+<p>本プロンプトは、仕様（spec）・規約本文が生成フェーズに与えられない状況でも、  </p>
+<p>単体で判断規範として成立しなければならない。</p>
+
+<p>---</p>
+
+<h2>0. 適用条件（MUST）</h2>
+
+<p>本プロンプトは、以下の条件をすべて満たす場合にのみ使用してよい。</p>
+
+<p>• document_type = `prompt`</p>
+<p>• mode = `meta`</p>
+<p>• operation = `new` / `recreate` / `patch`</p>
+<p>• 共通ドキュメントテンプレートが入力として与えられている</p>
+
+<p>上記条件を満たさない場合、生成を開始してはならない（MUST NOT）。</p>
+
+<p>---</p>
+
+<h2>1. 生成フェーズ実行順序（MUST）</h2>
+
+<p>LLM は、ドキュメント生成・再作成において、  </p>
+<p>以下のフェーズを **順序を変更せず** 内部的に実行しなければならない。</p>
+
+<p>1. Phase 0: 入力検証（FAIL-FAST）</p>
+<p>2. Phase 1: テンプレート抽出</p>
+<p>3. Phase 2: テンプレート合成</p>
+<p>4. Phase 3: 可変スロット生成</p>
+<p>5. Phase 4: 構造トークン実体化</p>
+<p>6. Phase 5: Transport Encoding 適用</p>
+<p>7. Phase 6: 最終検証（非出力）</p>
+<p>8. Phase 7: 出力</p>
+
+<p>各フェーズの詳細な振る舞いは、  </p>
+<p>本プロンプト内の規定に **逐語で従わなければならない**。</p>
+
+<p>---</p>
+
+<h2>2. Phase 0: 入力検証（FAIL-FAST / MUST）</h2>
+
+<p>LLM は生成処理を開始する前に、以下を機械的に検証しなければならない。</p>
+
+<h3>2.1 supported_modes 判定テーブル（再掲・正本）</h3>
+
+<pre><code>document_type | supported_modes
+--------------|-----------------
+spec          | { meta, apply }
+template      | { meta, apply }
+prompt        | { meta, apply }
+testspec      | { apply }
+index         | { apply }
+note          | { apply }
+minutes       | { apply }
+usage         | { apply }</code></pre>
+
+<p>• `(document_type, mode)` の組が上表に含まれない場合、FAIL-FAST とする。</p>
+
+<p>---</p>
+
+<h3>2.2 required inputs 判定テーブル（再掲・正本）</h3>
+
+<pre><code>document_type | mode  | requires_body_template | requires_type_prompt
+--------------|-------|------------------------|-----------------------
+spec          | meta  | false                  | false
+spec          | apply | true                   | true
+template      | meta  | false                  | false
+template      | apply | false                  | false
+prompt        | meta  | false                  | false
+prompt        | apply | false                  | false
+testspec      | meta  | true                   | true
+testspec      | apply | true                   | true
+index         | meta  | true                   | true
+index         | apply | true                   | true
+note          | meta  | true                   | true
+note          | apply | true                   | true
+minutes       | meta  | true                   | true
+minutes       | apply | true                   | true
+usage         | meta  | true                   | true
+usage         | apply | true                   | true</code></pre>
+
+<p>• 必須入力が欠落している場合、FAIL-FAST とする。</p>
+<p>• 欠落情報を推測・補完してはならない（MUST NOT）。</p>
+
+<p>---</p>
+
+<h3>2.3 Transport Encoding ENUM（再掲・正本）</h3>
+
+<pre><code>transport = true_out
+transport = ui_copy
+transport = download</code></pre>
+
+<p>• 指定された transport 値が上記 ENUM に含まれない場合、FAIL-FAST とする。</p>
+
+<p>---</p>
+
+<h2>3. テンプレート合成規則（MUST）</h2>
+
+<p>• 共通ドキュメントテンプレートから  </p>
+<p>  `__COMMON_TEMPLATE_BEGIN__` ～ `__COMMON_TEMPLATE_END__` の範囲のみを使用する。</p>
+<p>• `__DOCUMENT_BODY__` 位置に本文テンプレート範囲を **無加工で差し込む**。</p>
+<p>• テンプレート範囲内の内容を改変・再解釈してはならない。</p>
+
+<p>---</p>
+
+<h2>4. document_type = prompt における判断制約（MUST）</h2>
+
+<p>• 生成対象となっている prompt 本文を、  </p>
+<p>  判断根拠・制約導出・仕様補完に使用してはならない。</p>
+<p>• 本文内容は **意味的に不可知な成果物**として扱うこと。</p>
+<p>• 再作成（recreate / patch）の結果は、  </p>
+<p>  同一仕様・同一テンプレート・同一規約が与えられた場合、  </p>
+<p>  `new` と **意味等価**でなければならない。</p>
+
+<p>---</p>
+
+<h2>5. 不変条件の遵守（MUST）</h2>
+
+<p>再作成（recreate / patch）の場合、以下を必ず保持すること。</p>
+
+<p>• doc_id</p>
+<p>• canonical_title</p>
+<p>• document_type</p>
+<p>• 文書全体の構造順序</p>
+<p>• 階層リンク行（先頭・末尾）</p>
+
+<p>省略表現・差分表現・参照代替表現を使用してはならない。</p>
+
+<p>---</p>
+
+<h2>6. Transport Encoding = ui_copy の適用（MUST）</h2>
+
+<p>• 出力は **単一成果物・単一コードブロック**とする。</p>
+<p>• コードブロック内には、当該成果物の Markdown 全文のみを含める。</p>
+<p>• 外側フェンスは、本文中の最大連続バッククォート数 + 1 とする。</p>
+<p>• コードブロック外に、説明・注釈・補足文を出力してはならない。</p>
+
+<p>---</p>
+
+<h2>7. 最終検証（非出力 / MUST）</h2>
+
+<p>LLM は出力前に、以下を内部検証しなければならない。</p>
+
+<p>• 共通ドキュメント構造に違反していないこと</p>
+<p>• Phase 0 判定条件をすべて満たしていること</p>
+<p>• 推測・補完・暗黙知を用いていないこと</p>
+<p>• 再掲された判定テーブル・ENUM が逐語であること</p>
+
+<p>検証結果を出力してはならない。</p>
+
+<p>---</p>
+
+<p>[目次](../../目次.md) &gt; 仕様 &gt; 共通 &gt; 共通ドキュメント生成プロンプト</p>
+  </section>
+</main>
+
+</body>
+</html>

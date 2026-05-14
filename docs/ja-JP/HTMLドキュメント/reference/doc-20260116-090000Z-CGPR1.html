@@ -1,0 +1,245 @@
+<!doctype html>
+<html lang="ja">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>共通ドキュメント生成プロンプト</title>
+  <style>
+    body { font-family: sans-serif; line-height: 1.7; margin: 2rem; max-width: 1080px; }
+    header, nav, main, footer { margin-bottom: 1.5rem; }
+    code, pre { background: #f5f5f5; }
+    pre { padding: 1rem; overflow-x: auto; }
+    .meta { border: 1px solid #ddd; padding: 1rem; background: #fafafa; }
+    .warning { border: 1px solid #d99; padding: 1rem; background: #fff7f7; }
+    .card { border: 1px solid #ddd; padding: 1rem; margin: 1rem 0; }
+    a { text-decoration: none; }
+  </style>
+</head>
+<body>
+
+<header>
+  <h1>共通ドキュメント生成プロンプト</h1>
+  <p><a href="../index.html">HTMLドキュメント index</a></p>
+</header>
+<main>
+  <section class="meta">
+    <p><strong>doc_id:</strong> doc-20260116-090000Z-CGPR1</p>
+    <p><strong>document_type:</strong> prompt</p>
+    <p><strong>canonical_document:</strong> true</p>
+    <p><strong>presentation_policy:</strong> full_render</p>
+    <p><strong>Markdown正本:</strong> <a href="../../テンプレート/00_共通/_.md" target="_blank" rel="noopener noreferrer">共通ドキュメント生成プロンプト</a></p>
+  </section>
+
+  <section>
+    <h2>見出し一覧</h2>
+    <ul><li>共通ドキュメント生成プロンプト</li><li>1. 生成モードおよび操作種別</li><li>2. 再作成（recreate）における不変条件（MUST）</li><li>3. document_type = prompt に対する特則（MUST）</li><li>3.1 自己参照の禁止（MUST NOT）</li><li>3.2 new 等価性（MUST）</li><li>4. Phase 0 入力検証用 判定テーブル（逐語再掲）</li><li>4.1 document_type 別 supported_modes</li><li>4.2 document_type 別 required inputs（mode 別）</li><li>spec</li><li>template</li><li>prompt</li><li>testspec / index / note / minutes / usage</li><li>5. ENUM 再掲（逐語）</li><li>5.1 document_type（ENUM）</li><li>5.2 Transport Encoding（ENUM）</li><li>6. 生成フェーズ内部実行順序（MUST）</li><li>7. Transport Encoding 適用規則（ui_copy）</li><li>8. 内部自己検査（非出力・MUST）</li></ul>
+  </section>
+  <section>
+    <h2>本文</h2>
+    <p>&lt;!--</p>
+<p>HLDocS:LLM-MANAGED</p>
+<p>doc_id: doc-20260116-090000Z-CGPR1</p>
+<p>lang: ja-JP</p>
+<p>canonical_title: 共通ドキュメント生成プロンプト</p>
+<p>document_type: prompt</p>
+<p>canonical_document: true</p>
+<p>--&gt;</p>
+
+<p>[目次](../../目次.md) &gt; テンプレート &gt; 共通 &gt; 共通ドキュメント生成プロンプト</p>
+
+<h1>共通ドキュメント生成プロンプト</h1>
+
+<p>本プロンプトは、HLDocS において  </p>
+<p>**すべての document_type に共通して適用される生成・再作成の判断規範**を定義する。</p>
+
+<p>本プロンプトは **prompt（meta）** として成立し、  </p>
+<p>仕様本文・規約本文が生成フェーズに与えられない状況でも、  </p>
+<p>LLM が **推測に依存せず機械的に生成処理を実行できること**を目的とする。</p>
+
+<p>本プロンプトは以下を定義する。</p>
+
+<p>• 生成フェーズの内部実行順序（FAIL-FAST 含む）</p>
+<p>• 入力検証に必要な判定テーブルおよび ENUM の逐語再掲</p>
+<p>• 再作成（recreate / patch）時の不変条件の強制</p>
+<p>• document_type = prompt に対する自己参照禁止および new 等価性</p>
+<p>• Transport Encoding 適用規則（ui_copy）</p>
+
+<p>---</p>
+
+<h2>1. 生成モードおよび操作種別</h2>
+
+<p>• mode: `meta`</p>
+<p>• operation: `recreate`</p>
+
+<p>本プロンプトは **HLDocS 自身の構成要素（prompt）を生成・再作成するための判断規範**であり、  </p>
+<p>生成対象は **HLDocS 構成要素そのもの**である。</p>
+
+<p>---</p>
+
+<h2>2. 再作成（recreate）における不変条件（MUST）</h2>
+
+<p>recreate / patch において、以下は **必ず保持**しなければならない。</p>
+
+<p>• `doc_id`</p>
+<p>• `document_type`</p>
+<p>• 文書全体の構造順序</p>
+<p>• 階層リンク行（先頭および末尾）</p>
+
+<p>以下は禁止する（MUST NOT）。</p>
+
+<p>• 未変更部分の省略</p>
+<p>• 「変更なし」「同上」等の参照代替表現</p>
+<p>• 推測・補完・再解釈による内容変更</p>
+
+<p>---</p>
+
+<h2>3. document_type = prompt に対する特則（MUST）</h2>
+
+<h3>3.1 自己参照の禁止（MUST NOT）</h3>
+
+<p>生成対象となっている **prompt 本文そのもの**を、  </p>
+<p>以下の目的で判断根拠として使用してはならない。</p>
+
+<p>• 意味解釈</p>
+<p>• 制約導出</p>
+<p>• 正当性評価</p>
+<p>• 差分判断</p>
+
+<p>参照が許可されるのは、以下の **機械的保持に必要な不変項目のみ**である。</p>
+
+<p>• `doc_id`</p>
+<p>• `canonical_title`</p>
+<p>• `document_type`</p>
+<p>• 文書全体の構造順序</p>
+<p>• 階層リンク行</p>
+
+<h3>3.2 new 等価性（MUST）</h3>
+
+<p>同一の仕様・テンプレート・規約が与えられた場合、  </p>
+<p>document_type = `prompt` における recreate の生成結果は、  </p>
+<p>**new による生成結果と意味等価**でなければならない。</p>
+
+<p>生成対象 prompt の本文状態（旧版・欠落・乖離）は、  </p>
+<p>生成結果に一切影響してはならない。</p>
+
+<p>---</p>
+
+<h2>4. Phase 0 入力検証用 判定テーブル（逐語再掲）</h2>
+
+<p>以下は **Phase 0（入力検証）で使用される判定テーブル**であり、  </p>
+<p>本プロンプトに **逐語再掲** する。</p>
+
+<h3>4.1 document_type 別 supported_modes</h3>
+
+<p>• `spec` : `{ meta, apply }`</p>
+<p>• `template` : `{ meta, apply }`</p>
+<p>• `prompt` : `{ meta, apply }`</p>
+<p>• `testspec` : `{ apply }`</p>
+<p>• `index` : `{ apply }`</p>
+<p>• `note` : `{ apply }`</p>
+<p>• `minutes` : `{ apply }`</p>
+<p>• `usage` : `{ apply }`</p>
+
+<p>上記に含まれない `(mode, document_type)` の組は **FAIL-FAST** とする。</p>
+
+<p>---</p>
+
+<h3>4.2 document_type 別 required inputs（mode 別）</h3>
+
+<h4>spec</h4>
+<p>• requires_body_template_by_mode:</p>
+<p>  - meta: `false`</p>
+<p>  - apply: `true`</p>
+<p>• requires_type_prompt_by_mode:</p>
+<p>  - meta: `false`</p>
+<p>  - apply: `true`</p>
+
+<h4>template</h4>
+<p>• requires_body_template_by_mode:</p>
+<p>  - meta: `false`</p>
+<p>  - apply: `true`</p>
+<p>• requires_type_prompt_by_mode:</p>
+<p>  - meta: `false`</p>
+<p>  - apply: `true`</p>
+
+<h4>prompt</h4>
+<p>• requires_body_template_by_mode:</p>
+<p>  - meta: `false`</p>
+<p>  - apply: `false`</p>
+<p>• requires_type_prompt_by_mode:</p>
+<p>  - meta: `false`</p>
+<p>  - apply: `false`</p>
+
+<h4>testspec / index / note / minutes / usage</h4>
+<p>• requires_body_template_by_mode:</p>
+<p>  - apply: `true`</p>
+<p>• requires_type_prompt_by_mode:</p>
+<p>  - apply: `true`</p>
+
+<p>不足がある場合、生成を開始してはならない（FAIL-FAST）。</p>
+
+<p>---</p>
+
+<h2>5. ENUM 再掲（逐語）</h2>
+
+<h3>5.1 document_type（ENUM）</h3>
+
+<p>• `spec`</p>
+<p>• `index`</p>
+<p>• `template`</p>
+<p>• `prompt`</p>
+<p>• `testspec`</p>
+<p>• `note`</p>
+<p>• `minutes`</p>
+<p>• `usage`</p>
+
+<h3>5.2 Transport Encoding（ENUM）</h3>
+
+<p>• `true_out`</p>
+<p>• `ui_copy`</p>
+
+<p>---</p>
+
+<h2>6. 生成フェーズ内部実行順序（MUST）</h2>
+
+<p>LLM は以下の順序を **変更せず** 実行しなければならない。</p>
+
+<p>1. Phase 0: 入力検証（FAIL-FAST）</p>
+<p>2. Phase 1: テンプレート抽出</p>
+<p>3. Phase 2: テンプレート合成</p>
+<p>4. Phase 3: 可変スロット生成および識別子配置</p>
+<p>5. Phase 4: 構造トークン実体化</p>
+<p>6. Phase 5: Transport Encoding 適用</p>
+<p>7. Phase 6: 内部自己検査</p>
+<p>8. Phase 7: 最終出力</p>
+
+<p>---</p>
+
+<h2>7. Transport Encoding 適用規則（ui_copy）</h2>
+
+<p>• 本成果物は `ui_copy` を適用する</p>
+<p>• **成果物単位で 1 つのコードブロック**として提示する</p>
+<p>• コードブロック外に説明文を出力してはならない</p>
+<p>• 外側フェンスは本文中の最大連続バッククォート数 + 1 とする</p>
+<p>• 整形は復元可能（roundtrip）でなければならない</p>
+
+<p>---</p>
+
+<h2>8. 内部自己検査（非出力・MUST）</h2>
+
+<p>以下を必ず検査する。</p>
+
+<p>• 不変項目が保持されていること</p>
+<p>• 判定テーブルおよび ENUM が逐語再掲されていること</p>
+<p>• 自己参照禁止が守られていること</p>
+<p>• 省略・参照代替表現が存在しないこと</p>
+<p>• ui_copy 規約に適合していること</p>
+
+<p>---</p>
+
+<p>[目次](../../目次.md) &gt; テンプレート &gt; 共通 &gt; 共通ドキュメント生成プロンプト</p>
+  </section>
+</main>
+
+</body>
+</html>

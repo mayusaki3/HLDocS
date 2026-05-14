@@ -1,0 +1,149 @@
+<!doctype html>
+<html lang="ja">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>表示名リンク成立条件補足</title>
+  <style>
+    body { font-family: sans-serif; line-height: 1.7; margin: 2rem; max-width: 1080px; }
+    header, nav, main, footer { margin-bottom: 1.5rem; }
+    code, pre { background: #f5f5f5; }
+    pre { padding: 1rem; overflow-x: auto; }
+    .meta { border: 1px solid #ddd; padding: 1rem; background: #fafafa; }
+    .warning { border: 1px solid #d99; padding: 1rem; background: #fff7f7; }
+    .card { border: 1px solid #ddd; padding: 1rem; margin: 1rem 0; }
+    a { text-decoration: none; }
+  </style>
+</head>
+<body>
+
+<header>
+  <h1>表示名リンク成立条件補足</h1>
+  <p><a href="../index.html">HTMLドキュメント index</a></p>
+</header>
+<main>
+  <section class="meta">
+    <p><strong>doc_id:</strong> doc-20260512-DisplayLinkValidity</p>
+    <p><strong>document_type:</strong> spec</p>
+    <p><strong>canonical_document:</strong> true</p>
+    <p><strong>presentation_policy:</strong> full_render</p>
+    <p><strong>Markdown正本:</strong> <a href="../../仕様/00_共通/13_表示名リンク成立条件補足.md" target="_blank" rel="noopener noreferrer">表示名リンク成立条件補足</a></p>
+  </section>
+
+  <section>
+    <h2>見出し一覧</h2>
+    <ul><li>表示名リンク成立条件補足</li><li>1. 基本方針</li><li>2. 表示名リンク規約との整合性（MUST）</li><li>3. 許可される形式</li><li>4. 禁止される形式</li><li>5. 成立条件との関係</li><li>6. HTML 可視化との関係</li></ul>
+  </section>
+  <section>
+    <h2>本文</h2>
+    <p>&lt;!--</p>
+<p>HLDocS:LLM-MANAGED</p>
+<p>doc_id: doc-20260512-DisplayLinkValidity</p>
+<p>lang: ja-JP</p>
+<p>canonical_title: 表示名リンク成立条件補足</p>
+<p>document_type: spec</p>
+<p>canonical_document: true</p>
+<p>--&gt;</p>
+
+<p>[目次](../../目次.md) &gt; 仕様 &gt; 共通 &gt; 表示名リンク成立条件補足</p>
+
+<h1>表示名リンク成立条件補足</h1>
+
+<p>本書は、表示名リンク規約と prompt 成立条件規約との関係を補足する。</p>
+
+<p>本書は、表示名リンク規約違反を、</p>
+<p>単なる表示上の推奨事項ではなく、</p>
+<p>HLDocS の生成成立条件に関わる要件として定義する。</p>
+
+<p>本書は、「HLDocS 前提条件」という仕様が参照可能である場合にのみ適用される。</p>
+<p>• 「HLDocS 前提条件」が入力として与えられていない場合、</p>
+<p>または当該仕様に基づく適用可否が確定していない場合、</p>
+<p>本書に基づく判断・生成・再作成・工程実行を行ってはならない。</p>
+<p>• この場合、許可されるのは、</p>
+<p>提示された文書の受理および存在確認、</p>
+<p>ならびに前提条件が未参照または未確定である旨の通知のみとする。</p>
+<p>• 「HLDocS 前提条件」が入力文書一覧に含まれない場合、生成・再作成・成果物提示を一切行ってはならない。</p>
+
+<p>---</p>
+
+<h2>1. 基本方針</h2>
+
+<p>生成プロンプトは、表示名リンク規約に従った出力を生成しなければならない（MUST）。</p>
+
+<p>表示名リンク規約に違反する出力を許容する生成プロンプトは、</p>
+<p>prompt 成立条件規約における成立条件を満たしていないものとして扱う（MUST）。</p>
+
+<p>---</p>
+
+<h2>2. 表示名リンク規約との整合性（MUST）</h2>
+
+<p>生成プロンプトは、</p>
+<p>人間向け表示において、</p>
+<p>以下を直接表示してはならない（MUST NOT）。</p>
+
+<p>• 物理ファイル名</p>
+<p>• 物理ディレクトリ名</p>
+<p>• 並び順制御番号</p>
+<p>• 物理パス</p>
+
+<p>他ドキュメントを参照する場合は、</p>
+<p>番号なし表示名と Markdown Link を組み合わせた形式を使用しなければならない（MUST）。</p>
+
+<p>---</p>
+
+<h2>3. 許可される形式</h2>
+
+<p>以下は許可される。</p>
+
+<pre><code>[前提条件](./仕様/00_共通/01_前提条件.md)</code></pre>
+
+<pre><code>[表示名リンク規約](./仕様/00_共通/12_表示名リンク規約.md)</code></pre>
+
+<p>---</p>
+
+<h2>4. 禁止される形式</h2>
+
+<p>以下は禁止する（MUST NOT）。</p>
+
+<pre><code>[01_前提条件](./仕様/00_共通/01_前提条件.md)</code></pre>
+
+<pre><code>01_前提条件.md を参照する。</code></pre>
+
+<pre><code>docs/ja-JP/仕様/00_共通/01_前提条件.md</code></pre>
+
+<p>---</p>
+
+<h2>5. 成立条件との関係</h2>
+
+<p>生成プロンプトが以下を許容する場合、</p>
+<p>当該生成プロンプトは成立していないものとして扱う（MUST）。</p>
+
+<p>• 番号付きファイル名の表示</p>
+<p>• 物理パスの文中表示</p>
+<p>• 並び順制御番号の表示名利用</p>
+<p>• 番号なし表示名への変換漏れ</p>
+
+<p>これは、表示名リンク規約違反が、</p>
+<p>単なる UI 上の問題ではなく、</p>
+<p>HLDocS の canonical / human-facing separation に違反するためである。</p>
+
+<p>---</p>
+
+<h2>6. HTML 可視化との関係</h2>
+
+<p>本補足規約は、Markdown → HTML visualization の成立条件にも影響する。</p>
+
+<p>Markdown 上で番号付き物理名を表示している場合、</p>
+<p>HTML 側でも管理情報が利用者向け表示へ漏出する。</p>
+
+<p>そのため、表示名リンク規約を満たさない生成結果は、</p>
+<p>HTML 可視化前提の HLDocS ドキュメントとして不成立とみなす（MUST）。</p>
+
+<p>---</p>
+
+<p>[目次](../../目次.md) &gt; 仕様 &gt; 共通 &gt; 表示名リンク成立条件補足</p>
+  </section>
+</main>
+
+</body>
+</html>

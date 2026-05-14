@@ -1,0 +1,233 @@
+<!doctype html>
+<html lang="ja">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>共通生成プロンプト</title>
+  <style>
+    body { font-family: sans-serif; line-height: 1.7; margin: 2rem; max-width: 1080px; }
+    header, nav, main, footer { margin-bottom: 1.5rem; }
+    code, pre { background: #f5f5f5; }
+    pre { padding: 1rem; overflow-x: auto; }
+    .meta { border: 1px solid #ddd; padding: 1rem; background: #fafafa; }
+    .warning { border: 1px solid #d99; padding: 1rem; background: #fff7f7; }
+    .card { border: 1px solid #ddd; padding: 1rem; margin: 1rem 0; }
+    a { text-decoration: none; }
+  </style>
+</head>
+<body>
+
+<header>
+  <h1>共通生成プロンプト</h1>
+  <p><a href="../index.html">HTMLドキュメント index</a></p>
+</header>
+<main>
+  <section class="meta">
+    <p><strong>doc_id:</strong> doc-20260501-000000Z-X1Y2</p>
+    <p><strong>document_type:</strong> prompt</p>
+    <p><strong>canonical_document:</strong> true</p>
+    <p><strong>presentation_policy:</strong> full_render</p>
+    <p><strong>Markdown正本:</strong> <a href="../../テンプレート/00_共通/共通ドキュメント生成プロンプト.md" target="_blank" rel="noopener noreferrer">共通生成プロンプト</a></p>
+  </section>
+
+  <section>
+    <h2>見出し一覧</h2>
+    <ul><li>共通生成プロンプト</li><li>ENUM 再掲（MUST）</li><li>document_type</li><li>transport</li><li>判定テーブル再掲（MUST）</li><li>supported_modes</li><li>required inputs</li><li>共通テンプレート new</li><li>共通プロンプト new</li><li>共通テンプレート recreate</li><li>共通プロンプト recreate</li><li>生成フェーズ実行（MUST）</li><li>Phase 0（入力検証）</li><li>生成制約（MUST）</li><li>出力境界（MUST）</li><li>再作成制約（MUST）</li><li>prompt 成立条件（MUST）</li><li>Transport Encoding 選択（MUST）</li><li>Traceability（参照制約）</li><li>内部自己検査（非出力）</li></ul>
+  </section>
+  <section>
+    <h2>本文</h2>
+    <p>&lt;!--</p>
+<p>HLDocS:LLM-MANAGED</p>
+<p>doc_id: doc-20260501-000000Z-X1Y2</p>
+<p>lang: ja-JP</p>
+<p>canonical_title: 共通生成プロンプト</p>
+<p>document_type: prompt</p>
+<p>canonical_document: true</p>
+<p>--&gt;</p>
+
+<p>[目次](__TOC_REL_PATH__) &gt; __HIERARCHY_PATH__</p>
+
+<h1>共通生成プロンプト</h1>
+
+<p>本プロンプトは、HLDocS におけるすべての document_type に共通して適用される生成処理の判断規範を定義する。  </p>
+<p>本プロンプトは、仕様本文が入力として与えられない場合においても、生成フェーズの全処理を機械的に実行可能とすることを目的とする。  </p>
+<p>本プロンプトは、HLDocS 共通仕様が成立していることを前提として使用される。</p>
+
+<p>---</p>
+
+<h2>ENUM 再掲（MUST）</h2>
+
+<h3>document_type</h3>
+
+<p>• spec</p>
+<p>• index</p>
+<p>• template</p>
+<p>• prompt</p>
+<p>• testspec</p>
+<p>• note</p>
+<p>• minutes</p>
+<p>• usage</p>
+
+<h3>transport</h3>
+
+<p>• true_out</p>
+<p>• ui_copy</p>
+<p>• download</p>
+
+<p>---</p>
+
+<h2>判定テーブル再掲（MUST）</h2>
+
+<h3>supported_modes</h3>
+
+<p>• spec: { meta, apply }</p>
+<p>• template: { meta, apply }</p>
+<p>• prompt: { meta, apply }</p>
+<p>• testspec: { apply }</p>
+<p>• index: { apply }</p>
+<p>• note: { apply }</p>
+<p>• minutes: { apply }</p>
+<p>• usage: { apply }</p>
+
+<p>---</p>
+
+<h3>required inputs</h3>
+
+<h4>共通テンプレート new</h4>
+<p>• mode = meta</p>
+<p>• operation = new</p>
+<p>• document_type = template</p>
+<p>• target = common</p>
+<p>• required inputs = 共通仕様を構成する正本仕様群</p>
+<p>• prohibited required inputs =</p>
+<p>  - 既存の共通テンプレート</p>
+<p>  - 既存の共通生成プロンプト</p>
+<p>  - document_type 別テンプレート</p>
+<p>  - document_type 別生成プロンプト</p>
+
+<h4>共通プロンプト new</h4>
+<p>• mode = meta</p>
+<p>• operation = new</p>
+<p>• document_type = prompt</p>
+<p>• target = common</p>
+<p>• required inputs =</p>
+<p>  - 共通仕様を構成する正本仕様群</p>
+<p>  - 共通ドキュメントテンプレート本文実体</p>
+
+<h4>共通テンプレート recreate</h4>
+<p>• mode = meta</p>
+<p>• operation = recreate</p>
+<p>• document_type = template</p>
+<p>• target = common</p>
+<p>• required inputs =</p>
+<p>  - 共通仕様を構成する正本仕様群</p>
+<p>  - 修正前正本本文実体</p>
+
+<h4>共通プロンプト recreate</h4>
+<p>• mode = meta</p>
+<p>• operation = recreate</p>
+<p>• document_type = prompt</p>
+<p>• target = common</p>
+<p>• required inputs =</p>
+<p>  - 共通仕様を構成する正本仕様群</p>
+<p>  - 共通ドキュメントテンプレート本文実体</p>
+<p>  - 修正前正本本文実体</p>
+
+<p>---</p>
+
+<h2>生成フェーズ実行（MUST）</h2>
+
+<p>以下の Phase を順序変更せずに実行すること。</p>
+
+<p>• Phase 0: 入力検証（FAIL-FAST）</p>
+<p>• Phase 1: テンプレート抽出</p>
+<p>• Phase 2: テンプレート合成</p>
+<p>• Phase 3: 可変スロット生成</p>
+<p>• Phase 4: 実体化</p>
+<p>• Phase 5: Transport Encoding 適用</p>
+<p>• Phase 6: 構造検証（非出力）</p>
+<p>• Phase 7: 出力</p>
+
+<p>Phase 6 において検証失敗した場合、出力してはならない。</p>
+
+<p>---</p>
+
+<h2>Phase 0（入力検証）</h2>
+
+<p>以下を満たさない場合、生成を開始してはならない。</p>
+
+<p>• 前提条件仕様が提示されていること :contentReference[oaicite:0]{index=0}  </p>
+<p>• 共通仕様が成立していること :contentReference[oaicite:1]{index=1}  </p>
+<p>• required inputs がすべて提示されていること :contentReference[oaicite:2]{index=2}  </p>
+
+<p>不足がある場合は FAIL-FAST とする。</p>
+
+<p>---</p>
+
+<h2>生成制約（MUST）</h2>
+
+<p>• 仕様・規約・テンプレートを再解釈・補完してはならない :contentReference[oaicite:3]{index=3}  </p>
+<p>• 未提示情報を推測してはならない :contentReference[oaicite:4]{index=4}  </p>
+<p>• LLM-MANAGED ブロックを破壊してはならない :contentReference[oaicite:5]{index=5}  </p>
+<p>• 共通ドキュメント構造を変更してはならない :contentReference[oaicite:6]{index=6}  </p>
+
+<p>---</p>
+
+<h2>出力境界（MUST）</h2>
+
+<p>出力可能な内容は以下のみとする。</p>
+
+<p>1. 成果物</p>
+<p>2. FAIL-FAST 通知</p>
+
+<p>説明・補足・分析を出力してはならない :contentReference[oaicite:7]{index=7}  </p>
+
+<p>---</p>
+
+<h2>再作成制約（MUST）</h2>
+
+<p>recreate / patch の場合：</p>
+
+<p>• doc_id を変更してはならない :contentReference[oaicite:8]{index=8}  </p>
+<p>• 文書全体を完全出力すること :contentReference[oaicite:9]{index=9}  </p>
+<p>• 未提示正本がある場合は FAIL-FAST とする :contentReference[oaicite:10]{index=10}  </p>
+
+<p>---</p>
+
+<h2>prompt 成立条件（MUST）</h2>
+
+<p>• 仕様のみを判断根拠とすること :contentReference[oaicite:11]{index=11}  </p>
+<p>• 推測・補完を行わないこと :contentReference[oaicite:12]{index=12}  </p>
+<p>• 仕様と矛盾しないこと :contentReference[oaicite:13]{index=13}  </p>
+
+<p>---</p>
+
+<h2>Transport Encoding 選択（MUST）</h2>
+
+<p>• 構造保持が必要な場合は ui_copy または download を選択する :contentReference[oaicite:14]{index=14}  </p>
+<p>• true_out は構造を持たない場合のみ許可される :contentReference[oaicite:15]{index=15}  </p>
+
+<p>---</p>
+
+<h2>Traceability（参照制約）</h2>
+
+<p>• 参照は doc_id#sec_id のみ許可する :contentReference[oaicite:16]{index=16}  </p>
+<p>• sec_id の新規生成は禁止 :contentReference[oaicite:17]{index=17}  </p>
+
+<p>---</p>
+
+<h2>内部自己検査（非出力）</h2>
+
+<p>• ENUM が逐語一致していること  </p>
+<p>• 判定テーブルが完全再掲されていること  </p>
+<p>• Phase 順序が保持されていること  </p>
+<p>• 出力境界違反がないこと  </p>
+
+<p>---</p>
+
+<p>[目次](__TOC_REL_PATH__) &gt; __HIERARCHY_PATH__</p>
+  </section>
+</main>
+
+</body>
+</html>

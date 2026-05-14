@@ -1,0 +1,296 @@
+<!doctype html>
+<html lang="ja">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>HTML Traceability可視化規約</title>
+  <style>
+    body { font-family: sans-serif; line-height: 1.7; margin: 2rem; max-width: 1080px; }
+    header, nav, main, footer { margin-bottom: 1.5rem; }
+    code, pre { background: #f5f5f5; }
+    pre { padding: 1rem; overflow-x: auto; }
+    .meta { border: 1px solid #ddd; padding: 1rem; background: #fafafa; }
+    .warning { border: 1px solid #d99; padding: 1rem; background: #fff7f7; }
+    .card { border: 1px solid #ddd; padding: 1rem; margin: 1rem 0; }
+    a { text-decoration: none; }
+  </style>
+</head>
+<body>
+
+<header>
+  <h1>HTML Traceability可視化規約</h1>
+  <p><a href="../index.html">HTMLドキュメント index</a></p>
+</header>
+<main>
+  <section class="meta">
+    <p><strong>doc_id:</strong> doc-20260512-HtmlTraceabilityVisualization</p>
+    <p><strong>document_type:</strong> spec</p>
+    <p><strong>canonical_document:</strong> true</p>
+    <p><strong>presentation_policy:</strong> full_render</p>
+    <p><strong>Markdown正本:</strong> <a href="../../仕様/00_共通/19_HTML_Traceability可視化規約.md" target="_blank" rel="noopener noreferrer">HTML Traceability可視化規約</a></p>
+  </section>
+
+  <section>
+    <h2>見出し一覧</h2>
+    <ul><li>HTML Traceability可視化規約</li><li>1. 目的</li><li>2. 基本方針</li><li>3. 基本 Traceability 関係</li><li>4. Traceability Page</li><li>4.1 Document Traceability</li><li>4.2 sec_id Traceability</li><li>4.3 ref_id Traceability</li><li>4.4 Coverage Traceability</li><li>5. Coverage 表示</li><li>6. reverse traceability</li><li>7. orphan relation</li><li>8. stale relation</li><li>9. restructuring / migration</li><li>10. review navigation</li><li>11. Link 解決</li><li>12. 表示形式</li><li>13. profile 関係</li><li>14. 非目標</li><li>15. 後続仕様化対象</li></ul>
+  </section>
+  <section>
+    <h2>本文</h2>
+    <p>&lt;!--</p>
+<p>HLDocS:LLM-MANAGED</p>
+<p>doc_id: doc-20260512-HtmlTraceabilityVisualization</p>
+<p>lang: ja-JP</p>
+<p>canonical_title: HTML Traceability可視化規約</p>
+<p>document_type: spec</p>
+<p>canonical_document: true</p>
+<p>--&gt;</p>
+
+<p>[目次](../../目次.md) &gt; 仕様 &gt; 共通 &gt; HTML Traceability可視化規約</p>
+
+<h1>HTML Traceability可視化規約</h1>
+
+<p>本書は、「HLDocS 前提条件」という仕様が参照可能である場合にのみ適用される。</p>
+
+<p>• 「HLDocS 前提条件」が入力として与えられていない場合、または当該仕様に基づく適用可否が確定していない場合、本書に基づく判断・生成・再作成・工程実行を行ってはならない。</p>
+<p>• この場合、許可されるのは、提示された文書の受理および存在確認、ならびに前提条件が未参照または未確定である旨の通知のみとする。</p>
+<p>• 「HLDocS 前提条件」が入力文書一覧に含まれない場合、生成・再作成・成果物提示を一切行ってはならない。</p>
+
+<p>---</p>
+
+<h2>1. 目的</h2>
+
+<p>本書は、HLDocS における Traceability 関係の HTML 可視化方法を定義する。</p>
+
+<p>本規約は、以下を安定化することを目的とする。</p>
+
+<p>• spec / testspec / code / testcode 関係可視化</p>
+<p>• reverse traceability</p>
+<p>• coverage 可視化</p>
+<p>• orphan relation 検出</p>
+<p>• restructuring / migration 可視化</p>
+<p>• review navigation</p>
+
+<p>---</p>
+
+<h2>2. 基本方針</h2>
+
+<p>HTML Traceability 可視化は、Markdown 正本に存在する Traceability 情報を、人間が辿りやすい形へ変換する generated operational representation とする。</p>
+
+<p>Traceability HTML は canonical specification ではない。</p>
+
+<p>Traceability HTML を編集正本として扱ってはならない（MUST NOT）。</p>
+
+<p>Traceability HTML から Markdown 正本を逆生成してはならない（MUST NOT）。</p>
+
+<p>---</p>
+
+<h2>3. 基本 Traceability 関係</h2>
+
+<p>少なくとも以下の関係を可視化してよい（MAY）。</p>
+
+<pre><code>spec
+↓
+testspec
+↓
+code
+↓
+testcode</code></pre>
+
+<p>また、以下も表示してよい（MAY）。</p>
+
+<p>• reverse traceability</p>
+<p>• cross reference</p>
+<p>• review relation</p>
+<p>• migration relation</p>
+<p>• restructuring relation</p>
+
+<p>---</p>
+
+<h2>4. Traceability Page</h2>
+
+<p>Traceability 可視化は、少なくとも以下の単位で表示してよい（MAY）。</p>
+
+<h3>4.1 Document Traceability</h3>
+
+<p>document 単位の Traceability 表示。</p>
+
+<h3>4.2 sec_id Traceability</h3>
+
+<p>`sec_id` 単位の Traceability 表示。</p>
+
+<h3>4.3 ref_id Traceability</h3>
+
+<p>`ref_id` 単位の Traceability 表示。</p>
+
+<h3>4.4 Coverage Traceability</h3>
+
+<p>coverage 状態を含む Traceability 表示。</p>
+
+<p>---</p>
+
+<h2>5. Coverage 表示</h2>
+
+<p>Coverage 表示では、少なくとも以下を表示してよい（MAY）。</p>
+
+<p>• implemented</p>
+<p>• tested</p>
+<p>• untested</p>
+<p>• orphan</p>
+<p>• missing relation</p>
+<p>• stale relation</p>
+
+<p>Coverage 表示は、レビュー支援用途を想定する。</p>
+
+<p>---</p>
+
+<h2>6. reverse traceability</h2>
+
+<p>Traceability HTML は、reverse traceability を表示してよい（MAY）。</p>
+
+<p>例：</p>
+
+<pre><code>testcode
+↑
+code
+↑
+testspec
+↑
+spec</code></pre>
+
+<p>reverse traceability は、影響範囲分析・migration・restructuring に利用してよい（MAY）。</p>
+
+<p>---</p>
+
+<h2>7. orphan relation</h2>
+
+<p>以下を orphan relation として扱ってよい（MAY）。</p>
+
+<p>• relation target 不存在</p>
+<p>• reverse relation 不一致</p>
+<p>• stale relation</p>
+<p>• missing reference</p>
+
+<p>orphan relation は、HTML 上で警告表示してよい（MAY）。</p>
+
+<p>---</p>
+
+<h2>8. stale relation</h2>
+
+<p>以下を stale relation として扱ってよい（MAY）。</p>
+
+<p>• source markdown 更新後未同期</p>
+<p>• migration 後未同期</p>
+<p>• restructuring 後未同期</p>
+<p>• stale representation 間 relation</p>
+
+<p>stale relation は、Canonical Specification と等価であるとみなしてはならない（MUST NOT）。</p>
+
+<p>---</p>
+
+<h2>9. restructuring / migration</h2>
+
+<p>Traceability HTML は、restructuring / migration 関係を表示してよい（MAY）。</p>
+
+<p>想定例：</p>
+
+<pre><code>old_sec_id
+↓
+new_sec_id</code></pre>
+
+<pre><code>old_doc_id
+↓
+new_doc_id</code></pre>
+
+<pre><code>old_page_id
+↓
+new_page_id</code></pre>
+
+<p>---</p>
+
+<h2>10. review navigation</h2>
+
+<p>Traceability HTML は、レビュー支援 navigation を提供してよい（MAY）。</p>
+
+<p>想定例：</p>
+
+<p>• missing relation list</p>
+<p>• stale relation list</p>
+<p>• orphan relation list</p>
+<p>• untested list</p>
+<p>• unimplemented list</p>
+<p>• review target list</p>
+
+<p>---</p>
+
+<h2>11. Link 解決</h2>
+
+<p>Traceability HTML 間リンクは、HTML Site Manifest に基づいて解決しなければならない（MUST）。</p>
+
+<p>Manifest に存在しないページへリンクしてはならない（MUST NOT）。</p>
+
+<p>未生成ページは、必要に応じて `not generated` と表示してよい（MAY）。</p>
+
+<p>---</p>
+
+<h2>12. 表示形式</h2>
+
+<p>Traceability 可視化では、少なくとも以下の表示形式を利用してよい（MAY）。</p>
+
+<p>• graph</p>
+<p>• matrix</p>
+<p>• tree</p>
+<p>• table</p>
+<p>• reverse navigation</p>
+<p>• dependency view</p>
+
+<p>表示形式は canonical specification ではない。</p>
+
+<p>---</p>
+
+<h2>13. profile 関係</h2>
+
+<p>Traceability 可視化は、主に以下 profile に属する。</p>
+
+<p>• `traceability`</p>
+<p>• `full`</p>
+
+<p>必要に応じて `overview` に概要 graph を含めてよい（MAY）。</p>
+
+<p>---</p>
+
+<h2>14. 非目標</h2>
+
+<p>本規約は、以下を目的としない。</p>
+
+<p>• graph database</p>
+<p>• dynamic graph server</p>
+<p>• AI automatic inference</p>
+<p>• relation 推測補完</p>
+<p>• GitHub Pages 固定</p>
+
+<p>LLM は、存在しない relation を推測生成してはならない（MUST NOT）。</p>
+
+<p>---</p>
+
+<h2>15. 後続仕様化対象</h2>
+
+<p>後続仕様では、少なくとも以下を詳細化する。</p>
+
+<p>• graph format</p>
+<p>• matrix format</p>
+<p>• dependency notation</p>
+<p>• orphan severity</p>
+<p>• stale severity</p>
+<p>• review navigation format</p>
+<p>• cross-project traceability</p>
+<p>• multi-repository traceability</p>
+<p>• external adapter traceability</p>
+
+<p>---</p>
+
+<p>[目次](../../目次.md) &gt; 仕様 &gt; 共通 &gt; HTML Traceability可視化規約</p>
+  </section>
+</main>
+
+</body>
+</html>

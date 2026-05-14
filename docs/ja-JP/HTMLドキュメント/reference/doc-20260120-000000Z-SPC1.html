@@ -1,0 +1,159 @@
+<!doctype html>
+<html lang="ja">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>document_type:spec 仕様</title>
+  <style>
+    body { font-family: sans-serif; line-height: 1.7; margin: 2rem; max-width: 1080px; }
+    header, nav, main, footer { margin-bottom: 1.5rem; }
+    code, pre { background: #f5f5f5; }
+    pre { padding: 1rem; overflow-x: auto; }
+    .meta { border: 1px solid #ddd; padding: 1rem; background: #fafafa; }
+    .warning { border: 1px solid #d99; padding: 1rem; background: #fff7f7; }
+    .card { border: 1px solid #ddd; padding: 1rem; margin: 1rem 0; }
+    a { text-decoration: none; }
+  </style>
+</head>
+<body>
+
+<header>
+  <h1>document_type:spec 仕様</h1>
+  <p><a href="../index.html">HTMLドキュメント index</a></p>
+</header>
+<main>
+  <section class="meta">
+    <p><strong>doc_id:</strong> doc-20260120-000000Z-SPC1</p>
+    <p><strong>document_type:</strong> spec</p>
+    <p><strong>canonical_document:</strong> true</p>
+    <p><strong>presentation_policy:</strong> full_render</p>
+    <p><strong>Markdown正本:</strong> <a href="../../仕様/10_document_type/spec/01_spec_仕様.md" target="_blank" rel="noopener noreferrer">document_type:spec 仕様</a></p>
+  </section>
+
+  <section>
+    <h2>見出し一覧</h2>
+    <ul><li>document_type:spec 仕様</li><li>1. Purpose（存在理由）</li><li>2. Non-goals（対象外）</li><li>3. Classifier（判定条件）</li><li>4. 記載内容の制約</li><li>4.1 許可される内容（MUST / MAY）</li><li>4.2 禁止される内容（MUST NOT）</li><li>5. 他 document_type との関係</li><li>6. 更新・再生成ルール</li><li>7. LLM-MANAGED の扱い（spec 固有）</li><li>8. 内部自己検査（非出力）</li></ul>
+  </section>
+  <section>
+    <h2>本文</h2>
+    <p>&lt;!--</p>
+<p>HLDocS:LLM-MANAGED</p>
+<p>doc_id: doc-20260120-000000Z-SPC1</p>
+<p>lang: ja-JP</p>
+<p>canonical_title: document_type:spec 仕様</p>
+<p>document_type: spec</p>
+<p>canonical_document: true</p>
+<p>transport: [true_out]</p>
+<p>--&gt;</p>
+
+<p>[目次](../../../目次.md) &gt; 仕様 &gt; document_type &gt; spec &gt; spec 仕様</p>
+
+<h1>document_type:spec 仕様</h1>
+
+<p>本書は、HLDocS における `document_type: spec` の役割・責務・制約を定義する  </p>
+<p>**最小仕様（spec）**である。</p>
+
+<p>---</p>
+
+<h2>1. Purpose（存在理由）</h2>
+
+<p>`document_type: spec` は、  </p>
+<p>**システム・規約・構造における「正」を宣言するための文書**である。</p>
+
+<p>spec は以下を担う。</p>
+
+<p>• 用語・概念・構造の定義</p>
+<p>• 不変条件・制約・前提の宣言</p>
+<p>• 他 document_type が参照する基準点の提供</p>
+
+<p>spec は **説明のための文書ではなく、宣言のための文書**である。</p>
+
+<p>---</p>
+
+<h2>2. Non-goals（対象外）</h2>
+
+<p>spec は以下を目的としない。</p>
+
+<p>• 実装手順・運用手順の説明</p>
+<p>• テスト観点・検証方法・網羅性の記述</p>
+<p>• テストケース・検証結果の列挙</p>
+<p>• 生成方法・編集手順の説明</p>
+
+<p>検証・確認・テストに関する内容は、  </p>
+<p>**spec とは別の document_type** で扱う。</p>
+
+<p>---</p>
+
+<h2>3. Classifier（判定条件）</h2>
+
+<p>以下のすべてを満たす場合、`document_type: spec` と判定される。</p>
+
+<p>• 主体が「仕様」「規約」「定義」である</p>
+<p>• 内容が **正否の基準（正を宣言する文）** で構成されている</p>
+<p>• 他文書を評価・検証する立場にある</p>
+<p>• テストや運用の具体的方法を含まない</p>
+
+<p>---</p>
+
+<h2>4. 記載内容の制約</h2>
+
+<h3>4.1 許可される内容（MUST / MAY）</h3>
+
+<p>• 概念・用語の定義</p>
+<p>• 不変条件・制約条件</p>
+<p>• 構造・関係性の宣言</p>
+<p>• 他 spec への参照</p>
+
+<h3>4.2 禁止される内容（MUST NOT）</h3>
+
+<p>• テスト条件・検証観点</p>
+<p>• 実装例・サンプルコード</p>
+<p>• 手順書・操作説明</p>
+<p>• TODO・メモ・履歴・差分理由</p>
+
+<p>---</p>
+
+<h2>5. 他 document_type との関係</h2>
+
+<p>• index  </p>
+<p>  - spec 群の一覧化・構造提示を担う</p>
+<p>• template  </p>
+<p>  - spec に基づく文書の構造骨格を定義する</p>
+<p>• prompt  </p>
+<p>  - spec に基づく生成・判断・検査を定義する</p>
+
+<p>spec 自体は、生成や判断の方法を定義しない。</p>
+
+<p>---</p>
+
+<h2>6. 更新・再生成ルール</h2>
+
+<p>• spec の更新は、**意味論の変更**を伴う。</p>
+<p>• 更新時も `doc_id` は必ず維持する。</p>
+<p>• spec の変更は、下位 document_type（template / prompt 等）への</p>
+<p>  影響を考慮した上で行う。</p>
+
+<p>---</p>
+
+<h2>7. LLM-MANAGED の扱い（spec 固有）</h2>
+
+<p>• `document_type` は常に `spec`</p>
+<p>• `canonical_document` は原則 `true`</p>
+<p>• `transport` は既定で `[true_out]`</p>
+
+<p>---</p>
+
+<h2>8. 内部自己検査（非出力）</h2>
+
+<p>• 本文が宣言文主体であること</p>
+<p>• テスト・運用・手順に関する記述が含まれていないこと</p>
+<p>• 共通ドキュメント構造を満たしていること</p>
+
+<p>---</p>
+
+<p>[目次](../../../目次.md) &gt; 仕様 &gt; document_type &gt; spec &gt; spec 仕様</p>
+  </section>
+</main>
+
+</body>
+</html>

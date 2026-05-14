@@ -1,0 +1,209 @@
+<!doctype html>
+<html lang="ja">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>判定テーブル再掲要件規約</title>
+  <style>
+    body { font-family: sans-serif; line-height: 1.7; margin: 2rem; max-width: 1080px; }
+    header, nav, main, footer { margin-bottom: 1.5rem; }
+    code, pre { background: #f5f5f5; }
+    pre { padding: 1rem; overflow-x: auto; }
+    .meta { border: 1px solid #ddd; padding: 1rem; background: #fafafa; }
+    .warning { border: 1px solid #d99; padding: 1rem; background: #fff7f7; }
+    .card { border: 1px solid #ddd; padding: 1rem; margin: 1rem 0; }
+    a { text-decoration: none; }
+  </style>
+</head>
+<body>
+
+<header>
+  <h1>判定テーブル再掲要件規約</h1>
+  <p><a href="../index.html">HTMLドキュメント index</a></p>
+</header>
+<main>
+  <section class="meta">
+    <p><strong>doc_id:</strong> doc-20260202-000004Z-z9y1</p>
+    <p><strong>document_type:</strong> spec</p>
+    <p><strong>canonical_document:</strong> true</p>
+    <p><strong>presentation_policy:</strong> full_render</p>
+    <p><strong>Markdown正本:</strong> <a href="../../仕様/00_共通/11_判定テーブル再掲要件規約.md" target="_blank" rel="noopener noreferrer">判定テーブル再掲要件規約</a></p>
+  </section>
+
+  <section>
+    <h2>見出し一覧</h2>
+    <ul><li>判定テーブル再掲要件規約</li><li>1. 判定テーブル再掲要件（定義）（MUST）</li><li>1.1 判定テーブルの定義</li><li>1.2 再掲が必須となる条件（MUST）</li><li>1.3 再掲内容に関する制約（MUST）</li><li>1.4 再掲できない場合の扱い（FAIL-FAST / MUST）</li><li>2. Phase 0 判定用テーブルの再掲義務（運用）（MUST）</li><li>2.1 対象となる判定テーブル（MUST）</li><li>2.2 再掲内容の範囲（MUST）</li><li>2.3 再掲の所在（MUST）</li><li>2.4 再掲できない場合の扱い（FAIL-FAST / MUST）</li><li>2.5 required inputs テーブルへの必須再掲項目（MUST）</li></ul>
+  </section>
+  <section>
+    <h2>本文</h2>
+    <p>&lt;!--</p>
+<p>HLDocS:LLM-MANAGED</p>
+<p>doc_id: doc-20260202-000004Z-z9y1</p>
+<p>lang: ja-JP</p>
+<p>canonical_title: 判定テーブル再掲要件規約</p>
+<p>document_type: spec</p>
+<p>canonical_document: true</p>
+<p>--&gt;</p>
+
+<p>[目次](../../目次.md) &gt; 仕様 &gt; 共通 &gt; 判定テーブル再掲要件規約</p>
+
+<h1>判定テーブル再掲要件規約</h1>
+
+<p>本書は、HLDocS において  </p>
+<p>**生成フェーズ、とくに Phase 0（入力検証）で使用される判定テーブルを、生成プロンプト内に再掲すべき条件と制約**を定義する。</p>
+
+<p>本規約は、判定テーブルの意味論・設計意図・背景を定義するものではない。  </p>
+<p>また、HLDocS の仕様構造や document_type 間の関係性を規定するものでもない。</p>
+
+<p>本書の目的は、  </p>
+<p>仕様本文や規約本文が生成フェーズにおいて与えられない状況でも、  </p>
+<p>LLM が **推測や自然言語解釈に依存せず、機械的に入力検証を行える状態**を保証するために、  </p>
+<p>判定テーブル再掲の要件を明確化することにある。</p>
+
+<p>本書は、「HLDocS 前提条件」という仕様が参照可能である場合にのみ適用される。</p>
+<p>• 「HLDocS 前提条件」が入力として与えられていない場合、  </p>
+<p>または当該仕様に基づく適用可否が確定していない場合、  </p>
+<p>本書に基づく判断・生成・再作成・工程実行を行ってはならない。</p>
+<p>• この場合、許可されるのは、  </p>
+<p>提示された文書の受理および存在確認、  </p>
+<p>ならびに前提条件が未参照または未確定である旨の通知のみとする。</p>
+<p>• 「HLDocS 前提条件」が入力文書一覧に含まれない場合、生成・再作成・成果物提示を一切行ってはならない。</p>
+
+<p>---</p>
+
+<h2>1. 判定テーブル再掲要件（定義）（MUST）</h2>
+
+<p>本章は、生成フェーズ（特に Phase 0: 入力検証）で使用される  </p>
+<p>判定テーブルの再掲要件を定義する。</p>
+
+<h3>1.1 判定テーブルの定義</h3>
+
+<p>判定テーブルとは、入力値の組に対して  </p>
+<p>可否・必須性・分岐結果を **機械的に決定するための値集合**を指す。</p>
+
+<h3>1.2 再掲が必須となる条件（MUST）</h3>
+
+<p>以下のすべてを満たす場合、  </p>
+<p>生成プロンプトには当該判定テーブルを再掲しなければならない。</p>
+
+<p>• 判定テーブルが Phase 0（入力検証）またはそれに準ずる工程で使用される</p>
+<p>• 当該テーブルを定義する仕様本文・規約本文が、  </p>
+<p>  生成フェーズにおいて LLM に与えられない</p>
+<p>• LLM が当該判定を、推測や自然言語解釈を用いずに実行する必要がある</p>
+
+<h3>1.3 再掲内容に関する制約（MUST）</h3>
+
+<p>• 再掲内容は **値そのもの**、または **機械判定に必要な条件式・真理表のみ**</p>
+<p>• 人間向け説明・背景・設計意図を含めてはならない</p>
+<p>• 再掲内容の要約・再解釈・補足を行ってはならない</p>
+
+<h3>1.4 再掲できない場合の扱い（FAIL-FAST / MUST）</h3>
+
+<p>判定テーブルが再掲されていない場合、  </p>
+<p>LLM は生成を開始してはならない。</p>
+
+<p>---</p>
+
+<h2>2. Phase 0 判定用テーブルの再掲義務（運用）（MUST）</h2>
+
+<p>本章は、Phase 0（入力検証）で使用される判定テーブルについて、  </p>
+<p>生成プロンプト側における再掲義務の所在と範囲を明示する。</p>
+
+<p>本章は、判定テーブルの意味・背景・設計意図を定義するものではない。</p>
+
+<h3>2.1 対象となる判定テーブル（MUST）</h3>
+
+<p>Phase 0（入力検証）で使用される判定テーブルは、以下とする。</p>
+
+<p>• `supported_modes`</p>
+<p>• `required inputs`</p>
+
+<h3>2.2 再掲内容の範囲（MUST）</h3>
+
+<p>再掲される判定テーブルの内容は、以下に限定されなければならない。</p>
+
+<p>• 判定に使用される **値そのもの**</p>
+<p>• 判定に使用される **条件式または真理表**</p>
+
+<p>以下を含めてはならない。</p>
+
+<p>• 人間向け説明</p>
+<p>• 背景</p>
+<p>• 設計意図</p>
+<p>• 他仕様への参照注記</p>
+
+<h3>2.3 再掲の所在（MUST）</h3>
+
+<p>判定テーブルの再掲は、  </p>
+<p>生成フェーズで参照される **生成プロンプト本文**に行わなければならない。</p>
+
+<p>• 共通生成プロンプトは、document_type 非依存の入力検証に必要な範囲で再掲する</p>
+<p>• document_type 別生成プロンプトが Phase 0 判定に関与する場合、  </p>
+<p>  当該プロンプトに再掲する</p>
+
+<h3>2.4 再掲できない場合の扱い（FAIL-FAST / MUST）</h3>
+
+<p>Phase 0（入力検証）で使用される判定テーブルが再掲されていない場合、  </p>
+<p>LLM は生成を開始してはならない。</p>
+
+<p>この場合、  </p>
+<p>不足情報の推測・補完・代替解釈を行ってはならない（MUST NOT）。</p>
+
+<h3>2.5 required inputs テーブルへの必須再掲項目（MUST）</h3>
+
+<p>`required inputs` テーブルには、</p>
+<p>少なくとも以下の行を再掲しなければならない（MUST）。</p>
+
+<p>1. 共通テンプレート new 生成</p>
+<p>• mode = meta</p>
+<p>• operation = new</p>
+<p>• document_type = template</p>
+<p>• target = common</p>
+<p>• required inputs = 共通仕様を構成する正本仕様群</p>
+<p>• prohibited required inputs =</p>
+<p>  - 既存の共通テンプレート</p>
+<p>  - 既存の共通生成プロンプト</p>
+<p>  - document_type 別テンプレート</p>
+<p>  - document_type 別生成プロンプト</p>
+
+<p>2. 共通プロンプト new 生成</p>
+<p>• mode = meta</p>
+<p>• operation = new</p>
+<p>• document_type = prompt</p>
+<p>• target = common</p>
+<p>• required inputs =</p>
+<p>  - 共通仕様を構成する正本仕様群</p>
+<p>  - 共通ドキュメントテンプレート本文実体</p>
+
+<p>3. 共通テンプレート recreate</p>
+<p>• mode = meta</p>
+<p>• operation = recreate</p>
+<p>• document_type = template</p>
+<p>• target = common</p>
+<p>• required inputs =</p>
+<p>  - 共通仕様を構成する正本仕様群</p>
+<p>  - 修正前正本本文実体</p>
+
+<p>4. 共通プロンプト recreate</p>
+<p>• mode = meta</p>
+<p>• operation = recreate</p>
+<p>• document_type = prompt</p>
+<p>• target = common</p>
+<p>• required inputs =</p>
+<p>  - 共通仕様を構成する正本仕様群</p>
+<p>  - 共通ドキュメントテンプレート本文実体</p>
+<p>  - 修正前正本本文実体</p>
+
+<p>上記行が再掲されていない場合、</p>
+<p>LLM は短い通常運用指示に対する Phase 0 判定を</p>
+<p>推測で補ってはならない（MUST NOT）。</p>
+<p>この場合は FAIL-FAST とする（MUST）。</p>
+
+<p>---</p>
+
+<p>[目次](../../目次.md) &gt; 仕様 &gt; 共通 &gt; 判定テーブル再掲要件規約</p>
+  </section>
+</main>
+
+</body>
+</html>

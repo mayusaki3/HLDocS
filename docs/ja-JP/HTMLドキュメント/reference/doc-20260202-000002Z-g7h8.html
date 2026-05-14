@@ -1,0 +1,159 @@
+<!doctype html>
+<html lang="ja">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>prompt成立条件規約</title>
+  <style>
+    body { font-family: sans-serif; line-height: 1.7; margin: 2rem; max-width: 1080px; }
+    header, nav, main, footer { margin-bottom: 1.5rem; }
+    code, pre { background: #f5f5f5; }
+    pre { padding: 1rem; overflow-x: auto; }
+    .meta { border: 1px solid #ddd; padding: 1rem; background: #fafafa; }
+    .warning { border: 1px solid #d99; padding: 1rem; background: #fff7f7; }
+    .card { border: 1px solid #ddd; padding: 1rem; margin: 1rem 0; }
+    a { text-decoration: none; }
+  </style>
+</head>
+<body>
+
+<header>
+  <h1>prompt成立条件規約</h1>
+  <p><a href="../index.html">HTMLドキュメント index</a></p>
+</header>
+<main>
+  <section class="meta">
+    <p><strong>doc_id:</strong> doc-20260202-000002Z-g7h8</p>
+    <p><strong>document_type:</strong> spec</p>
+    <p><strong>canonical_document:</strong> true</p>
+    <p><strong>presentation_policy:</strong> full_render</p>
+    <p><strong>Markdown正本:</strong> <a href="../../仕様/00_共通/09_prompt成立条件規約.md" target="_blank" rel="noopener noreferrer">prompt成立条件規約</a></p>
+  </section>
+
+  <section>
+    <h2>見出し一覧</h2>
+    <ul><li>prompt成立条件規約</li><li>1. 本規約の適用範囲（MUST）</li><li>2. 成立条件の基本原則（MUST）</li><li>3. 仕様との関係性（MUST）</li><li>4. 再作成（recreate）および全文差し替え生成における成立条件（MUST）</li><li>5. 成立条件と実装責務の分離（MUST）</li><li>6. 不成立判定（MUST）</li></ul>
+  </section>
+  <section>
+    <h2>本文</h2>
+    <p>&lt;!--</p>
+<p>HLDocS:LLM-MANAGED</p>
+<p>doc_id: doc-20260202-000002Z-g7h8</p>
+<p>lang: ja-JP</p>
+<p>canonical_title: prompt成立条件規約</p>
+<p>document_type: spec</p>
+<p>canonical_document: true</p>
+<p>--&gt;</p>
+
+<p>[目次](../../目次.md) &gt; 仕様 &gt; 共通 &gt; prompt 成立条件規約</p>
+
+<h1>prompt成立条件規約</h1>
+
+<p>本書は、HLDocS において **生成プロンプト（prompt）が成立していると判定するための必要条件**</p>
+<p>を定義するものである。</p>
+
+<p>本書は、生成プロンプトの **実装方法・実行手順・内部処理・検査項目**を定義しない。  </p>
+<p>それらは **共通ドキュメント生成プロンプト（prompt / meta）**の責務である。</p>
+
+<p>本書の目的は、  </p>
+<p>「どのような条件を満たしていれば、その生成プロンプトは *成立している* と言えるか」</p>
+<p>を仕様として明確化することにある。</p>
+
+<p>本書は、「HLDocS 前提条件」という仕様が参照可能である場合にのみ適用される。</p>
+<p>• 「HLDocS 前提条件」が入力として与えられていない場合、  </p>
+<p>または当該仕様に基づく適用可否が確定していない場合、  </p>
+<p>本書に基づく判断・生成・再作成・工程実行を行ってはならない。</p>
+<p>• この場合、許可されるのは、  </p>
+<p>提示された文書の受理および存在確認、  </p>
+<p>ならびに前提条件が未参照または未確定である旨の通知のみとする。</p>
+<p>• 「HLDocS 前提条件」が入力文書一覧に含まれない場合、生成・再作成・成果物提示を一切行ってはならない。</p>
+
+<p>---</p>
+
+<h2>1. 本規約の適用範囲（MUST）</h2>
+
+<p>• 本規約は、HLDocS において使用される **すべての生成プロンプト（prompt）**に適用される。</p>
+<p>• 対象には以下を含むが、これに限定されない。</p>
+<p>  - 共通生成プロンプト</p>
+<p>  - document_type 別生成プロンプト</p>
+<p>• 本規約は、生成モード（meta / apply）によらず適用される。</p>
+
+<p>---</p>
+
+<h2>2. 成立条件の基本原則（MUST）</h2>
+
+<p>生成プロンプトは、以下の条件をすべて満たす場合にのみ  </p>
+<p>**成立している（valid）**と判定される。</p>
+
+<p>• 利用者から与えられた **仕様・テンプレート・規約**のみを判断根拠としていること</p>
+<p>• 推測・一般知識・過去会話・暗黙知を判断根拠としていないこと</p>
+<p>• 与えられた仕様と **意味的に矛盾しない**内容で構成されていること</p>
+<p>• 仕様に存在しない制約・例外・判断規則を **新たに導入していない**こと</p>
+
+<p>---</p>
+
+<h2>3. 仕様との関係性（MUST）</h2>
+
+<p>生成プロンプトは、  </p>
+<p>与えられた仕様群（spec）に対して以下の関係性を満たさなければならない。</p>
+
+<p>• 仕様に記載された MUST / MUST NOT 条件を弱体化・無効化してはならない</p>
+<p>• 仕様の記述を再解釈・要約・意訳してはならない</p>
+<p>• 仕様に記載のない判断基準を補完してはならない</p>
+
+<p>生成プロンプトは、仕様（spec）・テンプレート（template）・各種規約を前提として、</p>
+<p>仕様を実装するための判断規範を表現するものであり、</p>
+<p>仕様そのものを再定義したり、それらに代わる判断根拠として機能してはならない。</p>
+
+<p>---</p>
+
+<h2>4. 再作成（recreate）および全文差し替え生成における成立条件（MUST）</h2>
+
+<p>生成プロンプトが **再作成（recreate）** または  </p>
+<p>**全文差し替え生成**として生成される場合、以下をすべて満たさなければならない。</p>
+
+<p>• 生成対象となる正本が提示されていること</p>
+<p>• 正本に含まれる以下の要素が **維持されている**こと</p>
+<p>  - doc_id</p>
+<p>  - document_type</p>
+<p>  - 文書全体の構造順序</p>
+<p>  - 階層リンク行（先頭・末尾）</p>
+<p>• 未変更部分を省略してはならない</p>
+<p>• 参照代替表現（「同上」「変更なし」等）を使用してはならない</p>
+
+<p>これらの条件を満たさない生成プロンプトは、成立していないものとして扱われる。</p>
+
+<p>---</p>
+
+<h2>5. 成立条件と実装責務の分離（MUST）</h2>
+
+<p>本規約において定義されるのは、  </p>
+<p>**生成プロンプトが成立するための条件（WHAT）**のみである。</p>
+
+<p>以下は、本規約では定義しない。</p>
+
+<p>• 成立条件をどのように検査するか</p>
+<p>• 検査の順序・手続き・内部フェーズ</p>
+<p>• 内部自己検査の具体的項目</p>
+
+<p>これらの実装責務は、  </p>
+<p>**共通ドキュメント生成プロンプト（prompt / meta）**に完全に委譲される。</p>
+
+<p>---</p>
+
+<h2>6. 不成立判定（MUST）</h2>
+
+<p>本規約に定義された成立条件のいずれかを満たさない生成プロンプトは、  </p>
+<p>**不成立（invalid）**と判定されなければならない。</p>
+
+<p>不成立と判定された生成プロンプトは、  </p>
+<p>正規の HLDocS 成果物生成に使用してはならない。</p>
+
+<p>---</p>
+
+<p>[目次](../../目次.md) &gt; 仕様 &gt; 共通 &gt; prompt 成立条件規約</p>
+  </section>
+</main>
+
+</body>
+</html>

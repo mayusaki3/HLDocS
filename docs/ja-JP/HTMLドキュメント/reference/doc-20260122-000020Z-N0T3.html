@@ -1,0 +1,90 @@
+<!doctype html>
+<html lang="ja">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>document_type:note 生成プロンプト</title>
+  <style>
+    body { font-family: sans-serif; line-height: 1.7; margin: 2rem; max-width: 1080px; }
+    header, nav, main, footer { margin-bottom: 1.5rem; }
+    code, pre { background: #f5f5f5; }
+    pre { padding: 1rem; overflow-x: auto; }
+    .meta { border: 1px solid #ddd; padding: 1rem; background: #fafafa; }
+    .warning { border: 1px solid #d99; padding: 1rem; background: #fff7f7; }
+    .card { border: 1px solid #ddd; padding: 1rem; margin: 1rem 0; }
+    a { text-decoration: none; }
+  </style>
+</head>
+<body>
+
+<header>
+  <h1>document_type:note 生成プロンプト</h1>
+  <p><a href="../index.html">HTMLドキュメント index</a></p>
+</header>
+<main>
+  <section class="meta">
+    <p><strong>doc_id:</strong> doc-20260122-000020Z-N0T3</p>
+    <p><strong>document_type:</strong> prompt</p>
+    <p><strong>canonical_document:</strong> true</p>
+    <p><strong>presentation_policy:</strong> full_render</p>
+    <p><strong>Markdown正本:</strong> <a href="../../テンプレート/10_document_type/note/note生成プロンプト.md" target="_blank" rel="noopener noreferrer">document_type:note 生成プロンプト</a></p>
+  </section>
+
+  <section>
+    <h2>見出し一覧</h2>
+    <ul><li>document_type:note 生成プロンプト</li><li>0. 最上位命令（MUST）</li><li>1. note 判定（MUST）</li><li>2. note 禁止判定（MUST NOT）</li><li>3. 内容生成（MUST）</li></ul>
+  </section>
+  <section>
+    <h2>本文</h2>
+    <p>&lt;!--</p>
+<p>HLDocS:LLM-MANAGED</p>
+<p>doc_id: doc-20260122-000020Z-N0T3</p>
+<p>lang: ja-JP</p>
+<p>canonical_title: document_type:note 生成プロンプト</p>
+<p>document_type: prompt</p>
+<p>canonical_document: true</p>
+<p>transport: [download, ui_copy]</p>
+<p>--&gt;</p>
+
+<p>[目次](../../../目次.md) &gt; テンプレート &gt; document_type &gt; note &gt; 生成プロンプト</p>
+
+<h1>document_type:note 生成プロンプト</h1>
+
+<h2>0. 最上位命令（MUST）</h2>
+
+<p>• 出力は最終成果物のみとする。</p>
+<p>• 思考過程・理由・検査結果を出力してはならない。</p>
+<p>• `note` は補助的 document_type であり、他の document_type に該当する場合は生成してはならない。</p>
+
+<h2>1. note 判定（MUST）</h2>
+
+<p>以下に該当する場合のみ、`note` を生成してよい。</p>
+
+<p>• 記述対象が未確定・暫定である。</p>
+<p>• 合意済みの仕様・規約・手順ではない。</p>
+<p>• 既存の `spec` / `testspec` / `index` / `traceability` / `prompt` / `usage` に明確に該当しない。</p>
+
+<h2>2. note 禁止判定（MUST NOT）</h2>
+
+<p>以下に該当する場合、`note` を生成してはならない。</p>
+
+<p>• 合意済みルール・仕様を宣言している（spec）</p>
+<p>• テスト観点・期待結果を定義している（testspec）</p>
+<p>• LLM の生成・判断規則を定義している（prompt）</p>
+<p>• 文書構造や参照関係を定義している（index / traceability）</p>
+<p>• 操作手順の確定版を示している（usage）</p>
+
+<h2>3. 内容生成（MUST）</h2>
+
+<p>• 目的・前提・論点・案・未決事項を明示する。</p>
+<p>• 未確定であることが読み取れる表現を維持する。</p>
+<p>• 将来 `spec` 等に昇格する際に必要な前提情報を省略しない。</p>
+
+<p>---</p>
+
+<p>[目次](../../../目次.md) &gt; テンプレート &gt; document_type &gt; note &gt; 生成プロンプト</p>
+  </section>
+</main>
+
+</body>
+</html>

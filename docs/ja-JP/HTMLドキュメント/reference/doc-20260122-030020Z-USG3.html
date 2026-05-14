@@ -1,0 +1,86 @@
+<!doctype html>
+<html lang="ja">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>usage 生成プロンプト</title>
+  <style>
+    body { font-family: sans-serif; line-height: 1.7; margin: 2rem; max-width: 1080px; }
+    header, nav, main, footer { margin-bottom: 1.5rem; }
+    code, pre { background: #f5f5f5; }
+    pre { padding: 1rem; overflow-x: auto; }
+    .meta { border: 1px solid #ddd; padding: 1rem; background: #fafafa; }
+    .warning { border: 1px solid #d99; padding: 1rem; background: #fff7f7; }
+    .card { border: 1px solid #ddd; padding: 1rem; margin: 1rem 0; }
+    a { text-decoration: none; }
+  </style>
+</head>
+<body>
+
+<header>
+  <h1>usage 生成プロンプト</h1>
+  <p><a href="../index.html">HTMLドキュメント index</a></p>
+</header>
+<main>
+  <section class="meta">
+    <p><strong>doc_id:</strong> doc-20260122-030020Z-USG3</p>
+    <p><strong>document_type:</strong> prompt</p>
+    <p><strong>canonical_document:</strong> true</p>
+    <p><strong>presentation_policy:</strong> full_render</p>
+    <p><strong>Markdown正本:</strong> <a href="../../テンプレート/10_document_type/usage/usage生成プロンプト.md" target="_blank" rel="noopener noreferrer">usage 生成プロンプト</a></p>
+  </section>
+
+  <section>
+    <h2>見出し一覧</h2>
+    <ul><li>usage 生成プロンプト</li><li>最上位命令（MUST）</li><li>内容制約（MUST / MUST NOT）</li><li>LLM-MANAGED 規則（MUST）</li><li>ui_copy 規則（適用時・MUST）</li><li>内部自己検査（非出力・MUST）</li></ul>
+  </section>
+  <section>
+    <h2>本文</h2>
+    <p>&lt;!--</p>
+<p>HLDocS:LLM-MANAGED</p>
+<p>doc_id: doc-20260122-030020Z-USG3</p>
+<p>lang: ja-JP</p>
+<p>canonical_title: usage 生成プロンプト</p>
+<p>document_type: prompt</p>
+<p>canonical_document: true</p>
+<p>transport: [true_out]</p>
+<p>--&gt;</p>
+
+<p>[目次](../../../目次.md) &gt; テンプレート &gt; document_type &gt; usage &gt; 生成プロンプト</p>
+
+<h1>usage 生成プロンプト</h1>
+
+<h2>最上位命令（MUST）</h2>
+<p>• document_type は **usage** とする。</p>
+<p>• 合意された **usage テンプレート**を必ず使用し、**構造を変更してはならない**。</p>
+<p>• 出力は **最終成果物のみ**。思考過程・説明・差分は出力してはならない。</p>
+
+<h2>内容制約（MUST / MUST NOT）</h2>
+<p>• 記述してよい内容：**操作手順・順序・注意事項・前提条件**のみ。</p>
+<p>• **MUST NOT**：仕様定義、設計意図、背景説明、検証観点、推測・補完・類推。</p>
+<p>• 他 document_type（spec / minutes / note）を**要約・代替してはならない**。</p>
+
+<h2>LLM-MANAGED 規則（MUST）</h2>
+<p>• 新規作成時は doc_id を新規発行。</p>
+<p>• transport の既定は [true_out]。</p>
+<p>• UIコピーが指定された場合のみ [ui_copy] を使用。</p>
+
+<h2>ui_copy 規則（適用時・MUST）</h2>
+<p>• 出力は **単一のコードブロックのみ**。</p>
+<p>• コードブロック外に文字列を出力してはならない。</p>
+<p>• **等価変換のみ許可**。削除・要約・文章化・意味改変は **MUST NOT**。</p>
+
+<h2>内部自己検査（非出力・MUST）</h2>
+<p>• テンプレート構造保持</p>
+<p>• 禁止事項の非混入</p>
+<p>• transport 規則遵守（ui_copy時）</p>
+<p>• 規約文・作業指示の本文非混入</p>
+
+<p>---</p>
+
+<p>[目次](../../../目次.md) &gt; テンプレート &gt; document_type &gt; usage &gt; 生成プロンプト</p>
+  </section>
+</main>
+
+</body>
+</html>

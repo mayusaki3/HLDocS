@@ -1,0 +1,114 @@
+<!doctype html>
+<html lang="ja">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>document_type:index 生成プロンプト</title>
+  <style>
+    body { font-family: sans-serif; line-height: 1.7; margin: 2rem; max-width: 1080px; }
+    header, nav, main, footer { margin-bottom: 1.5rem; }
+    code, pre { background: #f5f5f5; }
+    pre { padding: 1rem; overflow-x: auto; }
+    .meta { border: 1px solid #ddd; padding: 1rem; background: #fafafa; }
+    .warning { border: 1px solid #d99; padding: 1rem; background: #fff7f7; }
+    .card { border: 1px solid #ddd; padding: 1rem; margin: 1rem 0; }
+    a { text-decoration: none; }
+  </style>
+</head>
+<body>
+
+<header>
+  <h1>document_type:index 生成プロンプト</h1>
+  <p><a href="../index.html">HTMLドキュメント index</a></p>
+</header>
+<main>
+  <section class="meta">
+    <p><strong>doc_id:</strong> doc-20260116-121000Z-IDXP</p>
+    <p><strong>document_type:</strong> prompt</p>
+    <p><strong>canonical_document:</strong> true</p>
+    <p><strong>presentation_policy:</strong> full_render</p>
+    <p><strong>Markdown正本:</strong> <a href="../../テンプレート/10_document_type/index/index生成プロンプト.md" target="_blank" rel="noopener noreferrer">document_type:index 生成プロンプト</a></p>
+  </section>
+
+  <section>
+    <h2>見出し一覧</h2>
+    <ul><li>document_type:index 生成プロンプト</li><li>0. 最上位命令（MUST）</li><li>1. 生成判断規則（MUST）</li><li>ガイド文に関する特則</li><li>2. LLM-MANAGED 値決定規則（MUST）</li><li>3. 禁止事項（MUST NOT）</li><li>4. 内部自己検査（非出力・MUST）</li></ul>
+  </section>
+  <section>
+    <h2>本文</h2>
+    <p>&lt;!--</p>
+<p>HLDocS:LLM-MANAGED</p>
+<p>doc_id: doc-20260116-121000Z-IDXP</p>
+<p>lang: ja-JP</p>
+<p>canonical_title: document_type:index 生成プロンプト</p>
+<p>document_type: prompt</p>
+<p>canonical_document: true</p>
+<p>transport: [true_out]</p>
+<p>--&gt;</p>
+
+<p>[目次](../../../目次.md) &gt; テンプレート &gt; document_type &gt; index &gt; 生成プロンプト</p>
+
+<h1>document_type:index 生成プロンプト</h1>
+
+<p>本プロンプトは、HLDocS における `document_type: index` を生成・更新する際の  </p>
+<p>**判断規則および自己検査条件**を定義する。</p>
+
+<p>---</p>
+
+<h2>0. 最上位命令（MUST）</h2>
+
+<p>• document_type は **index 固定**とする。</p>
+<p>• 一覧対象・階層範囲が未合意の場合、生成してはならない。</p>
+<p>• 出力は **最終成果物のみ**とする。</p>
+
+<p>---</p>
+
+<h2>1. 生成判断規則（MUST）</h2>
+
+<p>• index は「リンク列挙」を主体として構成する。</p>
+<p>• 各リンクには説明文を付与してはならない。</p>
+<p>• 分類・階層は構造としてのみ表現する。</p>
+
+<h3>ガイド文に関する特則</h3>
+
+<p>• ガイド文は原則として生成してはならない。</p>
+<p>• ユーザー指示に「概要」「目的」「使い方を入れる」等が</p>
+<p>  **明示されている場合に限り**、</p>
+<p>  本文冒頭に短いガイド文を含めてもよい。</p>
+<p>• 指示がない場合、ガイド文を自律的に追加してはならない。</p>
+
+<p>---</p>
+
+<h2>2. LLM-MANAGED 値決定規則（MUST）</h2>
+
+<p>• `doc_id`</p>
+<p>  - 新規生成時のみ生成する</p>
+<p>  - 更新時は既存値を必ず維持する</p>
+<p>• `document_type` : `index`</p>
+<p>• `canonical_document` : `true`</p>
+<p>• `transport` : `[true_out]`</p>
+
+<p>---</p>
+
+<h2>3. 禁止事項（MUST NOT）</h2>
+
+<p>• 仕様・規約・背景の説明</p>
+<p>• 更新理由・差分説明</p>
+<p>• TODO・作業指示文</p>
+
+<p>---</p>
+
+<h2>4. 内部自己検査（非出力・MUST）</h2>
+
+<p>• 本文がリンク列挙中心であること</p>
+<p>• 禁止事項が含まれていないこと</p>
+<p>• 共通ドキュメント構造を満たすこと</p>
+
+<p>---</p>
+
+<p>[目次](../../../目次.md) &gt; テンプレート &gt; document_type &gt; index &gt; 生成プロンプト</p>
+  </section>
+</main>
+
+</body>
+</html>
