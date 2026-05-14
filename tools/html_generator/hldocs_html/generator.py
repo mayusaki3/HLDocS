@@ -16,6 +16,7 @@ from pathlib import Path
 
 from .manifest import ensure_no_space_paths, write_manifest
 from .markdown_loader import load_markdown_documents
+from .markdown_viewer import write_markdown_viewer_assets
 from .presentation_model import (
     load_navigation_model,
     load_presentation_documents,
@@ -57,6 +58,8 @@ def generate(input_root: Path, output_root: Path, profiles: list[str]) -> None:
 
     if "overview" in profiles:
         pages.append(write_overview_page(output_root, documents))
+
+    write_markdown_viewer_assets(output_root)
 
     write_index_page(
         output_root,
