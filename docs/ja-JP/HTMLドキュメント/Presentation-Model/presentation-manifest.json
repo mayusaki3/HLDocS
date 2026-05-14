@@ -1,0 +1,19 @@
+{
+  "presentation_model_version": "0.1.0-poc",
+  "language": "ja-JP",
+  "scope": "HLDocS HTML generation PoC",
+  "role": "HTML生成用の中間構成情報。Markdown正本を置換しない operational input。",
+  "documents_dir": "documents",
+  "default_presentation_policy": "overview_only",
+  "presentation_policy_enum": [
+    "full_render",
+    "overview_only",
+    "link_only",
+    "not_generated"
+  ],
+  "markdown_navigation_mode": "new_tab",
+  "notes": [
+    "Markdown正本リンクは別タブまたは別ウィンドウで開く導線とする。",
+    ".md の表示方法またはダウンロード挙動はブラウザ、GitHub、OS、ユーザー環境の責務とし、HTML generator は Markdown viewer を提供しない。"
+  ]
+}
