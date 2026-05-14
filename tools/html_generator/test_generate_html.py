@@ -234,6 +234,7 @@ def test_manifest_link_targets_only_reference_existing_pages(tmp_path: Path) -> 
     for page in manifest["pages"]:
         assert set(page["link_targets"]).issubset(page_ids)
 
+
 # HTML-POC-UT-013
 def test_markdown_source_link_opens_in_new_tab(tmp_path: Path) -> None:
     """Markdown 正本リンクが別タブ表示用属性を持つこと。"""
@@ -252,3 +253,88 @@ def test_markdown_source_link_opens_in_new_tab(tmp_path: Path) -> None:
     reference_html = reference_files[0].read_text(encoding="utf-8")
     assert 'target="_blank"' in reference_html
     assert 'rel="noopener noreferrer"' in reference_html
+
+
+# HTML-POC-UT-014
+def test_presentation_policy_controls_rendering(tmp_path: Path) -> None:
+    """Presentation Model の policy に従い HTML 生成内容が分岐すること。"""
+
+    input_root = tmp_path / "docs" / "ja-JP"
+    source = input_root / "仕様" / "00_共通"
+    source.mkdir(parents=True)
+
+    markdown_cases = {
+        "doc-full": ("01_full.md", "Full Render 仕様", "FULL_RENDER_BODY"),
+        "doc-overview": ("02_overview.md", "Overview Only 仕様", "OVERVIEW_ONLY_BODY"),
+        "doc-link": ("03_link.md", "Link Only 仕様", "LINK_ONLY_BODY"),
+        "doc-not-generated": ("04_not_generated.md", "Not Generated 仕様", "NOT_GENERATED_BODY"),
+    }
+    for doc_id, (filename, title, body_marker) in markdown_cases.items():
+        (source / filename).write_text(
+            f"""<!--
+HLDocS:LLM-MANAGED
+doc_id: {doc_id}
+lang: ja-JP
+canonical_title: {title}
+document_type: spec
+canonical_document: true
+-->
+
+# {title}
+
+## 目的
+
+{body_marker}
+""",
+            encoding="utf-8",
+        )
+
+    presentation_documents = input_root / "HTMLドキュメント" / "Presentation-Model" / "documents"
+    presentation_documents.mkdir(parents=True)
+    policies = {
+        "doc-full": "full_render",
+        "doc-overview": "overview_only",
+        "doc-link": "link_only",
+        "doc-not-generated": "not_generated",
+    }
+    for doc_id, policy in policies.items():
+        (presentation_documents / f"{doc_id}.json").write_text(
+            json.dumps(
+                {
+                    "doc_id": doc_id,
+                    "presentation_policy": policy,
+                    "overview": f"{policy} overview",
+                    "policy_reason": f"{policy} reason",
+                },
+                ensure_ascii=False,
+                indent=2,
+            ),
+            encoding="utf-8",
+        )
+
+    output_root = input_root / "HTMLドキュメント"
+    generate_html.generate(input_root, output_root, ["overview", "reference"])
+
+    full_html = (output_root / "reference" / "doc-full.html").read_text(encoding="utf-8")
+    overview_html = (output_root / "reference" / "doc-overview.html").read_text(encoding="utf-8")
+    link_html = (output_root / "reference" / "doc-link.html").read_text(encoding="utf-8")
+    index_html = (output_root / "index.html").read_text(encoding="utf-8")
+    manifest = json.loads((output_root / "manifest" / "site-manifest.json").read_text(encoding="utf-8"))
+
+    assert "FULL_RENDER_BODY" in full_html
+    assert "OVERVIEW_ONLY_BODY" not in overview_html
+    assert "本文は HTML 化せず、概要と見出しのみ表示します。" in overview_html
+    assert "LINK_ONLY_BODY" not in link_html
+    assert "本文は HTML 化せず、Markdown 正本リンクを参照します。" in link_html
+    assert not (output_root / "reference" / "doc-not-generated.html").exists()
+    assert "Not Generated 仕様" in index_html
+    assert "not_generated reason" in index_html
+
+    pages_by_doc_id = {page["doc_id"]: page for page in manifest["pages"] if page.get("doc_id")}
+    assert pages_by_doc_id["doc-full"]["presentation_policy"] == "full_render"
+    assert pages_by_doc_id["doc-overview"]["presentation_policy"] == "overview_only"
+    assert pages_by_doc_id["doc-link"]["presentation_policy"] == "link_only"
+    assert "doc-not-generated" not in pages_by_doc_id
+    assert {
+        item["doc_id"] for item in manifest["not_generated_documents"]
+    } == {"doc-not-generated"}
