@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-05-14T02:07:21.043274+00:00",
+  "generated_at": "2026-05-14T04:34:20.505909+00:00",
   "profile": [
     "overview",
     "reference"
@@ -24,7 +24,7 @@
       "source_hash": "d0d2ee68ae9a04a1d8af56751fb0c45c22e305abc36d2162cc18aab59f494604",
       "stale": false,
       "link_targets": [],
-      "presentation_policy": "full_render",
+      "presentation_policy": "overview_only",
       "presentation_model": null
     },
     {
@@ -40,7 +40,7 @@
       "source_hash": "069ed7857a8c6d606a3383a7647467ee7f79f5c34ea08ed7f404550320d4a0d2",
       "stale": false,
       "link_targets": [],
-      "presentation_policy": "full_render",
+      "presentation_policy": "overview_only",
       "presentation_model": null
     },
     {
@@ -56,7 +56,7 @@
       "source_hash": "8d18cc4b63cf9b0a52cf27c3d8695d78a959df4f2cfaba2e1158778cfa6ce81e",
       "stale": false,
       "link_targets": [],
-      "presentation_policy": "full_render",
+      "presentation_policy": "overview_only",
       "presentation_model": null
     },
     {
@@ -72,7 +72,7 @@
       "source_hash": "5273c5f4cd17b951d4a24a1a2a01d3e219861a3435bf251ed7b809e3824511c7",
       "stale": false,
       "link_targets": [],
-      "presentation_policy": "full_render",
+      "presentation_policy": "overview_only",
       "presentation_model": null
     },
     {
@@ -88,7 +88,7 @@
       "source_hash": "5273c5f4cd17b951d4a24a1a2a01d3e219861a3435bf251ed7b809e3824511c7",
       "stale": false,
       "link_targets": [],
-      "presentation_policy": "full_render",
+      "presentation_policy": "overview_only",
       "presentation_model": null
     },
     {
@@ -104,7 +104,7 @@
       "source_hash": "feba67b9d0a60d39a9d26f5f0cfc6705a8fd409008590ac8639d422e5db8085c",
       "stale": false,
       "link_targets": [],
-      "presentation_policy": "full_render",
+      "presentation_policy": "overview_only",
       "presentation_model": null
     },
     {
@@ -120,7 +120,7 @@
       "source_hash": "8e1aa9c573c2e207e3c33cb099be009424cad3f88d47f2162bcda78845bc514a",
       "stale": false,
       "link_targets": [],
-      "presentation_policy": "full_render",
+      "presentation_policy": "overview_only",
       "presentation_model": null
     },
     {
@@ -136,7 +136,7 @@
       "source_hash": "fa180b68f1420d3be3a67f350b74de54cdf550b7f8374108277fe01461d5411a",
       "stale": false,
       "link_targets": [],
-      "presentation_policy": "full_render",
+      "presentation_policy": "overview_only",
       "presentation_model": null
     },
     {
@@ -152,7 +152,7 @@
       "source_hash": "6e819aabb93676f4a44de6c9cdb310624fd66bd8fdd0245435266e0cdad09980",
       "stale": false,
       "link_targets": [],
-      "presentation_policy": "full_render",
+      "presentation_policy": "overview_only",
       "presentation_model": null
     },
     {
@@ -168,7 +168,7 @@
       "source_hash": "1ac4712f14f911a5e07eecc92f09c283333ddc177f699b82c407fc95eb21de39",
       "stale": false,
       "link_targets": [],
-      "presentation_policy": "full_render",
+      "presentation_policy": "overview_only",
       "presentation_model": null
     },
     {
@@ -184,7 +184,7 @@
       "source_hash": "7bf76781a337dcd5034b19944aff126f38cde0d3610cfdcc767250314df886b7",
       "stale": false,
       "link_targets": [],
-      "presentation_policy": "full_render",
+      "presentation_policy": "overview_only",
       "presentation_model": null
     },
     {
@@ -200,7 +200,7 @@
       "source_hash": "2a44d925cb98b7f547769b9d84a8c6263946fd23581ba39299e91ed6381e4ad3",
       "stale": false,
       "link_targets": [],
-      "presentation_policy": "full_render",
+      "presentation_policy": "overview_only",
       "presentation_model": null
     },
     {
@@ -216,7 +216,7 @@
       "source_hash": "cd6d6e5b8f0ed73af033fbdb82d054868105fdddbcb04c0c4de2207bff645420",
       "stale": false,
       "link_targets": [],
-      "presentation_policy": "full_render",
+      "presentation_policy": "overview_only",
       "presentation_model": null
     },
     {
@@ -232,7 +232,7 @@
       "source_hash": "dbe7f58f881a5c7ccab2be51c2ce02d7fd59d09d1dd174afa9da39cc5fe963b0",
       "stale": false,
       "link_targets": [],
-      "presentation_policy": "full_render",
+      "presentation_policy": "overview_only",
       "presentation_model": null
     },
     {
@@ -248,7 +248,7 @@
       "source_hash": "7dc5fb10c9ec1b4c359a12ffba618980bc6c056f7a4800df02cf1f9d66b6ed3c",
       "stale": false,
       "link_targets": [],
-      "presentation_policy": "full_render",
+      "presentation_policy": "overview_only",
       "presentation_model": null
     },
     {
@@ -264,7 +264,7 @@
       "source_hash": "a5f0d59d781035fa9f04f66ff28eb432ef55a64c3c62496dadb2a03aa3889de4",
       "stale": false,
       "link_targets": [],
-      "presentation_policy": "full_render",
+      "presentation_policy": "overview_only",
       "presentation_model": null
     },
     {
@@ -280,7 +280,7 @@
       "source_hash": "2c7d8ac8c25289806018d96451ea2d9fa7d3776adbac1b066d376bc839cd4668",
       "stale": false,
       "link_targets": [],
-      "presentation_policy": "full_render",
+      "presentation_policy": "overview_only",
       "presentation_model": null
     },
     {
@@ -296,7 +296,7 @@
       "source_hash": "640f739f114cbbda1126a39332aa6e315a71acfbde4e20057c1f5601cdcc6b87",
       "stale": false,
       "link_targets": [],
-      "presentation_policy": "full_render",
+      "presentation_policy": "overview_only",
       "presentation_model": null
     },
     {
@@ -312,7 +312,7 @@
       "source_hash": "a205e96d5007eaaa3a7b95118f8d83d5a606095739c87cdfb4ab268897db4760",
       "stale": false,
       "link_targets": [],
-      "presentation_policy": "full_render",
+      "presentation_policy": "overview_only",
       "presentation_model": null
     },
     {
@@ -328,7 +328,7 @@
       "source_hash": "a39cd032fea623a22dd6d1bd24db23f2c926ba73781fa230e519aaf96aa068ce",
       "stale": false,
       "link_targets": [],
-      "presentation_policy": "full_render",
+      "presentation_policy": "overview_only",
       "presentation_model": null
     },
     {
@@ -344,7 +344,7 @@
       "source_hash": "f27c3fd803cdc14d6048d23fc4860fefdb7c3a7790434b78acce45a0f0e55138",
       "stale": false,
       "link_targets": [],
-      "presentation_policy": "full_render",
+      "presentation_policy": "overview_only",
       "presentation_model": null
     },
     {
@@ -360,7 +360,7 @@
       "source_hash": "466967f2b974908a97271471e7ceda5417869ef82b26ac3ebcc8cc0602799930",
       "stale": false,
       "link_targets": [],
-      "presentation_policy": "full_render",
+      "presentation_policy": "overview_only",
       "presentation_model": null
     },
     {
@@ -376,7 +376,7 @@
       "source_hash": "1047f3b9f6e01c9d4b68fb93bfb8b97a3a9d42071964b9b4ad8f9a35be062e4b",
       "stale": false,
       "link_targets": [],
-      "presentation_policy": "full_render",
+      "presentation_policy": "overview_only",
       "presentation_model": null
     },
     {
@@ -392,7 +392,7 @@
       "source_hash": "416f598b0b047d1f494f2336bbcae40e4e466d7e31a1d3d7fec444488b5f068a",
       "stale": false,
       "link_targets": [],
-      "presentation_policy": "full_render",
+      "presentation_policy": "overview_only",
       "presentation_model": null
     },
     {
@@ -408,7 +408,7 @@
       "source_hash": "76a03adbc934580a241ec93ec6a134357274771a116d979ba0c2b0c193483b69",
       "stale": false,
       "link_targets": [],
-      "presentation_policy": "full_render",
+      "presentation_policy": "overview_only",
       "presentation_model": null
     },
     {
@@ -424,7 +424,7 @@
       "source_hash": "955996c02f8bd26bfda7429223b4a27fa5f94812c33a54cadcc5c4b3dcd45510",
       "stale": false,
       "link_targets": [],
-      "presentation_policy": "full_render",
+      "presentation_policy": "overview_only",
       "presentation_model": null
     },
     {
@@ -440,7 +440,7 @@
       "source_hash": "ba6b1383a6e3b859b865d2b9e8b37aafc53429ca06881780b56334f006d87b85",
       "stale": false,
       "link_targets": [],
-      "presentation_policy": "full_render",
+      "presentation_policy": "overview_only",
       "presentation_model": null
     },
     {
@@ -456,7 +456,7 @@
       "source_hash": "b22f8eeab586fe56e1dff1964398fedabd017601439d5e80d1254ede84f0ec10",
       "stale": false,
       "link_targets": [],
-      "presentation_policy": "full_render",
+      "presentation_policy": "overview_only",
       "presentation_model": null
     },
     {
@@ -472,7 +472,7 @@
       "source_hash": "cac47c2a641c5a9b0c10072c020d55be3059ee085a2d61438a5ac82728d84945",
       "stale": false,
       "link_targets": [],
-      "presentation_policy": "full_render",
+      "presentation_policy": "overview_only",
       "presentation_model": null
     },
     {
@@ -488,7 +488,7 @@
       "source_hash": "f13372c7cda41e3ba2835b00e8e1d73acc1e714c88535642622b973a710012cd",
       "stale": false,
       "link_targets": [],
-      "presentation_policy": "full_render",
+      "presentation_policy": "overview_only",
       "presentation_model": null
     },
     {
@@ -504,7 +504,7 @@
       "source_hash": "be0fe4b708f2bc5b09b898f5d2681402698d4292c9340dec843c86b961ef1fe9",
       "stale": false,
       "link_targets": [],
-      "presentation_policy": "full_render",
+      "presentation_policy": "overview_only",
       "presentation_model": null
     },
     {
@@ -520,7 +520,7 @@
       "source_hash": "d802e1392810c6bcb483e0416eb543f9769aa6dd5ff15b4515d67e7bc22fd7da",
       "stale": false,
       "link_targets": [],
-      "presentation_policy": "full_render",
+      "presentation_policy": "overview_only",
       "presentation_model": null
     },
     {
@@ -536,7 +536,7 @@
       "source_hash": "58a7b32537882ee3efd6938c48cc5237c76bae4e697c14aa930b57582b2e7522",
       "stale": false,
       "link_targets": [],
-      "presentation_policy": "full_render",
+      "presentation_policy": "overview_only",
       "presentation_model": null
     },
     {
@@ -553,7 +553,7 @@
       "stale": false,
       "link_targets": [],
       "presentation_policy": "full_render",
-      "presentation_model": null
+      "presentation_model": "HTMLドキュメント/Presentation-Model/documents/doc-20260512-HtmlDocumentGeneration.json"
     },
     {
       "page_id": "reference:doc-20260512-HtmlSiteManifest",
@@ -568,8 +568,8 @@
       "source_hash": "19b48448396b2adebcbf81612f6b4b4ef13b4d58a0dc1e95cc19e67ac92b0c12",
       "stale": false,
       "link_targets": [],
-      "presentation_policy": "full_render",
-      "presentation_model": null
+      "presentation_policy": "overview_only",
+      "presentation_model": "HTMLドキュメント/Presentation-Model/documents/doc-20260512-HtmlSiteManifest.json"
     },
     {
       "page_id": "reference:doc-20260512-HtmlOutputUnit",
@@ -584,24 +584,8 @@
       "source_hash": "2a428a0df481004494184a526733460411982656e0bbdf1846709e8fece8a155",
       "stale": false,
       "link_targets": [],
-      "presentation_policy": "full_render",
-      "presentation_model": null
-    },
-    {
-      "page_id": "reference:doc-20260512-HtmlDirectoryStructure",
-      "profile": [
-        "reference"
-      ],
-      "source_markdown": "仕様/00_共通/18_HTMLディレクトリ構成規約.md",
-      "canonical_title": "HTMLディレクトリ構成規約",
-      "doc_id": "doc-20260512-HtmlDirectoryStructure",
-      "sec_id": [],
-      "output_html_path": "reference/doc-20260512-HtmlDirectoryStructure.html",
-      "source_hash": "a92f386ce0970fe0aa43400e5fdb339d2bde0cb2617c3d37756e4712945e7eeb",
-      "stale": false,
-      "link_targets": [],
-      "presentation_policy": "full_render",
-      "presentation_model": null
+      "presentation_policy": "link_only",
+      "presentation_model": "HTMLドキュメント/Presentation-Model/documents/doc-20260512-HtmlOutputUnit.json"
     },
     {
       "page_id": "reference:doc-20260512-HtmlTraceabilityVisualization",
@@ -616,7 +600,7 @@
       "source_hash": "dbc1b66e617916c44c5172ded381d8e5ce729810487685893dd02d52d50a9dda",
       "stale": false,
       "link_targets": [],
-      "presentation_policy": "full_render",
+      "presentation_policy": "overview_only",
       "presentation_model": null
     },
     {
@@ -632,7 +616,7 @@
       "source_hash": "a0c6ec5f07342837f04c1ea287b019e9c1d77b377d7394b0601759f24e51e5c8",
       "stale": false,
       "link_targets": [],
-      "presentation_policy": "full_render",
+      "presentation_policy": "overview_only",
       "presentation_model": null
     },
     {
@@ -648,7 +632,7 @@
       "source_hash": "3cc1cb0fa853ae60e1fb622ebecbe269fdc4332d8e6cabf61558a546de2458b1",
       "stale": false,
       "link_targets": [],
-      "presentation_policy": "full_render",
+      "presentation_policy": "overview_only",
       "presentation_model": null
     },
     {
@@ -664,7 +648,7 @@
       "source_hash": "1cbf81eabdb5f5484845916dc3d584f6ccb86f89420c1d1039cd733e93c9a927",
       "stale": false,
       "link_targets": [],
-      "presentation_policy": "full_render",
+      "presentation_policy": "overview_only",
       "presentation_model": null
     },
     {
@@ -680,7 +664,7 @@
       "source_hash": "a8225a2420c7629cd66fab412c97229cd5aff2471e813ab7926e218814683eb3",
       "stale": false,
       "link_targets": [],
-      "presentation_policy": "full_render",
+      "presentation_policy": "overview_only",
       "presentation_model": null
     },
     {
@@ -696,7 +680,7 @@
       "source_hash": "f726e95cc49a5fd7409cba5f982cc3a8974d4bfa40e4b6c772c3a35579cb4d82",
       "stale": false,
       "link_targets": [],
-      "presentation_policy": "full_render",
+      "presentation_policy": "overview_only",
       "presentation_model": null
     },
     {
@@ -715,7 +699,7 @@
       "source_hash": "be7deff580da1407ff09ce2dc0cb67fcad8eced516fb6e1d74a250f2680bb5d9",
       "stale": false,
       "link_targets": [],
-      "presentation_policy": "full_render",
+      "presentation_policy": "overview_only",
       "presentation_model": null
     },
     {
@@ -731,7 +715,7 @@
       "source_hash": "4e20e5444837a9e63bbdcfd87aa366d144d8c43a6b45656cda8bfc7b4a6204ba",
       "stale": false,
       "link_targets": [],
-      "presentation_policy": "full_render",
+      "presentation_policy": "overview_only",
       "presentation_model": null
     },
     {
@@ -747,7 +731,7 @@
       "source_hash": "df906141dfad5500b4ea665426e10a70d0e3c1713755c048bd9b0dd6113ffa1c",
       "stale": false,
       "link_targets": [],
-      "presentation_policy": "full_render",
+      "presentation_policy": "overview_only",
       "presentation_model": null
     },
     {
@@ -763,7 +747,7 @@
       "source_hash": "5f542a43e43eaecc5acdde549deefece74d60c29385b96199a6d23a05a1655ef",
       "stale": false,
       "link_targets": [],
-      "presentation_policy": "full_render",
+      "presentation_policy": "overview_only",
       "presentation_model": null
     },
     {
@@ -779,7 +763,7 @@
       "source_hash": "cafda1f53cc9a6681f0889f7ea20ac82ba38a6cedf3765d50c49339217972e8f",
       "stale": false,
       "link_targets": [],
-      "presentation_policy": "full_render",
+      "presentation_policy": "overview_only",
       "presentation_model": null
     },
     {
@@ -799,5 +783,13 @@
       "presentation_model": null
     }
   ],
-  "not_generated_documents": []
+  "not_generated_documents": [
+    {
+      "doc_id": "doc-20260512-HtmlDirectoryStructure",
+      "canonical_title": "HTMLディレクトリ構成規約",
+      "source_markdown": "仕様/00_共通/18_HTMLディレクトリ構成規約.md",
+      "presentation_policy": "not_generated",
+      "reason": "not generated 一覧表示 PoC を検証するため。"
+    }
+  ]
 }

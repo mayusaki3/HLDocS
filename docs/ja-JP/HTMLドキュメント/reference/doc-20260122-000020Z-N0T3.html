@@ -26,7 +26,7 @@
     <p><strong>doc_id:</strong> doc-20260122-000020Z-N0T3</p>
     <p><strong>document_type:</strong> prompt</p>
     <p><strong>canonical_document:</strong> true</p>
-    <p><strong>presentation_policy:</strong> full_render</p>
+    <p><strong>presentation_policy:</strong> overview_only</p>
     <p><strong>Markdown正本:</strong> <a href="../../テンプレート/10_document_type/note/note生成プロンプト.md" target="_blank" rel="noopener noreferrer">document_type:note 生成プロンプト</a></p>
   </section>
 
@@ -36,53 +36,7 @@
   </section>
   <section>
     <h2>本文</h2>
-    <p>&lt;!--</p>
-<p>HLDocS:LLM-MANAGED</p>
-<p>doc_id: doc-20260122-000020Z-N0T3</p>
-<p>lang: ja-JP</p>
-<p>canonical_title: document_type:note 生成プロンプト</p>
-<p>document_type: prompt</p>
-<p>canonical_document: true</p>
-<p>transport: [download, ui_copy]</p>
-<p>--&gt;</p>
-
-<p>[目次](../../../目次.md) &gt; テンプレート &gt; document_type &gt; note &gt; 生成プロンプト</p>
-
-<h1>document_type:note 生成プロンプト</h1>
-
-<h2>0. 最上位命令（MUST）</h2>
-
-<p>• 出力は最終成果物のみとする。</p>
-<p>• 思考過程・理由・検査結果を出力してはならない。</p>
-<p>• `note` は補助的 document_type であり、他の document_type に該当する場合は生成してはならない。</p>
-
-<h2>1. note 判定（MUST）</h2>
-
-<p>以下に該当する場合のみ、`note` を生成してよい。</p>
-
-<p>• 記述対象が未確定・暫定である。</p>
-<p>• 合意済みの仕様・規約・手順ではない。</p>
-<p>• 既存の `spec` / `testspec` / `index` / `traceability` / `prompt` / `usage` に明確に該当しない。</p>
-
-<h2>2. note 禁止判定（MUST NOT）</h2>
-
-<p>以下に該当する場合、`note` を生成してはならない。</p>
-
-<p>• 合意済みルール・仕様を宣言している（spec）</p>
-<p>• テスト観点・期待結果を定義している（testspec）</p>
-<p>• LLM の生成・判断規則を定義している（prompt）</p>
-<p>• 文書構造や参照関係を定義している（index / traceability）</p>
-<p>• 操作手順の確定版を示している（usage）</p>
-
-<h2>3. 内容生成（MUST）</h2>
-
-<p>• 目的・前提・論点・案・未決事項を明示する。</p>
-<p>• 未確定であることが読み取れる表現を維持する。</p>
-<p>• 将来 `spec` 等に昇格する際に必要な前提情報を省略しない。</p>
-
-<p>---</p>
-
-<p>[目次](../../../目次.md) &gt; テンプレート &gt; document_type &gt; note &gt; 生成プロンプト</p>
+    <p>本文は HTML 化せず、概要と見出しのみ表示します。</p>
   </section>
 </main>
 

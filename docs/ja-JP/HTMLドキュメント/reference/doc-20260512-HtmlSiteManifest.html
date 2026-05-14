@@ -26,8 +26,18 @@
     <p><strong>doc_id:</strong> doc-20260512-HtmlSiteManifest</p>
     <p><strong>document_type:</strong> spec</p>
     <p><strong>canonical_document:</strong> true</p>
-    <p><strong>presentation_policy:</strong> full_render</p>
+    <p><strong>presentation_policy:</strong> overview_only</p>
     <p><strong>Markdown正本:</strong> <a href="../../仕様/00_共通/16_HTML_Site_Manifest規約.md" target="_blank" rel="noopener noreferrer">HTML Site Manifest規約</a></p>
+  </section>
+
+  <section>
+    <h2>概要</h2>
+    <p>HTML Site Manifest の generated metadata 管理規約。</p>
+  </section>
+
+  <section>
+    <h2>HTML表示方針の理由</h2>
+    <p>概要と見出しのみを表示する PoC を検証するため。</p>
   </section>
 
   <section>
@@ -36,224 +46,7 @@
   </section>
   <section>
     <h2>本文</h2>
-    <p>&lt;!--</p>
-<p>HLDocS:LLM-MANAGED</p>
-<p>doc_id: doc-20260512-HtmlSiteManifest</p>
-<p>lang: ja-JP</p>
-<p>canonical_title: HTML Site Manifest規約</p>
-<p>document_type: spec</p>
-<p>canonical_document: true</p>
-<p>--&gt;</p>
-
-<p>[目次](../../目次.md) &gt; 仕様 &gt; 共通 &gt; HTML Site Manifest規約</p>
-
-<h1>HTML Site Manifest規約</h1>
-
-<p>本書は、「HLDocS 前提条件」という仕様が参照可能である場合にのみ適用される。</p>
-
-<p>• 「HLDocS 前提条件」が入力として与えられていない場合、または当該仕様に基づく適用可否が確定していない場合、本書に基づく判断・生成・再作成・工程実行を行ってはならない。</p>
-<p>• この場合、許可されるのは、提示された文書の受理および存在確認、ならびに前提条件が未参照または未確定である旨の通知のみとする。</p>
-<p>• 「HLDocS 前提条件」が入力文書一覧に含まれない場合、生成・再作成・成果物提示を一切行ってはならない。</p>
-
-<p>---</p>
-
-<h2>1. 目的</h2>
-
-<p>本書は、HLDocS における HTML ドキュメント生成結果の論理管理方法を定義する。</p>
-
-<p>HTML Site Manifest は、以下を安定化することを目的とする。</p>
-
-<p>• HTML ドキュメント間リンク</p>
-<p>• profile 別部分生成</p>
-<p>• stale representation 判定</p>
-<p>• restructuring / migration</p>
-<p>• Traceability 可視化</p>
-<p>• generated output 管理</p>
-
-<p>---</p>
-
-<h2>2. 基本方針</h2>
-
-<p>HTML Site Manifest は、HTML ドキュメント生成結果を管理する generated metadata とする。</p>
-
-<p>Manifest は canonical specification ではない。</p>
-
-<p>Markdown 正本が canonical であり、Manifest は generated operational metadata として扱う。</p>
-
-<p>Manifest を編集正本として扱ってはならない（MUST NOT）。</p>
-
-<p>Manifest から Markdown 正本を逆生成してはならない（MUST NOT）。</p>
-
-<p>---</p>
-
-<h2>3. Manifest の役割</h2>
-
-<p>Manifest は、少なくとも以下を管理する。</p>
-
-<p>• 生成対象 HTML 一覧</p>
-<p>• source markdown</p>
-<p>• profile</p>
-<p>• 内部リンク解決</p>
-<p>• stale 状態</p>
-<p>• Traceability 関係</p>
-<p>• restructuring / migration 関係</p>
-
-<p>Manifest は、HTML ドキュメント間リンクの唯一の論理根拠として扱わなければならない（MUST）。</p>
-
-<p>---</p>
-
-<h2>4. Manifest 必須項目</h2>
-
-<p>Manifest は、少なくとも以下を保持しなければならない（MUST）。</p>
-
-<h3>4.1 page_id</h3>
-
-<p>HTML ページ識別子。</p>
-
-<h3>4.2 profile</h3>
-
-<p>対象 profile。</p>
-
-<p>例：</p>
-
-<pre><code>overview
-reference
-traceability
-test-report
-full</code></pre>
-
-<h3>4.3 source_markdown</h3>
-
-<p>生成元 Markdown 正本。</p>
-
-<h3>4.4 canonical_title</h3>
-
-<p>表示用 canonical title。</p>
-
-<h3>4.5 doc_id</h3>
-
-<p>対応する `doc_id`。</p>
-
-<h3>4.6 sec_id</h3>
-
-<p>対応する `sec_id` 一覧。</p>
-
-<h3>4.7 output_html_path</h3>
-
-<p>出力 HTML パス。</p>
-
-<h3>4.8 generated_at</h3>
-
-<p>生成日時。</p>
-
-<h3>4.9 source_hash</h3>
-
-<p>生成元 Markdown hash。</p>
-
-<h3>4.10 stale</h3>
-
-<p>stale representation 状態。</p>
-
-<h3>4.11 link_targets</h3>
-
-<p>リンク可能対象 page_id 一覧。</p>
-
-<p>---</p>
-
-<h2>5. Link 解決規則</h2>
-
-<p>HTML ドキュメント間リンクは、Manifest に存在するページのみを対象としなければならない（MUST）。</p>
-
-<p>Manifest に存在しないページへリンクしてはならない（MUST NOT）。</p>
-
-<p>LLM は、未生成ページを推測補完してリンク生成してはならない（MUST NOT）。</p>
-
-<p>---</p>
-
-<h2>6. stale representation</h2>
-
-<p>以下の場合、HTML ドキュメントは stale representation として扱う。</p>
-
-<p>• source_hash 不一致</p>
-<p>• source markdown 更新後未再生成</p>
-<p>• migration 後未更新</p>
-<p>• restructuring 後未更新</p>
-
-<p>stale representation は、Canonical Specification と等価であるとみなしてはならない（MUST NOT）。</p>
-
-<p>Manifest は、stale 状態を保持しなければならない（MUST）。</p>
-
-<p>---</p>
-
-<h2>7. profile 関係</h2>
-
-<p>Manifest は、各 HTML ページがどの profile に属するかを保持しなければならない（MUST）。</p>
-
-<p>1ページが複数 profile に属してもよい（MAY）。</p>
-
-<p>---</p>
-
-<h2>8. restructuring / migration</h2>
-
-<p>Manifest は、restructuring / migration 関係を保持してよい（MAY）。</p>
-
-<p>例：</p>
-
-<pre><code>old_page_id
-↓
-new_page_id</code></pre>
-
-<pre><code>old_sec_id
-↓
-new_sec_id</code></pre>
-
-<p>など。</p>
-
-<p>---</p>
-
-<h2>9. Traceability 関係</h2>
-
-<p>Manifest は、少なくとも以下の Traceability 関係を保持してよい（MAY）。</p>
-
-<pre><code>spec
-↓
-testspec
-↓
-code
-↓
-testcode</code></pre>
-
-<p>Manifest は、reverse traceability を保持してよい（MAY）。</p>
-
-<p>---</p>
-
-<h2>10. 非目標</h2>
-
-<p>本規約は、以下を目的としない。</p>
-
-<p>• CMS</p>
-<p>• DB サーバ</p>
-<p>• 動的検索サーバ</p>
-<p>• GitHub Pages 固定</p>
-<p>• 完全な Web アプリケーション</p>
-
-<p>---</p>
-
-<h2>11. 後続仕様化対象</h2>
-
-<p>後続仕様では、少なくとも以下を詳細化する。</p>
-
-<p>• Manifest JSON 形式</p>
-<p>• page_id 形式</p>
-<p>• source_hash 算出方法</p>
-<p>• stale 判定アルゴリズム</p>
-<p>• migration relation format</p>
-<p>• reverse link format</p>
-<p>• profile inheritance</p>
-
-<p>---</p>
-
-<p>[目次](../../目次.md) &gt; 仕様 &gt; 共通 &gt; HTML Site Manifest規約</p>
+    <p>本文は HTML 化せず、概要と見出しのみ表示します。</p>
   </section>
 </main>
 

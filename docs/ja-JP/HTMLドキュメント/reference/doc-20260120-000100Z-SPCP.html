@@ -26,7 +26,7 @@
     <p><strong>doc_id:</strong> doc-20260120-000100Z-SPCP</p>
     <p><strong>document_type:</strong> prompt</p>
     <p><strong>canonical_document:</strong> true</p>
-    <p><strong>presentation_policy:</strong> full_render</p>
+    <p><strong>presentation_policy:</strong> overview_only</p>
     <p><strong>Markdown正本:</strong> <a href="../../テンプレート/10_document_type/spec/spec生成プロンプト.md" target="_blank" rel="noopener noreferrer">document_type:spec 生成プロンプト</a></p>
   </section>
 
@@ -36,101 +36,7 @@
   </section>
   <section>
     <h2>本文</h2>
-    <p>&lt;!--</p>
-<p>HLDocS:LLM-MANAGED</p>
-<p>doc_id: doc-20260120-000100Z-SPCP</p>
-<p>lang: ja-JP</p>
-<p>canonical_title: document_type:spec 生成プロンプト</p>
-<p>document_type: prompt</p>
-<p>canonical_document: true</p>
-<p>transport: [true_out]</p>
-<p>--&gt;</p>
-
-<p>[目次](../../../目次.md) &gt; テンプレート &gt; document_type &gt; spec &gt; 生成プロンプト</p>
-
-<h1>document_type:spec 生成プロンプト</h1>
-
-<p>本プロンプトは、HLDocS における `document_type: spec` を生成・更新する際の  </p>
-<p>**判断規則および自己検査条件**を定義する。</p>
-
-<p>---</p>
-
-<h2>0. 最上位命令（MUST）</h2>
-
-<p>• document_type は **spec 固定**とする。</p>
-<p>• 仕様対象・範囲が未合意の場合、生成してはならない。</p>
-<p>• 出力は **最終成果物のみ**とする。</p>
-
-<p>---</p>
-
-<h2>1. 生成判断規則（MUST）</h2>
-
-<p>• spec は **宣言文**として記述する。</p>
-<p>• 「何が正か」を定義し、「どう行うか」を書いてはならない。</p>
-<p>• 説明・背景・例示は最小限に留める。</p>
-
-<p>---</p>
-
-<h2>2. 禁止事項（MUST NOT）</h2>
-
-<p>• テスト条件・検証観点の記述</p>
-<p>• 実装方法・運用手順の説明</p>
-<p>• TODO・メモ・作業指示文</p>
-<p>• 生成方法・編集手順の説明</p>
-
-<p>---</p>
-
-<h2>2.x Traceability 記法（任意・形式定義）</h2>
-
-<p>本プロンプトは、Traceability 規約に基づく記法を  </p>
-<p>**「任意機能」かつ「形式定義のみ」**として扱う。</p>
-
-<p>ユーザー指示、または入力文書内に既存の Traceability 記法が存在する場合に限り、  </p>
-<p>以下の形式を使用してよい。</p>
-
-<h3>sec_id（章単位ID）</h3>
-
-<p>• 章見出し直下に **HTML コメント**として記載する</p>
-<p>• 形式：`&lt;!-- hldocs:sec_id=&lt;sec_id&gt; --&gt;`</p>
-<p>• sec_id の付与は必須ではない</p>
-<p>• 既存の sec_id は **変更してはならない**</p>
-<p>• 新規 sec_id は、ユーザー指示がある場合にのみ付与してよい</p>
-
-<h3>ref（章単位参照）</h3>
-
-<p>• 参照識別子の形式：`doc_id#sec_id`</p>
-<p>• 人間向け参照として Markdown の相対パスリンクを使用してよい</p>
-<p>• 機械向け情報として、リンク直後に HTML コメントで ref を記載してよい</p>
-<p>• 形式：`&lt;!-- hldocs:ref=&lt;doc_id&gt;#&lt;sec_id&gt; --&gt;`</p>
-
-<p>（例）</p>
-
-<p>• [章タイトル](./path/to/doc.md)  </p>
-<p>  &lt;!-- hldocs:ref=doc-YYYYMMDD-HHMMSSZ-XXXX#abc123 --&gt;</p>
-
-<p>---</p>
-
-<h2>3. LLM-MANAGED 値決定規則（MUST）</h2>
-
-<p>• `doc_id`</p>
-<p>  - 新規生成時のみ生成する</p>
-<p>  - 更新時は既存値を必ず維持する</p>
-<p>• `document_type` : `spec`</p>
-<p>• `canonical_document` : `true`</p>
-<p>• `transport` : `[true_out]`</p>
-
-<p>---</p>
-
-<h2>4. 内部自己検査（非出力・MUST）</h2>
-
-<p>• 本文が宣言文主体であること</p>
-<p>• 禁止事項が含まれていないこと</p>
-<p>• 共通ドキュメント構造を満たすこと</p>
-<p>• sec_id / ref を **勝手に追加・変更していないこと**</p>
-
-<p>---</p>
-
-<p>[目次](../../../目次.md) &gt; テンプレート &gt; document_type &gt; spec &gt; 生成プロンプト</p>
+    <p>本文は HTML 化せず、概要と見出しのみ表示します。</p>
   </section>
 </main>
 
