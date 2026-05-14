@@ -709,6 +709,7 @@ def write_index_page(
     pages: list[dict[str, object]],
     generated_at: str,
     not_generated_documents: list[dict[str, object]],
+    navigation_model: dict[str, Any] | None,
 ) -> None:
     """HTML ドキュメント入口 index.html を生成する。
 
@@ -717,9 +718,25 @@ def write_index_page(
         pages: Manifest page entries。
         generated_at: 生成日時。
         not_generated_documents: HTML生成対象外の文書一覧。
+        navigation_model: index.html に表示する navigation tree の Presentation Model。
     """
 
     reference_items: list[str] = []
+    navigation_html = ""
+    if navigation_model:
+        pages_by_doc_id = {
+            str(page["doc_id"]): page
+            for page in pages
+            if page.get("doc_id") and page.get("output_html_path")
+        }
+        items = navigation_model.get("items", [])
+        if isinstance(items, list) and items:
+            navigation_html = f"""
+    <section>
+        <h2>Navigation</h2>
+        <ul>{render_navigation_items(items, pages_by_doc_id)}</ul>
+    </section>
+    """
     for page in pages:
         if "reference" not in page.get("profile", []):
             continue
@@ -749,6 +766,7 @@ def write_index_page(
     <h2>Overview</h2>
     <p><a href="overview/index.html">HLDocS HTML Overview</a></p>
   </section>
+  {navigation_html}
   <section>
     <h2>Reference</h2>
     <ul>{''.join(reference_items)}</ul>
@@ -815,6 +833,40 @@ def ensure_no_space_paths(output_root: Path) -> None:
         raise RuntimeError(f"Generated paths contain spaces:\n{joined}")
 
 
+def load_navigation_model(input_root: Path) -> dict[str, Any] | None:
+    """site/navigation.json を読み込む。"""
+
+    path = presentation_model_root(input_root) / "site" / "navigation.json"
+    if not path.exists():
+        return None
+    return json.loads(path.read_text(encoding="utf-8"))
+
+
+def render_navigation_items(items: list[dict[str, Any]], pages_by_doc_id: dict[str, dict[str, object]]) -> str:
+    """navigation tree を HTML に変換する。"""
+
+    rendered_items: list[str] = []
+    for item in items:
+        title = html.escape(str(item.get("title", "")))
+        doc_id = item.get("doc_id")
+        children = item.get("children", [])
+
+        if doc_id and doc_id in pages_by_doc_id:
+            page = pages_by_doc_id[str(doc_id)]
+            path = html.escape(str(page["output_html_path"]))
+            label = f'<a href="{path}">{title}</a>'
+        else:
+            label = title
+
+        child_html = ""
+        if isinstance(children, list) and children:
+            child_html = f"<ul>{render_navigation_items(children, pages_by_doc_id)}</ul>"
+
+        rendered_items.append(f"<li>{label}{child_html}</li>")
+
+    return "".join(rendered_items)
+
+
 def generate(input_root: Path, output_root: Path, profiles: list[str]) -> None:
     """HTML PoC 生成を実行する。
 
@@ -831,6 +883,7 @@ def generate(input_root: Path, output_root: Path, profiles: list[str]) -> None:
     documents = load_markdown_documents(input_root)
     presentation_documents, has_presentation_model = load_presentation_documents(input_root)
     generated_at = _datetime.datetime.now(_datetime.UTC).isoformat()
+    navigation_model = load_navigation_model(input_root)
 
     pages: list[dict[str, object]] = []
     not_generated_documents: list[dict[str, object]] = []
@@ -845,7 +898,7 @@ def generate(input_root: Path, output_root: Path, profiles: list[str]) -> None:
     if "overview" in profiles:
         pages.append(write_overview_page(output_root, documents))
 
-    write_index_page(output_root, pages, generated_at, not_generated_documents)
+    write_index_page(output_root, pages, generated_at, not_generated_documents, navigation_model)
     write_manifest(output_root, profiles, pages, generated_at, not_generated_documents)
     ensure_no_space_paths(output_root)
 

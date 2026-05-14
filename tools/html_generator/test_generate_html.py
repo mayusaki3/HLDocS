@@ -338,3 +338,51 @@ canonical_document: true
     assert {
         item["doc_id"] for item in manifest["not_generated_documents"]
     } == {"doc-not-generated"}
+
+
+# HTML-POC-UT-015
+def test_navigation_model_is_displayed_in_index(tmp_path: Path) -> None:
+    """navigation.json に基づき index.html に Navigation が表示されること。"""
+
+    input_root = tmp_path / "docs" / "ja-JP"
+    source = input_root / "仕様" / "00_共通"
+    source.mkdir(parents=True)
+
+    (source / "01_テスト仕様.md").write_text(VALID_MARKDOWN, encoding="utf-8")
+
+    navigation_dir = input_root / "HTMLドキュメント" / "Presentation-Model" / "site"
+    navigation_dir.mkdir(parents=True)
+    (navigation_dir / "navigation.json").write_text(
+        json.dumps(
+            {
+                "items": [
+                    {
+                        "title": "テストNavigation",
+                        "children": [
+                            {
+                                "title": "テスト仕様",
+                                "doc_id": "doc-test-001",
+                            },
+                            {
+                                "title": "未生成仕様",
+                                "doc_id": "doc-not-generated",
+                            },
+                        ],
+                    }
+                ]
+            },
+            ensure_ascii=False,
+            indent=2,
+        ),
+        encoding="utf-8",
+    )
+
+    output_root = input_root / "HTMLドキュメント"
+    generate_html.generate(input_root, output_root, ["overview", "reference"])
+
+    index_html = (output_root / "index.html").read_text(encoding="utf-8")
+
+    assert "<h2>Navigation</h2>" in index_html
+    assert "テストNavigation" in index_html
+    assert '<a href="reference/doc-test-001.html">テスト仕様</a>' in index_html
+    assert "未生成仕様" in index_html
