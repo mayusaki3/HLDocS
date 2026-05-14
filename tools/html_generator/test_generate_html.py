@@ -233,3 +233,22 @@ def test_manifest_link_targets_only_reference_existing_pages(tmp_path: Path) -> 
     page_ids = {page["page_id"] for page in manifest["pages"]}
     for page in manifest["pages"]:
         assert set(page["link_targets"]).issubset(page_ids)
+
+# HTML-POC-UT-013
+def test_markdown_source_link_opens_in_new_tab(tmp_path: Path) -> None:
+    """Markdown 正本リンクが別タブ表示用属性を持つこと。"""
+
+    input_root = tmp_path / "docs" / "ja-JP"
+    source = input_root / "仕様" / "00_共通"
+    source.mkdir(parents=True)
+    (source / "01_テスト仕様.md").write_text(VALID_MARKDOWN, encoding="utf-8")
+
+    output_root = input_root / "HTMLドキュメント"
+    generate_html.generate(input_root, output_root, ["overview", "reference"])
+
+    reference_files = list((output_root / "reference").glob("*.html"))
+    assert reference_files
+
+    reference_html = reference_files[0].read_text(encoding="utf-8")
+    assert 'target="_blank"' in reference_html
+    assert 'rel="noopener noreferrer"' in reference_html

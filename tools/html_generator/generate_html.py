@@ -523,7 +523,7 @@ def build_reference_body(document: MarkdownDocument, presentation_document: Pres
     <p><strong>document_type:</strong> {html.escape(document.document_type)}</p>
     <p><strong>canonical_document:</strong> {html.escape(document.canonical_document)}</p>
     <p><strong>presentation_policy:</strong> {html.escape(policy)}</p>
-    <p><strong>Markdown正本:</strong> <a href="{html.escape(source_link)}">{html.escape(document.canonical_title)}</a></p>
+    <p><strong>Markdown正本:</strong> <a href="{html.escape(source_link)}" target="_blank" rel="noopener noreferrer">{html.escape(document.canonical_title)}</a></p>
   </section>
 """
     if overview:
