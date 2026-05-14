@@ -1,0 +1,6 @@
+{
+  "doc_id": "doc-20260512-HtmlDocumentGeneration",
+  "presentation_policy": "full_render",
+  "overview": "HTMLドキュメント生成の基本規約を定義する。",
+  "policy_reason": "reference profile における本文HTML生成を検証するため。"
+}
