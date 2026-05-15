@@ -1,0 +1,24 @@
+<!doctype html>
+<html lang="ja">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Markdown Viewer</title>
+  <link rel="stylesheet" href="viewer.css">
+</head>
+<body>
+  <header class="viewer-header">
+    <h1 id="viewer-title">Markdown Viewer</h1>
+    <nav class="viewer-toolbar">
+      <button type="button" id="render-mode">Render</button>
+      <button type="button" id="source-mode">Source</button>
+      <a id="raw-link" href="#" target="_blank" rel="noopener noreferrer">Raw Markdown</a>
+    </nav>
+  </header>
+  <main>
+    <article id="rendered" class="markdown-body"></article>
+    <pre id="source" class="markdown-source" hidden><code></code></pre>
+  </main>
+  <script src="viewer.js"></script>
+</body>
+</html>

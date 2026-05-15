@@ -49,7 +49,10 @@ def test_safe_slug_removes_spaces() -> None:
 def test_markdown_source_link_points_to_canonical_markdown(tmp_path: Path) -> None:
     document = _load_single_document(tmp_path)
 
-    assert markdown_source_link(document) == "../../仕様/00_共通/01_テスト仕様.md"
+    assert (
+        markdown_source_link(document)
+        == "../markdown/viewer.html?src=../../仕様/00_共通/01_テスト仕様.md"
+    )
 
 
 # HTML-POC-UT-RD-002
