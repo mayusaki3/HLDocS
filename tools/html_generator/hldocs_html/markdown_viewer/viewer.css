@@ -1,0 +1,40 @@
+body {
+  font-family: sans-serif;
+  line-height: 1.7;
+  margin: 2rem;
+  max-width: 1080px;
+}
+
+.viewer-header {
+  border-bottom: 1px solid #ddd;
+  margin-bottom: 1.5rem;
+  padding-bottom: 1rem;
+}
+
+.viewer-toolbar {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+
+.viewer-toolbar button {
+  border: 1px solid #ccc;
+  border-radius: 0.25rem;
+  background: #f8f8f8;
+  cursor: pointer;
+  padding: 0.35rem 0.7rem;
+}
+
+.metadata-panel {
+  border: 1px solid #ddd;
+  background: #fafafa;
+  margin-bottom: 1.5rem;
+  padding: 1rem;
+}
+
+.markdown-body pre,
+.markdown-source {
+  background: #f5f5f5;
+  overflow-x: auto;
+  padding: 1rem;
+}
