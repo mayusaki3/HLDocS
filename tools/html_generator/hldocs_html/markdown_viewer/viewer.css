@@ -1,14 +1,17 @@
 body {
   font-family: sans-serif;
   line-height: 1.7;
-  margin: 2rem;
-  max-width: 1080px;
+  margin: 0;
+  background: #ffffff;
 }
 
 .viewer-header {
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+  background: #ffffff;
   border-bottom: 1px solid #ddd;
-  margin-bottom: 1.5rem;
-  padding-bottom: 1rem;
+  padding: 1rem 1.5rem;
 }
 
 .viewer-toolbar {
@@ -25,6 +28,28 @@ body {
   padding: 0.35rem 0.7rem;
 }
 
+.viewer-layout {
+  display: grid;
+  grid-template-columns: 280px minmax(0, 1fr);
+  gap: 2rem;
+  padding: 1.5rem;
+}
+
+.toc-panel {
+  position: sticky;
+  top: 7rem;
+  align-self: start;
+  max-height: calc(100vh - 8rem);
+  overflow-y: auto;
+  border-right: 1px solid #eee;
+  padding-right: 1rem;
+}
+
+.content-panel {
+  min-width: 0;
+  max-width: 1080px;
+}
+
 .metadata-panel {
   border: 1px solid #ddd;
   background: #fafafa;
@@ -37,4 +62,20 @@ body {
   background: #f5f5f5;
   overflow-x: auto;
   padding: 1rem;
+}
+
+@media (max-width: 960px) {
+  .viewer-layout {
+    grid-template-columns: 1fr;
+  }
+
+  .toc-panel {
+    position: static;
+    max-height: none;
+    border-right: none;
+    border-bottom: 1px solid #eee;
+    margin-bottom: 1rem;
+    padding-right: 0;
+    padding-bottom: 1rem;
+  }
 }
