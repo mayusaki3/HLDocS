@@ -22,10 +22,13 @@ VIEWER_HTML = """<!doctype html>
       <button type=\"button\" id=\"bottom-button\" data-i18n=\"bottom\">Bottom</button>
     </nav>
   </header>
-  <main>
-    <section id=\"metadata\" class=\"metadata-panel\" hidden></section>
-    <article id=\"rendered\" class=\"markdown-body\"></article>
-    <pre id=\"source\" class=\"markdown-source\" hidden><code></code></pre>
+  <main class=\"viewer-layout\">
+    <aside id=\"toc-panel\" class=\"toc-panel\" aria-label=\"Table of contents\"></aside>
+    <section class=\"content-panel\">
+      <section id=\"metadata\" class=\"metadata-panel\" hidden></section>
+      <article id=\"rendered\" class=\"markdown-body\"></article>
+      <pre id=\"source\" class=\"markdown-source\" hidden><code></code></pre>
+    </section>
   </main>
   <script src=\"viewer.js\"></script>
 </body>
