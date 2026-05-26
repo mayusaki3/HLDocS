@@ -6,9 +6,65 @@
 
 HTML は Markdown 正本を置き換えるものではなく、read-only Operational Representation として生成する。
 
+本ディレクトリは Generate 系責務のみを扱う。
+
+```text
+Canonical Markdown
+→ Operational HTML
+```
+
 ---
 
-## 2. 対象 profile
+## 2. markdown_viewer との責務分離
+
+markdown_viewer は html_generator の runtime subsystem ではない。
+
+markdown_viewer は以下を目的とする。
+
+```text
+Canonical Markdown Browser
+```
+
+一方、html_generator は以下を扱う。
+
+```text
+- HTML generation
+- relationship analysis
+- operational visualization
+- presentation generation
+- summarization
+```
+
+---
+
+## 3. html_generator の責務
+
+html_generator は Generate 系責務を扱う。
+
+### 対象
+
+```text
+- HTML generation
+- relationship graph generation
+- presentation generation
+- operational visualization
+- summarization
+- transformation
+```
+
+### 非対象
+
+```text
+- lightweight markdown browsing
+- local markdown navigation UI
+- source browsing
+```
+
+これらは markdown_viewer 側責務。
+
+---
+
+## 4. 対象 profile
 
 初期 PoC では、以下のみを対象とする。
 
@@ -24,47 +80,81 @@ HTML は Markdown 正本を置き換えるものではなく、read-only Operati
 
 ---
 
-## 3. ディレクトリ構成
+## 5. ディレクトリ構成
 
 ```text
-tools/html_generator/
-├── generate_html.py
-├── hldocs_html/
-│   ├── constants.py
-│   ├── models.py
-│   ├── markdown_loader.py
-│   ├── presentation_model.py
-│   ├── renderer.py
-│   ├── manifest.py
-│   └── generator.py
-├── tests/
-│   ├── test_markdown_loader.py
-│   ├── test_presentation_model.py
-│   ├── test_renderer.py
-│   └── test_generator.py
-└── test_generate_html.py
+tools/
+├── html_generator/
+│   ├── generate_html.py
+│   ├── hldocs_html/
+│   │   ├── constants.py
+│   │   ├── models.py
+│   │   ├── markdown_loader.py
+│   │   ├── presentation_model.py
+│   │   ├── renderer.py
+│   │   ├── manifest.py
+│   │   └── generator.py
+│   ├── tests/
+│   └── test_generate_html.py
+└── markdown_viewer/
+    ├── viewer.js
+    ├── viewer.css
+    ├── viewer_template.py
+    └── README.md
 ```
-
-役割は以下とする。
-
-| Path | 役割 |
-| --- | --- |
-| `generate_html.py` | CLI 互換入口。実処理は `hldocs_html` へ委譲する。 |
-| `hldocs_html/markdown_loader.py` | Markdown 正本列挙、LLM-MANAGED metadata 抽出、見出し・sec_id 抽出。 |
-| `hldocs_html/presentation_model.py` | Presentation Model 読み込み、presentation_policy 解決、navigation 読み込み。 |
-| `hldocs_html/renderer.py` | reference / overview / index / Navigation / Document Map の HTML 生成。 |
-| `hldocs_html/manifest.py` | HTML Site Manifest 生成、生成パス検査。 |
-| `hldocs_html/generator.py` | 全体 orchestration。 |
-| `tests/` | 責務別テスト。CI の実行対象。 |
-| `test_generate_html.py` | 旧ローカルコマンド互換用テスト入口。 |
 
 ---
 
-## 4. 実行方法
+## 6. html_generator 側へ残すもの
+
+以下は html_generator 側へ残す。
+
+```text
+- relationship model
+- operational graph
+- generated visualization
+- dependency analysis
+- presentation model
+- summarization visualization
+```
+
+---
+
+## 7. html_generator 側へ残さないもの
+
+以下は markdown_viewer 側へ分離する。
+
+```text
+- markdown render UI
+- TOC UI
+- source toggle UI
+- hash navigation UI
+- sticky toolbar
+- Mermaid render UI
+```
+
+---
+
+## 8. viewer/runtime 化禁止
+
+html_generator は markdown_viewer を以下へ拡張しない。
+
+```text
+- graph runtime
+- runtime platform
+- projection runtime
+- distributed synchronization runtime
+```
+
+これらが必要なら別責務として扱う。
+
+---
+
+## 9. 実行方法
 
 リポジトリルートから以下を実行する。
 
-### 4.1 bash / Git Bash
+### 9.1 bash / Git Bash
 
 ```bash
 python tools/html_generator/generate_html.py \
@@ -73,7 +163,7 @@ python tools/html_generator/generate_html.py \
   --profile overview,reference
 ```
 
-### 4.2 PowerShell
+### 9.2 PowerShell
 
 PowerShell では、改行継続に `^` ではなくバッククォート `` ` `` を使用する。
 
@@ -84,15 +174,7 @@ python tools/html_generator/generate_html.py `
   --profile overview,reference
 ```
 
-1行で実行してもよい。
-
-```powershell
-python tools/html_generator/generate_html.py --input docs/ja-JP --output docs/ja-JP/HTMLドキュメント --profile overview,reference
-```
-
-### 4.3 cmd.exe
-
-cmd.exe では、改行継続に `^` を使用する。
+### 9.3 cmd.exe
 
 ```cmd
 python tools/html_generator/generate_html.py ^
@@ -103,24 +185,12 @@ python tools/html_generator/generate_html.py ^
 
 ---
 
-## 5. Presentation Model
+## 10. Presentation Model
 
 Presentation Model は以下に配置する。
 
 ```text
 docs/ja-JP/HTMLドキュメント/Presentation-Model/
-```
-
-文書単位 policy は以下に配置する。
-
-```text
-docs/ja-JP/HTMLドキュメント/Presentation-Model/documents/*.json
-```
-
-site navigation は以下に配置する。
-
-```text
-docs/ja-JP/HTMLドキュメント/Presentation-Model/site/navigation.json
 ```
 
 対応 policy は以下とする。
@@ -134,66 +204,56 @@ docs/ja-JP/HTMLドキュメント/Presentation-Model/site/navigation.json
 
 ---
 
-## 6. 生成物
+## 11. 生成物
 
 以下が生成される。
 
 ```text
 docs/ja-JP/HTMLドキュメント/
 ├── overview/
-│   └── index.html
 ├── reference/
-│   └── *.html
 ├── manifest/
-│   └── site-manifest.json
 └── index.html
 ```
 
-`index.html` には、現時点で以下を出力する。
-
-- Overview 導線
-- Navigation
-- Document Map
-- Reference 一覧
-- Not generated 一覧
-
 ---
 
-## 7. テスト実行
-
-CI と同じ責務別テストのみを実行する場合は以下を使用する。
+## 12. テスト実行
 
 ```bash
 python -m pytest tools/html_generator/tests
 ```
 
-旧ローカルコマンド互換入口を確認する場合は以下を使用する。
-
-```bash
-python -m pytest tools/html_generator/test_generate_html.py
-```
-
-以下は互換入口と責務別テストを両方検出するため、テスト件数が重複する。
-
-```bash
-python -m pytest tools/html_generator
-```
-
 ---
 
-## 8. 注意点
+## 13. 注意点
 
 - 本実装は PoC 用であり、正式 generator ではない。
-- Markdown 変換は最小実装であり、完全な Markdown 変換器ではない。
-- `sec_id` は本文に存在する場合のみ抽出し、推測生成しない。
-- Manifest に存在しないページへの内部リンクは生成しない。
-- HTML generated artifact のファイル名・ディレクトリ名には空白を含めない。
-- `test_generate_html.py` は互換入口であり、新規テストは `tests/` 配下へ追加する。
+- Markdown 変換は最小実装である。
+- `sec_id` は推測生成しない。
+- Manifest に存在しない内部リンクは生成しない。
+- generated artifact のファイル名・ディレクトリ名には空白を含めない。
 
 ---
 
-## 9. 後続
+## 14. アーキテクチャ原則
 
-PoC の検証結果は、まず `docs/ja-JP/フィードバック` に記録する。
+### html_generator
 
-PoC 完了後、必要な内容を HTML 系仕様へ一括反映する。
+```text
+Generate Layer
+```
+
+### markdown_viewer
+
+```text
+Browse Layer
+```
+
+### Runtime
+
+```text
+別責務
+```
+
+Browse / Generate / Runtime を混在させない。
