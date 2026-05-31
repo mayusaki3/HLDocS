@@ -1,5 +1,5 @@
 # HLDocS  
-**Human–LLM Doc Roles Spec**
+**Human–LLM Document Rule Specifications**
 
 HLDocS は、人間（Human）と大規模言語モデル（LLM）が協調して  
 ドキュメントを作成・検証・再構成するための  

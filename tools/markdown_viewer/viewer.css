@@ -1,0 +1,92 @@
+/*
+ * HLDocS Markdown Viewer
+ *
+ * Design goals:
+ * - readability
+ * - lightweight layout
+ * - document navigation
+ * - mobile readability
+ *
+ * Non-goals:
+ * - runtime dashboard
+ * - operational visualization runtime
+ */
+
+:root {
+    --viewer-max-width: 960px;
+    --viewer-sidebar-width: 280px;
+    --viewer-spacing: 16px;
+}
+
+body {
+    margin: 0;
+    padding: 0;
+    font-family: sans-serif;
+    line-height: 1.7;
+    background: #ffffff;
+    color: #222222;
+}
+
+.viewer-layout {
+    display: flex;
+    gap: var(--viewer-spacing);
+}
+
+.viewer-sidebar {
+    position: sticky;
+    top: 0;
+    width: var(--viewer-sidebar-width);
+    height: 100vh;
+    overflow-y: auto;
+    padding: var(--viewer-spacing);
+    border-right: 1px solid #dddddd;
+}
+
+.viewer-content {
+    max-width: var(--viewer-max-width);
+    padding: calc(var(--viewer-spacing) * 2);
+}
+
+.viewer-toolbar {
+    position: sticky;
+    top: 0;
+    display: flex;
+    gap: 8px;
+    padding: 8px;
+    background: #ffffff;
+    border-bottom: 1px solid #dddddd;
+}
+
+.viewer-source {
+    display: none;
+}
+
+body.source-visible .viewer-rendered {
+    display: none;
+}
+
+body.source-visible .viewer-source {
+    display: block;
+}
+
+pre {
+    overflow-x: auto;
+}
+
+img {
+    max-width: 100%;
+}
+
+@media (max-width: 960px) {
+    .viewer-layout {
+        flex-direction: column;
+    }
+
+    .viewer-sidebar {
+        position: relative;
+        width: auto;
+        height: auto;
+        border-right: none;
+        border-bottom: 1px solid #dddddd;
+    }
+}

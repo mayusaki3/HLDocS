@@ -1,0 +1,74 @@
+body {
+  font-family: sans-serif;
+  line-height: 1.7;
+  margin: 2rem;
+  max-width: 1080px;
+}
+
+.viewer-header {
+  border-bottom: 1px solid #ddd;
+  margin-bottom: 1.5rem;
+  padding-bottom: 1rem;
+}
+
+.viewer-toolbar {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+
+.viewer-toolbar button,
+.viewer-toolbar a {
+  border: 1px solid #ccc;
+  border-radius: 0.25rem;
+  background: #f8f8f8;
+  color: #222;
+  cursor: pointer;
+  padding: 0.35rem 0.7rem;
+  text-decoration: none;
+}
+
+.markdown-body h1,
+.markdown-body h2,
+.markdown-body h3 {
+  border-bottom: 1px solid #eee;
+  padding-bottom: 0.2rem;
+}
+
+.markdown-body pre,
+.markdown-source {
+  background: #f5f5f5;
+  overflow-x: auto;
+  padding: 1rem;
+}
+
+.markdown-body code {
+  background: #f5f5f5;
+  padding: 0.1rem 0.25rem;
+}
+
+.markdown-body table {
+  border-collapse: collapse;
+  width: 100%;
+}
+
+.markdown-body th,
+.markdown-body td {
+  border: 1px solid #ddd;
+  padding: 0.5rem;
+  text-align: left;
+  vertical-align: top;
+}
+
+.markdown-body blockquote {
+  border-left: 4px solid #ddd;
+  color: #555;
+  margin-left: 0;
+  padding-left: 1rem;
+}
+
+.error {
+  border: 1px solid #d99;
+  background: #fff7f7;
+  padding: 1rem;
+}

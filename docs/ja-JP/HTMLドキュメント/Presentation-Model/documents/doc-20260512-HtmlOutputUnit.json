@@ -1,0 +1,6 @@
+{
+  "doc_id": "doc-20260512-HtmlOutputUnit",
+  "presentation_policy": "link_only",
+  "overview": "HTML出力単位と profile 別出力範囲を定義する。",
+  "policy_reason": "Markdown正本リンクのみ表示する導線 PoC を検証するため。"
+}

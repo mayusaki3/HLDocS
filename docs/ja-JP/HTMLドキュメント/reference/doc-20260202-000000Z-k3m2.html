@@ -1,0 +1,47 @@
+<!doctype html>
+<html lang="ja">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>生成フェーズ実行規約</title>
+  <style>
+    body { font-family: sans-serif; line-height: 1.7; margin: 2rem; max-width: 1080px; }
+    header, nav, main, footer { margin-bottom: 1.5rem; }
+    code, pre { background: #f5f5f5; }
+    pre { padding: 1rem; overflow-x: auto; }
+    table { border-collapse: collapse; width: 100%; }
+    th, td { border: 1px solid #ddd; padding: 0.5rem; text-align: left; vertical-align: top; }
+    th { background: #f5f5f5; }
+    .meta { border: 1px solid #ddd; padding: 1rem; background: #fafafa; }
+    .warning { border: 1px solid #d99; padding: 1rem; background: #fff7f7; }
+    .card { border: 1px solid #ddd; padding: 1rem; margin: 1rem 0; }
+    a { text-decoration: none; }
+  </style>
+</head>
+<body>
+
+<header>
+  <h1>生成フェーズ実行規約</h1>
+  <p><a href="../index.html">HTMLドキュメント index</a></p>
+</header>
+<main>
+  <section class="meta">
+    <p><strong>doc_id:</strong> doc-20260202-000000Z-k3m2</p>
+    <p><strong>document_type:</strong> spec</p>
+    <p><strong>canonical_document:</strong> true</p>
+    <p><strong>presentation_policy:</strong> overview_only</p>
+    <p><strong>Markdown正本:</strong> <a href="../markdown/viewer.html?src=../../仕様/00_共通/07_生成フェーズ実行規約.md" target="_blank" rel="noopener noreferrer">生成フェーズ実行規約</a></p>
+  </section>
+
+  <section>
+    <h2>見出し一覧</h2>
+    <ul><li>生成フェーズ実行規約</li><li>1. 生成フェーズのプロンプト輸出要件</li><li>1.1 document_type 別仕様との接続（MUST）</li><li>2. 構造トークンと空行の規約</li><li>3. 構造検証との関係</li><li>4. テンプレート合成規約（MUST）</li><li>4.1 共通テンプレート範囲</li><li>4.2 document_type 別本文テンプレート範囲</li><li>4.3 本文差し込み位置</li><li>4.4 無改変規則（MUST）</li><li>5. 構造トークン規約（MUST）</li><li>5.1 構造トークンの目的</li><li>5.2 既定の構造トークン</li><li>5.3 使用規則（MUST）</li><li>5.4 実体化の責務（MUST）</li><li>5.5 実体化の要件（MUST）</li><li>5.6 将来拡張（MUST）</li><li>6. 生成フェーズ順序（MUST）</li><li>Phase 0: 入力検証（FAIL-FAST）</li><li>0.1 前提条件適用確認（MUST）</li><li>0.2 mode / operation / document_type の定義済みマッピング</li><li>0.2.0 target の定義済みマッピング（MUST）</li><li>0.2.0a 定義済みマッピングの Phase 0 一般条文に対する優先（MUST）</li><li>0.2.1 短い通常運用指示に対する既定値適用後判定（MUST）</li><li>0.2.2 共通テンプレート new 生成の required inputs（MUST）</li><li>0.2.3 共通プロンプト new 生成の required inputs（MUST）</li><li>0.3 recreate / patch 不成立時の禁止（MUST）</li><li>0.4 停止理由の分類規則（MUST）</li><li>0.4.0 個別 required inputs 条文の優先（MUST）</li><li>0.4.1 FAIL-FAST 通知の出力純度（MUST）</li><li>0.5 停止理由の分類禁止（MUST NOT）</li><li>Phase 1: テンプレート抽出</li><li>Phase 2: テンプレート合成</li><li>Phase 3: 可変スロット生成および Traceability 構築</li><li>Phase 4: 実体化</li><li>Phase 5: Transport Encoding 適用</li><li>Phase 6: 構造検証（非出力）</li><li>6.0 検証独立性原則（MUST）</li><li>6.0.1 検証対象成立確認（MUST）</li><li>6.1 実体化前検査</li><li>6.1.1 プレースホルダおよび構造トークン検査（参照検査）</li><li>6.1.2 template 文書追加検査（参照検査）</li><li>6.1.2.1 共通ドキュメントテンプレート唯一形検査（MUST）</li><li>6.1.3 テンプレート範囲構文検査</li><li>6.1.4 document_type 別本文テンプレート追加検査</li><li>6.2 実体化後検査</li><li>6.2.1 HLDocS 文書構造検査（参照検査）</li><li>6.2.1.1 共通テンプレート成果物完成形検査（MUST）</li><li>6.2.1.2 本文先頭説明文存在検査（MUST）</li><li>6.2.1.3 構造空行検査（MUST）</li><li>6.2.2 検証粒度固定（MUST）</li><li>6.3 検証失敗時の処理</li><li>6.4 再試行規則（MUST）</li><li>6.5 失敗通知の形式（MUST）</li><li>6.6 複数成果物生成規則（MUST）</li><li>Phase 7: 出力</li><li>7. document_type 検証規則（MUST）</li></ul>
+  </section>
+  <section>
+    <h2>本文</h2>
+    <p>本文は HTML 化せず、概要と見出しのみ表示します。</p>
+  </section>
+</main>
+
+</body>
+</html>
