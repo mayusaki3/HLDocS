@@ -1,5 +1,7 @@
+[日本語](./README.md) | [English](./README_en-US.md)
+
 # HLDocS  
-**Human–LLM Doc Roles Spec**
+**Human–LLM Document Roles Specification**
 
 HLDocS は、人間（Human）と大規模言語モデル（LLM）が協調して  
 ドキュメントを作成・検証・再構成するための  
@@ -10,7 +12,7 @@ HLDocS は、人間（Human）と大規模言語モデル（LLM）が協調し�
 
 ---
 
-## Release Status
+## リリース状況
 
 HLDocS は現在、**Preview Release（v0.x 系）**として公開されている。
 
@@ -20,6 +22,9 @@ HLDocS は現在、**Preview Release（v0.x 系）**として公開されてい�
 - Traceability 基盤：利用可能
 - ChatGPT UI ベース運用：利用可能
 - 再生成・再構成運用：利用可能
+- LLM_WORKSPACE 運用：利用可能
+- 成果物更新運用：利用可能
+- ドキュメント参照・ナビゲーション規約：利用可能
 - prompt/template の完全自己完結生成：開発継続中
 
 現在の推奨利用方法：
@@ -33,7 +38,7 @@ HLDocS は既に実プロジェクトで利用可能な状態にあるが、
 
 ---
 
-## What is HLDocS?
+## HLDocSとは
 
 HLDocS は、次の前提に基づくドキュメント仕様である。
 
@@ -47,7 +52,7 @@ HLDocS は「人間が読むための書き方」ではなく、
 
 ---
 
-## Roles
+## 役割
 
 ### Human（人間）の役割
 
@@ -72,7 +77,27 @@ LLM は、HLDocS において
 
 ---
 
-## Canonical vs Non-Canonical
+## LLM_WORKSPACEと作業運用
+
+HLDocSでは、長期間にわたる Human–LLM 協調作業を支援する。
+
+推奨する作業運用は以下の通りである。
+
+1. 新しい要求は Request に記録する
+2. 現在の作業状態は Worklog に記録する
+3. チャット移行が必要な場合のみ Handover を作成する
+
+Worklog は作業状態の正本とする。
+
+LLM_WORKSPACE は論理構造であり、
+保存先は GitHub、添付ファイル、チャット等を利用できる。
+
+GitHub が利用できない場合でも、
+作業継続可能でなければならない。
+
+---
+
+## 正規情報と非正規情報
 
 HLDocS では、ドキュメント内の情報を以下の 2 種類に分けて扱う。
 
@@ -101,7 +126,7 @@ HLDocS では、ドキュメント内の情報を以下の 2 種類に分けて�
 
 ---
 
-## Document Types
+## ドキュメント種別
 
 HLDocS は、以下のようなドキュメント種別への適用を想定する。
 
@@ -118,7 +143,7 @@ HLDocS は、以下のようなドキュメント種別への適用を想定す�
 
 ---
 
-## Markdown Policy
+## Markdown運用方針
 
 HLDocS のドキュメントは Markdown 形式を前提とする。
 
@@ -131,7 +156,7 @@ HLDocS のドキュメントは Markdown 形式を前提とする。
 
 ---
 
-## What HLDocS Does Not Do
+## HLDocSの対象外
 
 HLDocS は以下を目的としない。
 
@@ -144,14 +169,14 @@ HLDocS はあくまで
 
 ---
 
-## Roadmap
+## ロードマップ
 
 ### v0.x Preview Series
 
 現在の主な開発対象：
 
 - 仕様再構成ワークフロー
-- Traceability migration
+- トレーサビリティ移行
 - Markdown → HTML 可視化規約
 - 運用ワークフロー安定化
 - 検証フロー整備
@@ -167,7 +192,7 @@ v1.0 では以下を目標とする。
 
 ---
 
-## Future Scope
+## 今後の展開
 
 本リポジトリには、将来的に以下が追加される可能性がある。
 
@@ -180,12 +205,12 @@ v1.0 では以下を目標とする。
 
 ---
 
-## Documents
+## ドキュメント
 
 - [目次](./docs/ja-JP/目次.md)
 
 ---
 
-## License
+## ライセンス
 
 MIT License
