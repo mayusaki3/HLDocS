@@ -45,11 +45,11 @@ canonical_document: true
 
 以下は継続開発中。
 
-- prompt/template の完全自己完結生成
-- HTML visualization pipeline
-- specification restructuring workflow
-- Traceability migration workflow
-- validator integration
+- プロンプト／テンプレートの完全自己完結生成
+- HTML可視化パイプライン
+- 仕様再構成ワークフロー
+- Traceability移行ワークフロー
+- バリデータ統合
 
 ---
 
@@ -69,7 +69,7 @@ SansaVRM 系プロジェクトで実運用検証予定。
 
 ### Phase 3
 
-Markdown → HTML visualization 規約を追加予定。
+Markdown → HTML可視化規約を追加予定。
 
 主目的：
 
@@ -78,18 +78,18 @@ Markdown → HTML visualization 規約を追加予定。
 - 差分・再構成可視化
 - LLM 補助 UI
 
-Markdown canonical / HTML generated の片方向構成を前提とする。
+Markdown正本／HTML生成物の片方向構成を前提とする。
 
 ---
 
-### Planned v1.0
+### v1.0予定
 
 以下を目標とする。
 
-- fully self-contained generation
-- stable reconstruction workflow
-- complete validation integration
-- production-grade operation
+- 完全自己完結生成
+- 安定した再構成ワークフロー
+- 完全な検証統合
+- 本番運用対応
 
 ---
 
