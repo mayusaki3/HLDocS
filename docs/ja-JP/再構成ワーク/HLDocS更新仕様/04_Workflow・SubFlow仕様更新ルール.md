@@ -26,13 +26,13 @@ HLDocS利用時には参照しない。
 
 以下のいずれかを行う場合は、Workflow・SubFlow仕様を更新しなければならない（MUST）。
 
-* Workflowを追加する場合
-* Workflowを削除する場合
-* Workflowを変更する場合
-* SubFlowを追加する場合
-* SubFlowを削除する場合
-* SubFlowを変更する場合
-* WorkflowとSubFlowの参照関係を追加・削除・変更する場合
+- Workflowを追加する場合
+- Workflowを削除する場合
+- Workflowを変更する場合
+- SubFlowを追加する場合
+- SubFlowを削除する場合
+- SubFlowを変更する場合
+- WorkflowとSubFlowの参照関係を追加・削除・変更する場合
 
 ## 4. 更新規則
 
@@ -41,6 +41,10 @@ Workflowを追加・削除・変更する場合は、状態マシン仕様更新
 
 SubFlowを追加・削除・変更する場合は、共通仕様成立条件更新ルールに従い、仕様要素一覧を更新しなければならない（MUST）。  
 Workflowが参照するSubFlowは、共通仕様成立条件に定義する仕様要素一覧へ登録されていなければならない（MUST）。
+
+SubFlowの参照関係は循環してはならない（MUST NOT）。  
+SubFlowは、自身を直接または間接に呼び出してはならない（MUST NOT）。  
+SubFlowを追加・変更する場合は、循環参照が存在しないことを確認しなければならない（MUST）。
 
 ---
 
