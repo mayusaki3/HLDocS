@@ -46,6 +46,10 @@ SubFlowの参照関係は循環してはならない（MUST NOT）。
 SubFlowは、自身を直接または間接に呼び出してはならない（MUST NOT）。  
 SubFlowを追加・変更する場合は、循環参照が存在しないことを確認しなければならない（MUST）。
 
+利用者実行を許可するHLDocS Toolは、
+利用者実行へ移行する条件を個別Tool仕様に定義しなければならない（MUST）。
+WorkflowまたはSubFlowは、個別Tool仕様に定義されていない利用者実行を行ってはならない（MUST NOT）。
+
 ---
 
 [目次](../目次.md) > HLDocS更新仕様 > Workflow・SubFlow仕様更新ルール
