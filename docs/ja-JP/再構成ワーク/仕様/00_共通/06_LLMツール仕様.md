@@ -117,7 +117,7 @@ HLDocS.GitHub.ls-files
 
 | Tool名 | 能力 | 利用条件 | 優先度 | 個別Tool仕様 |
 | ---- | ---- | ---- | ---- | ---- |
-| GitHub.ls-files | GitHub上のファイル一覧を取得する | リポジトリ、パス、参照先が特定できる場合 | 標準 | [GitHub.ls-files](./LLMツール/GitHub/GitHub.ls-files.md) |
+| Git.userEnv_ls-files | 利用者環境のGit管理下ファイル一覧を取得する | リポジトリ、パス、参照先が特定できる場合 | 標準 | [Git.userEnv_ls-files](./LLMツール/Git/Git.userEnv_ls-files.md) |
 
 本一覧は、HLDocSで管理するToolを示す。  
 本一覧に存在しないLLM標準Toolの利用を禁止してはならない（MUST NOT）。
@@ -169,7 +169,10 @@ Tool選択時は、次の事項を考慮しなければならない（MUST）。
 - 制約
 - 取得可能な情報
 - 実行環境
-- 優先度
+- 優先度（同一能力のTool間の優先度で、優先度が同じToolの場合はどちらを選んでも良い）
+
+HLDocS Toolに利用者実行が定義されている場合、
+LLM実行環境で実行できないと判断した時のみ、利用者実行へ移行してよい（MAY）。
 
 ---
 
@@ -183,8 +186,14 @@ LLM標準Toolの利用は、HLDocS Toolの存在によって禁止されない�
 ### 5.3 HLDocS Tool
 
 HLDocS Toolは、HLDocSがTool一覧および個別Tool仕様で管理するToolである。  
-LLM標準Toolで目的を達成できない場合は、HLDocS Toolを利用してよい（MAY）。  
+HLDocS Toolは、目的に応じて利用してよい（MAY）。  
 HLDocS Toolは、LLM標準Toolの不足を補うために定義してよい（MAY）。
+LLM標準Toolで目的を達成できない場合は、同一目的を達成可能なHLDocS Toolを利用してよい（MAY）。
+
+例.
+Git管理下ファイル一覧の取得を目的としていたが、
+LLM標準Toolでは取得できなかったため、
+利用者環境のGit管理下ファイル一覧を取得した。
 
 ---
 

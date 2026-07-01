@@ -2,22 +2,22 @@
 HLDocS:LLM-MANAGED
 doc_id: doc-20260620-000000Z-GHLS
 lang: ja-JP
-canonical_title: GitHub.ls-files
+canonical_title: Git.userEnv_ls-files
 document_type: spec
 canonical_document: true
 -->
 
-[目次](../../../../目次.md) > LLMツール > GitHub > GitHub.ls-files
+[目次](../../../../目次.md) > LLMツール > Git > Git.userEnv_ls-files
 
-# GitHub.ls-files
+# Git.userEnv_ls-files
 
 ## 1. Tool名
 
-GitHub.ls-files
+Git.userEnv_ls-files
 
 ## 2. 目的
 
-本Toolは、GitHub上の公開リポジトリからファイル一覧を取得するためのToolである。  
+本Toolは、LLMに変わり利用者がGitHubやGitLab等の公開リポジトリまたは非公開リポジトリからファイル一覧を取得するためのToolである。  
 本Toolは、LLM標準Toolでリポジトリのディレクトリ・ファイル一覧を取得できない場合に利用する。
 
 本仕様は、共通仕様成立状態でのみ利用できる。  
@@ -26,14 +26,12 @@ GitHub.ls-files
 
 ## 3. 能力
 
-本Toolは、指定されたGitHub公開リポジトリ、ブランチ、パス配下のファイル一覧を取得する。  
+本Toolは、指定されたGitHubやGitLab等の公開リポジトリまたは非公開リポジトリ、ブランチ、パス配下のファイル一覧を取得する。  
 本Toolは、取得結果としてファイルパス一覧を返却する。  
 本Toolは、ファイル内容の取得を目的としない。
 
 ## 4. 利用条件
 
-本Toolは、対象リポジトリがpublicリポジトリである場合に利用できる。  
-本Toolは、GitHubへネットワーク接続できる実行環境でのみ利用できる。  
 本Toolは、対象リポジトリ、参照先、および取得対象パスが指定されている場合に利用できる。
 
 ## 5. 入力
@@ -166,4 +164,4 @@ LLM標準Toolで同等の能力を利用できる場合は、LLM標準Toolを利
 
 ---
 
-[目次](../../../../目次.md) > LLMツール > GitHub > GitHub.ls-files
+[目次](../../../../目次.md) > LLMツール > Git > Git.userEnv_ls-files
