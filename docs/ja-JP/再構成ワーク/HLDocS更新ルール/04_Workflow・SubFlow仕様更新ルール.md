@@ -7,7 +7,7 @@ document_type: spec
 canonical_document: true
 -->
 
-[目次](../目次.md) > HLDocS更新仕様 > Workflow・SubFlow仕様更新ルール
+[目次](../目次.md) > HLDocS更新ルール > Workflow・SubFlow仕様更新ルール
 
 # Workflow・SubFlow仕様更新ルール
 
@@ -52,4 +52,4 @@ WorkflowまたはSubFlowは、個別Tool仕様に定義されていない利用�
 
 ---
 
-[目次](../目次.md) > HLDocS更新仕様 > Workflow・SubFlow仕様更新ルール
+[目次](../目次.md) > HLDocS更新ルール > Workflow・SubFlow仕様更新ルール

@@ -7,7 +7,7 @@ document_type: spec
 canonical_document: true
 -->
 
-[目次](../目次.md) > HLDocS更新仕様 > LLMツール仕様更新ルール
+[目次](../目次.md) > HLDocS更新ルール > LLMツール仕様更新ルール
 
 # LLMツール仕様更新ルール
 
@@ -190,4 +190,4 @@ LLMツール仕様または個別Tool仕様を更新した場合は、次を確�
 
 ---
 
-[目次](../目次.md) > HLDocS更新仕様 > LLMツール仕様更新ルール
+[目次](../目次.md) > HLDocS更新ルール > LLMツール仕様更新ルール
