@@ -1,0 +1,140 @@
+<!--
+HLDocS:LLM-MANAGED
+doc_id: doc-20260927-000000Z-CORE
+lang: ja-JP
+canonical_title: Core仕様
+document_type: spec
+canonical_document: true
+-->
+
+[目次](../../目次.md) > 仕様 > Core > Core仕様
+
+# Core仕様
+
+## 1. 目的
+
+本書は、HLDocS Coreの責務と、通常運転および復旧に共通する実行制御を定義する。
+
+## 2. Coreの責務
+
+Coreは次を担当する。
+
+- HLDocSシステム起動制御
+- Execution Contextの正本管理
+- Execution Contextに対する変更要求の検証および適用
+- Restriction Contextの構築および強制
+- 登録済み仕様要素の参照機構
+- State Machineへの制御移譲
+- State Machineへ移譲できない場合の復旧制御
+
+Coreは、作業の意味上の処理内容を決定する機構ではない。
+
+## 3. Coreが行ってはならないこと
+
+Coreは次を行ってはならない（MUST NOT）。
+
+- 通常作業で利用するWorkflowを意味判断によって選択する。
+- Workflow PlanへWorkflowを独断で追加、削除または並べ替える。
+- WorkflowまたはSubFlowの処理内容を決定する。
+- State Machineに代わって通常のState遷移可否を決定する。
+- 個別Restriction Setの内容を独断で変更する。
+- 制限確認を迂回して処理を実行する。
+
+## 4. Execution Context
+
+Coreは、実行状態をExecution Contextとして管理しなければならない（MUST）。
+
+Execution Contextは、少なくとも次を表現できなければならない（MUST）。
+
+- Current Work
+- WorkごとのStatusおよびPurpose
+- Current State
+- Workflow Plan
+- Active Workflow
+- Suspended Workflow
+- Issues
+
+Work Statusは、少なくとも次を扱う。
+
+- ACTIVE
+- SUSPENDED
+- COMPLETED
+
+同時にACTIVEとなるWorkは最大1件とする（MUST）。
+
+Workflow Planの実行状態とIssueの状態を同一の状態として扱ってはならない（MUST NOT）。  
+Workflowが完了していても、Issueが未解決であることを許容する。
+
+## 5. Execution Contextの変更
+
+State Machine、Workflow管理、Workflowその他のSubsystemは、Execution Contextを直接変更してはならない（MUST NOT）。  
+Execution Contextを変更する場合は、Coreへ変更要求を行わなければならない（MUST）。
+
+Coreは変更要求について、少なくとも次を確認しなければならない（MUST）。
+
+- 現在のExecution Contextとの整合性
+- 要求元が当該変更を要求できること
+- 有効なRestriction Contextに違反しないこと
+- 利用者承認を必要とする変更では、必要な承認根拠が存在すること
+
+## 6. Workflow Plan変更
+
+承認済みWorkflow Plan内の通常の実行状態遷移は、各仕様の条件を満たす場合に適用してよい（MAY）。
+
+次のWorkflow Plan変更は、利用者による明示的な指示または承認なしに確定してはならない（MUST NOT）。
+
+- Workflowの追加
+- Workflowの削除
+- Workflow順序の変更
+- WorkflowのSKIPPED化
+
+Workflow候補を発見したこと、Issueを発見したこと、またはLLMが変更を有益と判断したことを、利用者承認として扱ってはならない（MUST NOT）。
+
+## 7. Restriction Context
+
+Coreは、常時適用する安全側の基本制御を保持しなければならない（MUST）。
+
+通常運転では、現在の実行位置に応じて次のRestriction Setを必要な範囲で読み込み、Restriction Contextを構築する。
+
+- State
+- Workflow
+- SubFlow
+
+下位のRestriction Setは上位の制限を緩和してはならない（MUST NOT）。  
+複数の制限が競合する場合は、禁止またはより厳しい制限を優先しなければならない（MUST）。
+
+必要なRestriction Setを取得または解釈できない場合は、制限なしとして処理を継続してはならない（MUST NOT）。
+
+## 8. State Machineへの移譲
+
+Coreは起動後、State Machine仕様を必要な範囲で参照し、制御移譲を試行する。
+
+移譲成功後は、通常のState遷移判断をState Machineへ委ねなければならない（MUST）。  
+CoreはState Machineが許可した遷移要求について、Execution ContextおよびRestriction Context上の整合性を確認した後にCurrent Stateへ適用する。
+
+## 9. 復旧
+
+State Machineへの移譲に失敗した場合、Coreは通常運転を開始してはならない（MUST NOT）。
+
+Coreは安全側の基本制御を維持したまま、復旧に必要な仕様だけを参照してよい（MAY）。  
+復旧では、少なくとも次を可能とする。
+
+- 不足または不整合の特定
+- 利用者への状況提示
+- 利用者判断の取得
+- 許可された範囲での修正
+- 修正後の再検証
+- State Machineへの移譲再試行
+
+復旧処理の詳細は、別途定義する復旧仕様に従う。
+
+## 10. Interactionとの関係
+
+Coreは利用者との自然言語対話を直接担当しない。  
+利用者への情報提示および判断要求はInteractionを介して行う。
+
+Coreは、利用者承認を必要とする変更について、Interaction等から得られた承認根拠を検証してから適用しなければならない（MUST）。
+
+---
+
+[目次](../../目次.md) > 仕様 > Core > Core仕様
