@@ -73,12 +73,14 @@ CoreはState MachineからState変更要求を受けた場合、Execution Contex
 State変更を適用する場合、Coreは次の順序を保証しなければならない（MUST）。
 
 1. 遷移元Stateに属する実行中処理がState遷移可能な状態であることを確認する。
-2. 遷移元State由来のRestriction Setを解除対象とする。
-3. Current Stateを遷移先へ変更する。
-4. 遷移先State仕様を参照する。
-5. 遷移先Stateが宣言するRestriction Setを取得し、適用する。
-6. 必要なRestriction Setを適用できたことを確認する。
-7. 遷移先Stateでの通常処理を開始可能とする。
+2. 遷移先State仕様を参照する。
+3. 遷移先Stateが宣言するRestriction Setを取得し、適用可能であることを検証する。
+4. 遷移先Stateの開始に必要なExecution Context条件を検証する。
+5. 遷移元State由来Restriction Setの解除と、遷移先State由来Restriction Setの適用をステージする。
+6. Current StateおよびState由来Restriction Contextを、一つの整合した変更として確定する。
+7. 確定後にのみ、遷移先Stateでの通常処理を開始可能とする。
+
+検証またはステージ中に失敗した場合、Current Stateおよび有効な遷移元Restriction Contextを変更してはならない（MUST NOT）。
 
 Core基本制限はState遷移中も解除してはならない（MUST NOT）。
 
