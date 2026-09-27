@@ -20,6 +20,7 @@ canonical_document: true
 ## 2. State定義
 
 - State: 能力確認
+- plan_owner: SYSTEM
 - available_workflows:
   - HLDocS能力確認
 - default_workflow_plan:
@@ -32,7 +33,9 @@ Core基本制限は能力確認Stateでも常時適用する。
 
 能力確認StateはState MachineのInitial Stateとして使用できる。
 
-能力確認Stateへ進入した場合、当該Work/実行単位に既存のWorkflow Planが存在しないときは、default_workflow_planから実行用Workflow Planを生成する。
+能力確認Stateへ進入し、対応するSYSTEM Workflow Planが存在しない場合は、default_workflow_planからOwner=SYSTEMの実行用Workflow Planを生成する。
+
+能力確認のためだけにWorkを生成してはならない（MUST NOT）。
 
 ## 4. 能力確認
 
@@ -43,7 +46,7 @@ Stateへ登録されていることだけを理由として、能力を利用可
 
 ## 5. 終了
 
-default_workflow_planが完了した場合、待機StateへのState遷移を要求できる状態となる。
+SYSTEM Workflow Planが完了した場合、待機StateへのState遷移を要求できる状態となる。
 
 State自身が遷移を実行してはならない（MUST NOT）。
 
