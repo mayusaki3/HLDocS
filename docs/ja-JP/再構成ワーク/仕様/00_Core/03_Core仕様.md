@@ -46,13 +46,25 @@ Coreは、実行状態をExecution Contextとして管理しなければなら�
 
 Execution Contextは、少なくとも次を表現できなければならない（MUST）。
 
-- Current Work
-- WorkごとのStatusおよびPurpose
 - Current State
-- Workflow Plan
+- Current Workflow Plan
 - Active Workflow
 - Suspended Workflow
-- Issues
+- Current Work
+- Work Contexts
+
+Current Workflow PlanはWorkの有無に依存しない現在の実行Planとする。
+
+Current Workflow PlanはOwnerを持たなければならない（MUST）。  
+Ownerは少なくとも次を区別する。
+
+- SYSTEM: HLDocS自身の通常運転処理
+- WORK: 利用者Workに属する処理
+
+OwnerがWORKの場合は、対応するWork IDを一意に関連付けなければならない（MUST）。  
+OwnerがSYSTEMの場合は、存在しないWorkを生成してPlanの所有者としてはならない（MUST NOT）。
+
+Work Contextは少なくともWork ID、Purpose、StatusおよびIssuesを保持する。
 
 Work Statusは、少なくとも次を扱う。
 
@@ -62,12 +74,11 @@ Work Statusは、少なくとも次を扱う。
 
 同時にACTIVEとなるWorkは最大1件とする（MUST）。
 
-Workflow Planの実行状態とIssueの状態を同一の状態として扱ってはならない（MUST NOT）。  
-Workflowが完了していても、Issueが未解決であることを許容する。
+Workflow Planの実行状態とIssueの状態を同一の状態として扱ってはならない（MUST NOT）。
 
 ## 5. Execution Contextの変更
 
-State Machine、Workflow管理、Workflowその他のSubsystemは、Execution Contextを直接変更してはならない（MUST NOT）。  
+State Machine、選択ルール、Workflowその他のSubsystemは、Execution Contextを直接変更してはならない（MUST NOT）。  
 Execution Contextを変更する場合は、Coreへ変更要求を行わなければならない（MUST）。
 
 Coreは変更要求について、少なくとも次を確認しなければならない（MUST）。
@@ -79,30 +90,26 @@ Coreは変更要求について、少なくとも次を確認しなければな�
 
 ## 6. Workflow Plan変更
 
-承認済みWorkflow Plan内の通常の実行状態遷移は、各仕様の条件を満たす場合に適用してよい（MAY）。
+Stateのdefault_workflow_planから新規Planを生成する場合、そのState仕様で定義されたPlanを初期Planとして生成してよい（MAY）。
 
-次のWorkflow Plan変更は、利用者による明示的な指示または承認なしに確定してはならない（MUST NOT）。
+承認済みまたはState仕様により確定したWorkflow Plan内の通常の実行状態遷移は、各仕様の条件を満たす場合に適用してよい（MAY）。
+
+実行中Planに対する次の変更は、利用者WorkをOwnerとする場合、利用者による明示的な指示または承認なしに確定してはならない（MUST NOT）。
 
 - Workflowの追加
 - Workflowの削除
 - Workflow順序の変更
 - WorkflowのSKIPPED化
 
-Workflow候補を発見したこと、Issueを発見したこと、またはLLMが変更を有益と判断したことを、利用者承認として扱ってはならない（MUST NOT）。
+SYSTEM Planの変更は、対応するStateまたはシステム仕様に明示された規則なしに確定してはならない（MUST NOT）。
 
 ## 7. Restriction Context
 
 Coreは、常時適用する安全側の基本制御を保持しなければならない（MUST）。
 
-通常運転では、現在の実行位置に応じて次のRestriction Setを必要な範囲で読み込み、Restriction Contextを構築する。
-
-- State
-- Workflow
-- SubFlow
+通常運転では、現在の実行位置に応じてState、Workflow、SubFlowのRestriction Setを必要な範囲で読み込み、Restriction Contextを構築する。
 
 下位のRestriction Setは上位の制限を緩和してはならない（MUST NOT）。  
-複数の制限が競合する場合は、禁止またはより厳しい制限を優先しなければならない（MUST）。
-
 必要なRestriction Setを取得または解釈できない場合は、制限なしとして処理を継続してはならない（MUST NOT）。
 
 ## 8. State Machineへの移譲
@@ -114,19 +121,8 @@ CoreはState Machineが許可した遷移要求について、Execution Context�
 
 ## 9. 復旧
 
-State Machineへの移譲に失敗した場合、Coreは通常運転を開始してはならない（MUST NOT）。
-
-Coreは安全側の基本制御を維持したまま、復旧に必要な仕様だけを参照してよい（MAY）。  
-復旧では、少なくとも次を可能とする。
-
-- 不足または不整合の特定
-- 利用者への状況提示
-- 利用者判断の取得
-- 許可された範囲での修正
-- 修正後の再検証
-- State Machineへの移譲再試行
-
-復旧処理の詳細は、別途定義する復旧仕様に従う。
+State Machineへの移譲に失敗した場合、Coreは通常運転を開始してはならない（MUST NOT）。  
+復旧処理の詳細はCore復旧仕様に従う。
 
 ## 10. Interactionとの関係
 
