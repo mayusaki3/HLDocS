@@ -28,16 +28,14 @@ Core基本制限は待機Stateでも常時適用する。
 
 ## 3. 進入条件
 
-初回の通常運転開始時は、State MachineのInitial Stateとして待機Stateへ進入する。
-
-Work完了後に待機Stateへ戻す場合は、State Machineに当該遷移が定義されていなければならない（MUST）。
+能力確認完了後またはWork完了後に待機Stateへ進入する場合は、State Machineに当該遷移が定義されていなければならない（MUST）。
 
 ## 4. 待機中の処理
 
 待機Stateへ進入したことだけを理由としてWorkflowを開始してはならない（MUST NOT）。
 
 利用者入力の受付および分類はInteractionの責務とする。  
-新規Work要求を受けた場合のWork生成、処理対象Stateの決定およびState遷移は、それぞれの仕様に従う。
+新規Work要求を受けた場合のWork生成、処理対象Stateの選択およびState遷移は、それぞれの仕様に従う。
 
 ## 5. 待機Workflow
 
