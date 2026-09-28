@@ -23,7 +23,7 @@ HLDocSは、次を目的とする。
 
 - 作業対象正本を根拠として作業する。
 - 推測や記憶への過度な依存を抑制する。
-- Work、State、Workflow、SubFlowおよびToolの責務を分離して作業を制御する。
+- Work(作業)、State(状態)、Workflow(ワークフロー)、SubFlow(サブフロー)およびTool(ツール)の責務を分離して作業を制御する。
 - 現在の処理に必要な仕様のみを参照し、LLMが保持するコンテキストを抑制する。
 - 再現可能かつ検証可能な成果物を生成する。
 - 利用者の判断を必要とする変更を、LLMが独断で確定しない。
@@ -32,15 +32,16 @@ HLDocSは、次を目的とする。
 
 HLDocSは、少なくとも次の責務領域によって構成する。
 
-- Core
-- State Machine
-- State
-- Workflow管理
-- Workflow
-- SubFlow
-- Tool
-- Restriction Set
-- Interaction
+- Core(中核)
+- State Machine(状態遷移機構)
+- State(状態)
+- Work(作業)
+- 選択ルール
+- Workflow(ワークフロー)
+- SubFlow(サブフロー)
+- Tool(ツール)
+- Restriction Set(制限セット)
+- Interaction(対話窓口)
 - LLM_WORKSPACE
 
 各責務領域は、実行時に常にすべての詳細仕様を参照することを要求しない。  
@@ -60,16 +61,16 @@ HLDocS仕様/規約（正本）と作業対象正本を混同してはならな�
 
 ## 5. 実行モデル
 
-HLDocSは、Coreの起動後にState Machineへ制御を移譲して通常運転を開始する。
+HLDocSは、Core(中核)の起動後にState Machine(状態遷移機構)へ制御を移譲して通常運転を開始する。
 
-通常運転では、Workを利用者から見た作業単位として扱い、WorkはState Machine上のStateを移動しながらWorkflow Planに従って処理される。  
-Workflowは作業進行、SubFlowは再利用可能な単一目的処理、Toolは能力提供を担当する。  
-利用者との入出力はInteractionを介して行う。
+通常運転では、Work(作業)を利用者から見た作業単位として扱い、WorkはState Machine(状態遷移機構)上のState(状態)を移動しながらWorkflow Plan(ワークフロー計画)に従って処理される。  
+Workflow(ワークフロー)は作業進行、SubFlow(サブフロー)は再利用可能な単一目的処理、Tool(ツール)は能力提供を担当する。  
+利用者との入出力はInteraction(対話窓口)を介して行う。
 
 ## 6. Core
 
-Coreは、HLDocSの整合性を維持するための共通実行機構である。  
-Coreは、システム起動、Execution Contextの管理、変更適用、制限制御、登録要素参照および復旧を担当する。
+Core(中核)は、HLDocSの整合性を維持するための共通実行機構である。  
+Coreは、システム起動、Execution Context(実行コンテキスト)の管理、変更適用、制限制御、登録要素参照および復旧を担当する。
 
 Coreは、通常作業における次のWorkflowを決定してはならない（MUST NOT）。  
 Coreは、WorkflowまたはSubFlowの処理内容を決定してはならない（MUST NOT）。
