@@ -20,7 +20,7 @@ canonical_document: true
 - Current Stateが変更Stateである。
 - 本WorkflowがCurrent Workflow Plan内で`PENDING(未実行)`である。
 - 変更調査Workflowが`COMPLETED(完了)`である。
-- 対象Workに対応するTarget Listを参照できる。
+- 対象WorkのWork Context(作業コンテキスト)からArtifact Type=`TARGET_LIST`のTarget Listを参照できる。
 - 対処に必要なRestriction Context(制限コンテキスト)を適用できる。
 
 ## 3. 処理
@@ -29,7 +29,7 @@ canonical_document: true
 2. 調査時点から状態が変化している場合は、そのまま対処せず再評価する。
 3. 対処可能かつ必要な承認根拠を満たす項目だけを処理する。
 4. Core(中核)の検証を経て必要なTool(ツール)または能力提供手段を実行する。
-5. 各項目の実行結果をTarget Listに対応付けて記録する。
+5. 各項目の実行結果をTarget Listに対応付けたArtifact(作業成果物)として記録する。
 
 ## 4. 制限
 
