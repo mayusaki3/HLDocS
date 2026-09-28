@@ -9,7 +9,7 @@ canonical_document: true
 
 [目次](../../目次.md) > 仕様 > State > State仕様
 
-# State仕様
+# State(状態)仕様
 
 ## 1. 目的
 
@@ -17,7 +17,7 @@ canonical_document: true
 
 ## 2. Stateの責務
 
-Stateは、State Machine上の一つの実行環境を宣言的に定義する。
+State(状態)は、State Machine(状態遷移機構)上の一つの実行環境を宣言的に定義する。
 
 State個別仕様は、少なくとも必要に応じて次を定義する。
 
