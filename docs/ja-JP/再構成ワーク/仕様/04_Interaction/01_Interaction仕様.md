@@ -79,9 +79,11 @@ INFORMATION_REQUESTへの応答だけを理由としてExecution Contextを変�
 
 ## 10. New Work Request
 
-Current Workが存在しない場合、利用者入力が新規作業要求として明確であれば、InteractionはWork生成要求をCoreへ送ってよい（MAY）。
+Current Workが存在しない場合、利用者入力が新規作業要求として明確であれば、Interaction(対話窓口)はNEW_WORK_REQUESTとして利用者入力およびそこから確定できるPurposeをCore(中核)へ渡してよい（MAY）。
 
-Work生成要求には、利用者入力およびそこから確定できるPurposeを含める。
+Coreはこれを確定済みWork生成要求として扱わず、Work Candidate(作業候補)を構成してState(状態)選択へ渡す。
+
+State選択、State Machine(状態遷移機構)およびState進入準備の検証が完了する前にWorkを`ACTIVE(実行中)`として確定してはならない（MUST NOT）。
 
 ACTIVE Workが存在する状態で別Work候補を検出した場合、新しいWorkへ暗黙に切り替えてはならない（MUST NOT）。
 
