@@ -9,7 +9,7 @@ canonical_document: true
 
 [目次](../../目次.md) > 仕様 > Workflow > Workflow仕様
 
-# Workflow仕様
+# Workflow(ワークフロー)仕様
 
 ## 1. 目的
 
@@ -17,14 +17,14 @@ canonical_document: true
 
 ## 2. Workflow
 
-WorkflowはHLDocSの処理を進行させる実行単位である。  
+Workflow(ワークフロー)はHLDocSの処理を進行させる実行単位である。  
 SYSTEM処理と利用者Work処理はWorkflow PlanのOwnerによって区別する。
 
 同時にACTIVEとなるWorkflowはExecution Context上で最大1件とする（MUST）。
 
 ## 3. Workflow Plan
 
-Workflow Planは現在実行するWorkflow列の実行インスタンスであり、Execution Contextに保持する。
+Workflow Plan(ワークフロー計画)は現在実行するWorkflow列の実行インスタンスであり、Execution Contextに保持する。
 
 OwnerはSYSTEMまたはWORKとする。  
 Owner=WORKの場合はWork IDを保持する。Owner=SYSTEMの場合はWork IDを要求してはならない（MUST NOT）。
