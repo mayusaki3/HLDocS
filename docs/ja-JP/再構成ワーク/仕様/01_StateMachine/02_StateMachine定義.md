@@ -9,7 +9,7 @@ canonical_document: true
 
 [目次](../../目次.md) > 仕様 > State Machine > State Machine定義
 
-# State Machine定義
+# State Machine(状態遷移機構)定義
 
 ## 1. 目的
 
@@ -42,7 +42,7 @@ Core → 能力確認 → SYSTEM Plan → 能力通知 → 待機 とする。
 ## 6. 新規Work正常系
 
 1. InteractionがNEW_WORK_REQUESTを識別する。
-2. Work Candidateを構成する。
+2. Work Candidate(作業候補)を構成する。
 3. State選択ルールを適用する。
 4. UNIQUEの場合、State Machineが遷移可否を判定する。
 5. CoreがWork生成、State遷移、State進入準備を検証する。
