@@ -9,7 +9,7 @@ canonical_document: true
 
 [目次](../../目次.md) > 仕様 > Interaction > Interaction仕様
 
-# Interaction仕様
+# Interaction(対話窓口)仕様
 
 ## 1. 目的
 
@@ -17,12 +17,12 @@ canonical_document: true
 
 ## 2. 責務
 
-InteractionはUser Inputの受付、Input Routing、Information/Progressの提示、Decision Request/Responseを担当する。  
+Interaction(対話窓口)はUser Inputの受付、Input Routing、Information/Progressの提示、Decision Request/Responseを担当する。  
 InteractionはExecution Contextを直接変更しない。
 
 ## 3. Interaction Context
 
-Interaction ContextはModeとActive Decision Requestを表現できなければならない（MUST）。
+Interaction Context(対話コンテキスト)はModeとActive Decision Requestを表現できなければならない（MUST）。
 
 ModeはNORMALまたはDECISION_REQUIREDとする。  
 Active Decision Requestは同時に最大1件とする（MUST）。
