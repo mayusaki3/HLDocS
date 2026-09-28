@@ -58,25 +58,56 @@ Decision Responseや追加情報によりUNIQUEへ変化した場合は、同じ
 
 ## 6. Work Context
 
-Work Contextは確定済みWorkのWork固有情報を保持する。
+Work Context(作業コンテキスト)は確定済みWorkのWork固有情報を保持する。
+
+Work Contextは少なくとも次を保持できる。
+
+- Work ID
+- Purpose
+- Status
+- Issues
+- Artifacts(作業成果物)
+
+Artifactsは任意とし、当該WorkのWorkflow間で引き継ぐ必要がある中間成果物または結果を保持できる。
+
+Artifactは少なくとも次を識別できなければならない（MUST）。
+
+- Artifact ID
+- Type
+- 生成元Workflow
+- 内容または内容への参照
+- 作成または更新時点
+
+Artifactは作業対象正本ではなく、Execution Context(実行コンテキスト)のCurrent State、Workflow Plan、Active Workflowその他の確定実行状態を代替してはならない（MUST NOT）。
+
+Artifactが正本または外部対象の状態を記録する場合、それは取得時点のスナップショットとして扱い、後続の変更処理前に必要な再検証を行わなければならない（MUST）。
 
 Workflow Plan、Active Workflow、Suspended WorkflowおよびCurrent Stateの正本はExecution Contextに保持する。
 
 SUSPENDED Workには再開に必要な実行情報を関連付けて保存し、再開時に再検証する。
 
-## 7. WorkとWorkflow Plan
+## 7. Artifactの変更
+
+WorkflowはArtifactの生成または更新をCoreへ要求できる。  
+ArtifactをWork Contextへ確定反映する処理はCoreが行わなければならない（MUST）。
+
+別WorkflowがArtifactを利用する場合は、対象Work、Artifact IDおよびTypeが期待するものと一致することを確認しなければならない（MUST）。
+
+完了済みWorkのArtifactを後続Workで参照する場合、それを現在状態として無条件に再利用してはならない（MUST NOT）。
+
+## 8. WorkとWorkflow Plan
 
 利用者Workを処理するWorkflow PlanはOwner=WORKとし、対象Work IDを関連付ける。
 
 SYSTEM Workflow PlanをWorkへ仮所属させてはならない（MUST NOT）。
 
-## 8. Work継続・切替
+## 9. Work継続・切替
 
 現在Workへの継続指示によって新規Workを生成してはならない（MUST NOT）。
 
 別Workへ切り替える場合は利用者の明示的な指示または承認を必要とする（MUST）。
 
-## 9. Work完了
+## 10. Work完了
 
 Workは、対象Plan完了、Active/Suspended Workflowなし、Work完了をBLOCKするIssue Policyなし、完了を保留するDecision Requestなしの場合に完了候補としてよい（MAY）。
 
