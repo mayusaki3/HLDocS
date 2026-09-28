@@ -20,7 +20,7 @@ canonical_document: true
 - Current Stateが変更Stateである。
 - 本WorkflowがCurrent Workflow Plan内で`PENDING(未実行)`である。
 - 変更対処Workflowが`COMPLETED(完了)`である。
-- Target Listおよび対処結果を参照できる。
+- 対象WorkのWork Context(作業コンテキスト)からTarget Listおよび対処結果のArtifact(作業成果物)を参照できる。
 
 ## 3. 処理
 
