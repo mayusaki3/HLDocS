@@ -9,7 +9,7 @@ canonical_document: true
 
 [目次](../../目次.md) > 仕様 > State Machine > State Machine仕様
 
-# State Machine仕様
+# State Machine(状態遷移機構)仕様
 
 ## 1. 目的
 
@@ -19,7 +19,7 @@ State Machineは、作業内容、Workflow内部処理または利用者入力�
 
 ## 2. 責務
 
-State Machineは次を担当する。
+State Machine(状態遷移機構)は次を担当する。
 
 - 登録されたStateの識別
 - Initial Stateの定義
