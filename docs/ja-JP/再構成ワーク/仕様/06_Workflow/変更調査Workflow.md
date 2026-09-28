@@ -33,7 +33,12 @@ canonical_document: true
 
 ## 4. Target List(対処対象リスト)
 
-Target Listは本Workflowの成果物であり、Work(作業)そのものの必須属性ではない。
+Target Listは本Workflowが生成するArtifact(作業成果物)であり、対象WorkのWork Context(作業コンテキスト)へ関連付ける。Work(作業)そのものの必須属性ではない。
+
+- Artifact Type: `TARGET_LIST`
+- 生成元Workflow: 変更調査
+
+Target Listの確定生成または更新はCore(中核)へのArtifact変更要求として行わなければならない（MUST）。
 
 各項目は必要に応じて、少なくとも次を表現できるものとする。
 
