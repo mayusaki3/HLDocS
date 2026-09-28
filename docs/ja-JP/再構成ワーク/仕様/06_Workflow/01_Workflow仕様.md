@@ -37,6 +37,18 @@ Planは、Plan内の全WorkflowがCOMPLETEDまたはSKIPPEDであり、Active/Su
 
 COMPLETEDとSKIPPEDを同一の意味として扱ってはならない（MUST NOT）。
 
+通常のWorkflow状態遷移は次を基本とする。
+
+- `PENDING → ACTIVE`: 開始
+- `ACTIVE → SUSPENDED`: 中断
+- `SUSPENDED → ACTIVE`: 復帰
+- `ACTIVE → COMPLETED`: 完了
+- `PENDING → SKIPPED`: スキップ
+
+`COMPLETED → PENDING`は通常遷移ではなく、Workflow Re-run(ワークフロー再実行)でのみ許可する。
+
+`SKIPPED`、`COMPLETED`その他の終了済み状態から、仕様に定義されていない通常遷移を行ってはならない（MUST NOT）。
+
 ## 5. Plan生成
 
 Stateへ進入し、対応するCurrent Workflow Planが存在せず、default_workflow_planが定義されている場合、Coreはdefault_workflow_planからPlanを生成してよい（MAY）。
@@ -46,6 +58,8 @@ SYSTEM用StateではOwner=SYSTEM、利用者Work用StateではOwner=WORKとす�
 ## 6. Workflow開始
 
 Workflow開始には、Current Stateのavailable_workflows登録、Current Plan所属、PENDING、他Active Workflowなし、開始条件成立、Restriction適用可能をすべて満たさなければならない（MUST）。
+
+別Workflowが`SUSPENDED(中断中)`であること自体は、Workflow開始を禁止しない。ただし、開始対象がその中断Workflowの復帰前提を破壊しないこと、および対応仕様上その実行が許可されていることをCoreが確認しなければならない（MUST）。
 
 Coreは検証後、WorkflowをACTIVEへ変更する。
 
@@ -84,7 +98,7 @@ Workflow Re-run(ワークフロー再実行)は、Current Workflow Plan(ワー�
 
 完了済みWorkflowを再実行する場合、通常の状態遷移として暗黙に`COMPLETED(完了)`から`PENDING(未実行)`へ戻してはならない（MUST NOT）。Core(中核)がRe-run要求を検証し、再実行可能な場合に対象Workflowを再実行可能状態へ戻す。
 
-Re-run時に別Workflowが`ACTIVE(実行中)`である場合、同時ACTIVE最大1件の規則を満たすため、必要に応じて現在のWorkflowを`SUSPENDED(中断中)`としてから再実行対象を開始する。
+Re-run時に別Workflowが`ACTIVE(実行中)`である場合、同時ACTIVE最大1件の規則を満たすため、現在のWorkflowを`SUSPENDED(中断中)`としてから再実行対象を開始しなければならない（MUST）。中断要求とRe-run開始の間に、同時ACTIVEが発生してはならない（MUST NOT）。
 
 Owner=`WORK`のPlanで、現在の利用者要求の遂行に必要な再調査・再検証等が既存Workflow仕様から明確に要求される場合、その仕様に従うRe-runはPlan構成変更の利用者承認を別途要求しない。ただし、Work Purposeの拡張、追加変更、または新たな利用者判断を伴う場合は該当する承認規則に従わなければならない（MUST）。
 
