@@ -80,11 +80,21 @@ Owner=WORKのPlanについて、追加、削除、並べ替え、SKIPPED化は�
 
 Owner=SYSTEMのPlanは対応仕様に明示された規則なしに変更してはならない（MUST NOT）。
 
-完了済みWorkflowを再度実行する必要が生じた場合、それを直接`PENDING(未実行)`へ戻すことを通常の状態遷移として扱ってはならない（MUST NOT）。再実行はPlan変更として扱い、Ownerに対応するPlan変更規則を適用しなければならない（MUST）。
+Workflow Re-run(ワークフロー再実行)は、Current Workflow Plan(ワークフロー計画)に既に存在するWorkflowを再度実行する実行制御であり、Workflowの追加、削除または順序変更を伴わない限りPlan構成変更として扱わない。
 
-Owner=`WORK`のPlanで再調査・再検証その他の再実行が必要となった場合、Workflowは必要性と対象を提示できるが、利用者の明示的な指示または承認なしに再実行をPlanへ確定してはならない（MUST NOT）。
+完了済みWorkflowを再実行する場合、通常の状態遷移として暗黙に`COMPLETED(完了)`から`PENDING(未実行)`へ戻してはならない（MUST NOT）。Core(中核)がRe-run要求を検証し、再実行可能な場合に対象Workflowを再実行可能状態へ戻す。
 
-## 11. State遷移
+Re-run時に別Workflowが`ACTIVE(実行中)`である場合、同時ACTIVE最大1件の規則を満たすため、必要に応じて現在のWorkflowを`SUSPENDED(中断中)`としてから再実行対象を開始する。
+
+Owner=`WORK`のPlanで、現在の利用者要求の遂行に必要な再調査・再検証等が既存Workflow仕様から明確に要求される場合、その仕様に従うRe-runはPlan構成変更の利用者承認を別途要求しない。ただし、Work Purposeの拡張、追加変更、または新たな利用者判断を伴う場合は該当する承認規則に従わなければならない（MUST）。
+
+## 11. Workflow Re-run
+
+Re-run要求は少なくとも対象Workflow、再実行理由および再実行後に復帰すべき処理を識別できなければならない（MUST）。
+
+Re-runは過去のArtifact(作業成果物)を最新状態として保証しない。再実行Workflowは必要な対象状態を再取得し、Artifactを更新しなければならない（MUST）。
+
+## 12. State遷移
 
 WorkflowはState遷移候補を提示できるが、自らCurrent Stateを変更してはならない（MUST NOT）。
 
