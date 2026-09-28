@@ -64,7 +64,9 @@ Ownerは少なくとも次を区別する。
 OwnerがWORKの場合は、対応するWork IDを一意に関連付けなければならない（MUST）。  
 OwnerがSYSTEMの場合は、存在しないWorkを生成してPlanの所有者としてはならない（MUST NOT）。
 
-Work Contextは少なくともWork ID、Purpose、StatusおよびIssuesを保持する。
+Work Context(作業コンテキスト)は少なくともWork ID、Purpose、Status、Issuesおよび任意のArtifacts(作業成果物)を保持できる。
+
+ArtifactsはWork固有の中間成果物または結果であり、作業対象正本またはExecution Context(実行コンテキスト)の確定実行状態を代替しない。
 
 Work Statusは、少なくとも次を扱う。
 
@@ -87,6 +89,8 @@ Coreは変更要求について、少なくとも次を確認しなければな�
 - 要求元が当該変更を要求できること
 - 有効なRestriction Contextに違反しないこと
 - 利用者承認を必要とする変更では、必要な承認根拠が存在すること
+
+Workflow(ワークフロー)がWork Context内のArtifactを生成または更新する場合もExecution Context変更要求として扱い、Coreが対象Work、要求元および変更内容を検証して適用しなければならない（MUST）。
 
 ## 6. Workflow Plan変更
 
