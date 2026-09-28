@@ -76,6 +76,8 @@ Work Statusは、少なくとも次を扱う。
 
 同時にACTIVEとなるWorkは最大1件とする（MUST）。
 
+同時に`ACTIVE(実行中)`となるWorkflowは最大1件とする（MUST）。`SUSPENDED(中断中)` Workflowが存在していても別WorkflowをACTIVEにできるが、その組み合わせが対応Workflow仕様で許可され、復帰先を一意に管理できなければならない（MUST）。
+
 Workflow Planの実行状態とIssueの状態を同一の状態として扱ってはならない（MUST NOT）。
 
 ## 5. Execution Contextの変更
@@ -107,7 +109,7 @@ Stateのdefault_workflow_planから新規Planを生成する場合、そのState
 
 SYSTEM Planの変更は、対応するStateまたはシステム仕様に明示された規則なしに確定してはならない（MUST NOT）。
 
-既存Plan内WorkflowのRe-run(再実行)は、Workflowの追加、削除または順序変更を伴わない限りPlan構成変更として扱わない。CoreはRe-run要求について、対象WorkflowがCurrent Planに存在すること、再実行理由が対応仕様に適合すること、同時ACTIVE制約およびRestriction Context(制限コンテキスト)を満たすことを検証しなければならない（MUST）。
+既存Plan内WorkflowのRe-run(再実行)はPlan構成変更として扱わない。CoreはRe-run要求について、対象WorkflowがCurrent Planに存在すること、再実行理由が対応仕様に適合すること、同時ACTIVE制約およびRestriction Context(制限コンテキスト)を満たすことを検証しなければならない（MUST）。
 
 ## 7. Restriction Context
 
