@@ -47,13 +47,14 @@ Target Listの内容と実体が不一致の場合、調査結果を正しいも
 変更対処Workflow(ワークフロー)は、`RESEARCH_REQUIRED`となったTargetについて次を行ってはならない（MUST NOT）。
 
 - 古いTarget Listを強制適用する。
-- 自ら変更調査Workflowを再実行する。
-- 完了済み変更調査Workflowを直接`PENDING(未実行)`へ戻す。
-- Workflow Plan(ワークフロー計画)を独断で変更する。
+- 変更対処Workflow内部で変更調査処理を代行する。
+- Core(中核)を介さずWorkflow状態を変更する。
 
-再調査がWork Purpose達成に必要な場合は、再調査候補を提示し、Owner=`WORK`のPlan変更規則に従う。
+再調査が現在のWork Purpose達成に必要であり、変更調査Workflow仕様の範囲内である場合、変更対処Workflowは自身を`SUSPENDED(中断中)`とする要求と、変更調査WorkflowのRe-run(再実行)要求をCoreへ提示してよい（MAY）。
 
-利用者が再調査を承認しない場合、当該Targetを未対処として後続検証へ引き渡してよい（MAY）。
+再調査のためにWork Purposeを拡張したり、利用者が要求していない追加変更を対象へ含めたりしてはならない（MUST NOT）。その必要がある場合はInteraction(対話窓口)による利用者判断を要求する。
+
+再調査完了後、Target List(対処対象リスト)が更新され、開始条件を再度満たす場合、Coreは中断していた変更対処Workflowを`ACTIVE(実行中)`へ復帰させてよい（MAY）。
 
 ## 6. 終了
 
