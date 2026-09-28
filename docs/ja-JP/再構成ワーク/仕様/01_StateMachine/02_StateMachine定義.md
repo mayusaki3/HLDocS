@@ -13,51 +13,67 @@ canonical_document: true
 
 ## 1. 目的
 
-本書は、HLDocS v0.7.0再構成時点のState登録および遷移関係を定義する。  
-未定義のStateを存在するものとして扱ってはならない（MUST NOT）。
+本書はHLDocS v0.7.0再構成時点のState登録および遷移関係を定義する。
 
 ## 2. State一覧
 
 | State | 個別仕様 | 用途 |
 | --- | --- | --- |
-| 能力確認 | ../02_State/能力確認State.md | 現在のHLDocSで利用可能な能力を検証し利用者へ通知する |
-| 待機 | ../02_State/待機State.md | 現在実行すべきWorkまたはWorkflowが存在しない通常運転 |
+| 能力確認 | ../02_State/能力確認State.md | 現在利用可能な能力を検証し通知する |
+| 待機 | ../02_State/待機State.md | 実行すべきWork/Workflowがない通常運転 |
 | 情報参照 | ../02_State/情報参照State.md | 正本を変更せず情報を参照、確認、説明または分析する |
 
 ## 3. Initial State
 
 Initial Stateは「能力確認」とする。
 
-「開始」はStateとして定義しない。  
-HLDocSシステム起動およびState Machineへの制御移譲はCoreの起動処理として扱う。
-
 ## 4. 遷移一覧
 
 | 遷移元 | 遷移先 | 条件 |
 | --- | --- | --- |
-| 能力確認 | 待機 | 能力確認StateのSYSTEM Workflow Planが完了していること |
-| 待機 | 情報参照 | ACTIVE Workが存在し、State選択ルールにより情報参照が候補となり、当該Workが情報参照Stateのwork_acceptanceに適合すること |
-| 情報参照 | 待機 | 対象WorkがCOMPLETEDであり、情報参照StateのWorkflow Planが終了していること |
+| 能力確認 | 待機 | 能力確認のSYSTEM Workflow Planが完了 |
+| 待機 | 情報参照 | 情報参照がUNIQUE候補で、Work Candidateがwork_acceptanceに適合し、CoreがWork生成とState進入を適用可能 |
+| 情報参照 | 待機 | 対象WorkがCOMPLETEDで、情報参照のWorkflow Planが終了 |
 
 ## 5. 起動時正常系
 
-1. CoreからState Machineへ制御を移譲する。
-2. Initial Stateである能力確認Stateへ進入する。
-3. Owner=SYSTEMのdefault Workflow Planを生成する。
-4. HLDocS能力確認Workflowによる検証結果をInteractionから通知する。
-5. Plan完了後、待機Stateへ遷移する。
+Core → 能力確認 → SYSTEM Plan → 能力通知 → 待機 とする。
 
-## 6. 情報参照Work正常系
+## 6. 新規Work正常系
 
-1. 待機StateでInteractionが情報参照要求をNEW_WORK_REQUESTとして分類する。
-2. Workを生成する。
-3. State選択ルールが登録Stateから候補を抽出する。
-4. 情報参照StateがUNIQUE候補となる場合、State Machineが待機→情報参照の遷移可否を判定する。
-5. Coreが遷移を適用する。
-6. Owner=WORKのdefault Workflow Planを生成する。
-7. 情報参照Workflowを実行する。
-8. 回答提示後、WorkflowおよびWorkを完了する。
-9. State Machineの判定を経て待機Stateへ戻る。
+1. InteractionがNEW_WORK_REQUESTを識別する。
+2. Work Candidateを構成する。
+3. State選択ルールを適用する。
+4. UNIQUEの場合、State Machineが遷移可否を判定する。
+5. CoreがWork生成、State遷移、State進入準備を検証する。
+6. 整合した一つの変更としてWorkをACTIVE化し対象Stateへ進入する。
+7. Owner=WORKのPlanを生成してWorkflowを実行する。
+8. Work完了後、定義された遷移で待機へ戻る。
+
+## 7. State選択異常系
+
+### 7.1 NONE
+
+例: 現在未定義の「仕様を修正して」。
+
+処理可能なStateが存在しない場合、Workを生成しない。  
+Interactionから現在処理できない旨を通知して待機を維持する。
+
+### 7.2 UNKNOWN
+
+例: 「これを確認して」のように、対象または目的が不足して情報参照適合性を判断できない場合。
+
+Workを生成せずDecision Requestまたは追加情報要求を行う。  
+回答後、同じWork Candidateを再評価する。
+
+### 7.3 MULTIPLE
+
+複数のwork_acceptanceへ同時に適合し一意に選択できない場合、Workを生成せず候補選択のDecision Requestを行う。
+
+利用者選択後もState MachineおよびCoreの検証を行う。
+
+現時点ではWork処理Stateが情報参照のみであるため、実構成上MULTIPLEは発生しない。  
+MULTIPLEを検証するためだけに重複Stateを追加してはならない（MUST NOT）。
 
 ---
 
