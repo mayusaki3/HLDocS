@@ -23,60 +23,67 @@ StatusはACTIVE、SUSPENDED、COMPLETEDとする。
 同時にACTIVEとなるWorkは最大1件とする（MUST）。  
 COMPLETEDとなったWorkを直接ACTIVEへ戻してはならない（MUST NOT）。
 
-## 3. Work Context
+## 3. Work Candidate
 
-Work ContextはWork固有情報を保持する。
+NEW_WORK_REQUESTを受けた時点では、Workを直ちにExecution Contextへ確定生成せず、まずWork Candidateを構成する。
 
-Workflow Plan、Active Workflow、Suspended WorkflowおよびCurrent Stateの正本はExecution Contextに保持し、Work Contextへ重複して正本を保持してはならない（MUST NOT）。
+Work Candidateは少なくとも次を持つ。
 
-SUSPENDED Workには再開に必要な実行情報を関連付けて保存できなければならない（MUST）。  
-保存情報は再開時に再検証する。
+- Purpose
+- Source User Input
+- 必要に応じてWork ID生成に必要な情報
+
+Work CandidateはWorkではなく、ACTIVE/SUSPENDED/COMPLETEDのStatusを持たない。  
+Work CandidateをCurrent Workとして扱ってはならない（MUST NOT）。
 
 ## 4. Work生成
 
-Current Workが存在しない状態で、Interactionが利用者入力をNEW_WORK_REQUESTとして一意に分類した場合、InteractionはCoreへWork生成要求を送ってよい（MAY）。
+Interactionが利用者入力をNEW_WORK_REQUESTとして一意に分類した場合、Work CandidateをState選択へ渡してよい（MAY）。
 
-Coreは要求を検証し、他のACTIVE Workが存在しない場合にWorkを生成してCurrent WorkとしてACTIVEにできる。
-
-Work生成要求にはWork ID生成に必要な情報、Purpose、Status=ACTIVE、生成根拠となる利用者入力を関連付ける。
+Work Candidateについて処理可能なStateがUNIQUEであり、State Machine上の遷移が可能で、State進入準備を完了できる場合、CoreはWorkを生成してACTIVEとし、State遷移と整合した一つのコミットとして適用してよい（MAY）。
 
 Purposeを確定するために作業範囲を推測で拡張してはならない（MUST NOT）。
 
-## 5. WorkとWorkflow Plan
+## 5. State選択が確定しない場合
+
+State選択結果がMULTIPLE、NONEまたはUNKNOWNの場合、Work CandidateをACTIVE Workとして確定してはならない（MUST NOT）。
+
+- MULTIPLE: 必要ならInteractionのDecision Requestで利用者選択を取得する。
+- UNKNOWN: 必要な追加情報を取得する。
+- NONE: 現在処理可能なStateがないことをInteractionから通知する。
+
+Decision Responseや追加情報によりUNIQUEへ変化した場合は、同じWork Candidateを再評価してよい（MAY）。
+
+候補処理を中止する場合、Work Candidateを破棄してよい。Work履歴としてCOMPLETED等を生成する必要はない。
+
+## 6. Work Context
+
+Work Contextは確定済みWorkのWork固有情報を保持する。
+
+Workflow Plan、Active Workflow、Suspended WorkflowおよびCurrent Stateの正本はExecution Contextに保持する。
+
+SUSPENDED Workには再開に必要な実行情報を関連付けて保存し、再開時に再検証する。
+
+## 7. WorkとWorkflow Plan
 
 利用者Workを処理するWorkflow PlanはOwner=WORKとし、対象Work IDを関連付ける。
 
 SYSTEM Workflow PlanをWorkへ仮所属させてはならない（MUST NOT）。
 
-## 6. Work開始とState
-
-Work生成と処理対象Stateの選択は別の意味判断とする（MUST）。
-
-Work生成後、現在StateでWorkを処理できない場合はState選択ルールを使用し、State Machineによる遷移可否判定を経なければならない（MUST）。
-
-ただし、必要なWork生成、State選択、State遷移およびState進入準備がすべて検証済みの場合、CoreはExecution Contextに不整合な中間状態を公開しないため、関連変更を一つの整合したコミットとして適用してよい（MAY）。
-
-## 7. Work継続・切替
+## 8. Work継続・切替
 
 現在Workへの継続指示によって新規Workを生成してはならない（MUST NOT）。
 
 別Workへ切り替える場合は利用者の明示的な指示または承認を必要とする（MUST）。
 
-## 8. Work完了
+## 9. Work完了
 
-Workは少なくとも次を満たす場合に完了候補としてよい（MAY）。
+Workは、対象Plan完了、Active/Suspended Workflowなし、Work完了をBLOCKするIssue Policyなし、完了を保留するDecision Requestなしの場合に完了候補としてよい（MAY）。
 
-- 当該WorkをOwnerとするWorkflow Planが完了している。
-- 当該Workに属するActive Workflowが存在しない。
-- 当該Workに属するSuspended Workflowが存在しない。
-- Work完了をBLOCKするIssue Policyが存在しない。
-- Work完了を保留するDecision Requestが存在しない。
+残存IssueがあってもPolicyおよび利用者判断に従いCOMPLETEDとしてよい（MAY）。  
+Work完了によってIssueを自動的にRESOLVED/CLOSEDへ変更してはならない（MUST NOT）。
 
-残存Issueがある場合でもPolicyおよび利用者判断に従いWorkをCOMPLETEDとしてよい（MAY）。  
-Work完了によってIssueを自動的にRESOLVEDまたはCLOSEDへ変更してはならない（MUST NOT）。
-
-WorkをCOMPLETEDへ変更した後、Current Workから解除する。  
-完了済みWorkはWork Contextsに履歴として保持してよい（MAY）。
+COMPLETED後はCurrent Workから解除し、Work Contextsに履歴として保持してよい（MAY）。
 
 ---
 
