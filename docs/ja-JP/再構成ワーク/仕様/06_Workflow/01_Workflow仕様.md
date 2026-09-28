@@ -80,6 +80,10 @@ Owner=WORKのPlanについて、追加、削除、並べ替え、SKIPPED化は�
 
 Owner=SYSTEMのPlanは対応仕様に明示された規則なしに変更してはならない（MUST NOT）。
 
+完了済みWorkflowを再度実行する必要が生じた場合、それを直接`PENDING(未実行)`へ戻すことを通常の状態遷移として扱ってはならない（MUST NOT）。再実行はPlan変更として扱い、Ownerに対応するPlan変更規則を適用しなければならない（MUST）。
+
+Owner=`WORK`のPlanで再調査・再検証その他の再実行が必要となった場合、Workflowは必要性と対象を提示できるが、利用者の明示的な指示または承認なしに再実行をPlanへ確定してはならない（MUST NOT）。
+
 ## 11. State遷移
 
 WorkflowはState遷移候補を提示できるが、自らCurrent Stateを変更してはならない（MUST NOT）。
