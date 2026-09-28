@@ -9,7 +9,7 @@ canonical_document: true
 
 [目次](../../目次.md) > 仕様 > Work > Work仕様
 
-# Work仕様
+# Work(作業)仕様
 
 ## 1. 目的
 
@@ -25,9 +25,9 @@ COMPLETEDとなったWorkを直接ACTIVEへ戻してはならない（MUST NOT�
 
 ## 3. Work Candidate
 
-NEW_WORK_REQUESTを受けた時点では、Workを直ちにExecution Contextへ確定生成せず、まずWork Candidateを構成する。
+NEW_WORK_REQUESTを受けた時点では、Workを直ちにExecution Contextへ確定生成せず、まずWork Candidate(作業候補)を構成する。
 
-Work Candidateは少なくとも次を持つ。
+Work Candidate(作業候補)は少なくとも次を持つ。
 
 - Purpose
 - Source User Input
