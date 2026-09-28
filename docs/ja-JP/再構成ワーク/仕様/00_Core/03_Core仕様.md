@@ -9,11 +9,11 @@ canonical_document: true
 
 [目次](../../目次.md) > 仕様 > Core > Core仕様
 
-# Core仕様
+# Core(中核)仕様
 
 ## 1. 目的
 
-本書は、HLDocS Coreの責務と、通常運転および復旧に共通する実行制御を定義する。
+本書は、HLDocS Core(中核)の責務と、通常運転および復旧に共通する実行制御を定義する。
 
 ## 2. Coreの責務
 
@@ -22,7 +22,7 @@ Coreは次を担当する。
 - HLDocSシステム起動制御
 - Execution Contextの正本管理
 - Execution Contextに対する変更要求の検証および適用
-- Restriction Contextの構築および強制
+- Restriction Context(制限コンテキスト)の構築および強制
 - 登録済み仕様要素の参照機構
 - State Machineへの制御移譲
 - State Machineへ移譲できない場合の復旧制御
@@ -44,7 +44,7 @@ Coreは次を行ってはならない（MUST NOT）。
 
 Coreは、実行状態をExecution Contextとして管理しなければならない（MUST）。
 
-Execution Contextは、少なくとも次を表現できなければならない（MUST）。
+Execution Context(実行コンテキスト)は、少なくとも次を表現できなければならない（MUST）。
 
 - Current State
 - Current Workflow Plan
