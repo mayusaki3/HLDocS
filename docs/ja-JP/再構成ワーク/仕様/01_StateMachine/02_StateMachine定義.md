@@ -22,6 +22,7 @@ canonical_document: true
 | 能力確認 | ../02_State/能力確認State.md | 現在利用可能な能力を検証し通知する |
 | 待機 | ../02_State/待機State.md | 実行すべきWork/Workflowがない通常運転 |
 | 情報参照 | ../02_State/情報参照State.md | 正本を変更せず情報を参照、確認、説明または分析する |
+| 変更 | ../02_State/変更State.md | 利用者が明示的に要求した正本または作業対象の変更を実行する |
 
 ## 3. Initial State
 
@@ -32,8 +33,10 @@ Initial Stateは「能力確認」とする。
 | 遷移元 | 遷移先 | 条件 |
 | --- | --- | --- |
 | 能力確認 | 待機 | 能力確認のSYSTEM Workflow Planが完了 |
-| 待機 | 情報参照 | 情報参照がUNIQUE候補で、Work Candidateがwork_acceptanceに適合し、CoreがWork生成とState進入を適用可能 |
-| 情報参照 | 待機 | 対象WorkがCOMPLETEDで、情報参照のWorkflow Planが終了 |
+| 待機 | 情報参照 | 情報参照が`UNIQUE(一意)`候補で、Work Candidate(作業候補)がwork_acceptanceに適合し、Core(中核)がWork生成とState進入を適用可能 |
+| 待機 | 変更 | 変更が`UNIQUE(一意)`候補で、Work Candidate(作業候補)がwork_acceptanceに適合し、Core(中核)がWork生成とState進入を適用可能 |
+| 情報参照 | 待機 | 対象Workが`COMPLETED(完了)`で、情報参照のWorkflow Planが終了 |
+| 変更 | 待機 | 対象Workが`COMPLETED(完了)`で、変更のWorkflow Planが終了 |
 
 ## 5. 起動時正常系
 
@@ -72,8 +75,11 @@ Workを生成せずDecision Requestまたは追加情報要求を行う。
 
 利用者選択後もState MachineおよびCoreの検証を行う。
 
-現時点ではWork処理Stateが情報参照のみであるため、実構成上MULTIPLEは発生しない。  
-MULTIPLEを検証するためだけに重複Stateを追加してはならない（MUST NOT）。
+現在は情報参照Stateと変更Stateが存在するが、それぞれのwork_acceptanceは「変更を要求しないWork」と「変更を明示的に目的とするWork」として排他的に定義する。  
+したがって、単純な参照要求または明示的な変更要求を理由として`MULTIPLE(複数)`にしてはならない（MUST NOT）。
+
+一つの利用者要求が複数Stateの処理目的を実際に含み、単一Stateへ安全に確定できない場合は`MULTIPLE(複数)`となり得る。  
+`MULTIPLE(複数)`を検証するためだけにwork_acceptanceを重複させてはならない（MUST NOT）。
 
 ---
 
