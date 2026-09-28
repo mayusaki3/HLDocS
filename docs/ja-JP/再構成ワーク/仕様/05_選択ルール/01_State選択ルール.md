@@ -9,7 +9,7 @@ canonical_document: true
 
 [目次](../../目次.md) > 仕様 > 選択ルール > State選択ルール
 
-# State選択ルール
+# State(状態)選択ルール
 
 ## 1. 目的
 
