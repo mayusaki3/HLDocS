@@ -20,7 +20,7 @@ canonical_document: true
 - Current Stateが変更Stateである。
 - Current Workflow Plan(ワークフロー計画)のOwnerが`WORK`である。
 - PlanのWork IDがCurrent Workと一致する。
-- 本WorkflowがPlan内で`PENDING(未実行)`である。
+- 本WorkflowがPlan内で`PENDING(未実行)`である。初回実行または承認済みRe-run(再実行)のどちらでもよい。
 
 ## 3. 処理
 
@@ -39,6 +39,8 @@ Target Listは本Workflowが生成するArtifact(作業成果物)であり、対
 - 生成元Workflow: 変更調査
 
 Target Listの確定生成または更新はCore(中核)へのArtifact変更要求として行わなければならない（MUST）。
+
+Re-runの場合は既存Target Listを調査結果に基づいて更新する。過去の現在状態を最新状態として引き継いではならない（MUST NOT）。
 
 各項目は必要に応じて、少なくとも次を表現できるものとする。
 
