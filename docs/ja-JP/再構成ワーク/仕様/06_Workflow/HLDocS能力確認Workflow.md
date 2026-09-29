@@ -26,14 +26,39 @@ canonical_document: true
 
 ## 3. 能力の扱い
 
-能力とは、利用者がHLDocSに依頼可能な作業機能をいう。
+HLDocSの能力は、Practical Capability(実務能力)とExecution Capability(実行能力)に分けて扱う。
 
-登録された仕様要素そのものを能力として列挙してはならない（MUST NOT）。
+### 3.1 Practical Capability(実務能力)
+
+実務能力は、利用者から見た「どのような作業を遂行できるか」を表す。
 
 例:
 
-- 「Git Tool」ではなく「Gitを利用したソースコード更新」
-- 「検証SubFlow」ではなく「仕様に基づく検証」
+- コードを生成・修正できる。
+- 仕様を調査できる。
+- 仕様を変更できる。
+
+登録されたState、Workflow、SubFlowまたはToolそのものを実務能力として列挙してはならない（MUST NOT）。
+
+### 3.2 Execution Capability(実行能力)
+
+実行能力は、実務能力を成立させるためにHLDocSが実際に行える操作を表す。
+
+例:
+
+- ファイルを参照できる。
+- ファイルを書き込める。
+- Gitの状態・差分を参照できる。
+- Gitへ変更を書き込める。
+- テストを実行できる。
+
+Execution Capabilityは特定のTool名と同一視してはならない（MUST NOT）。一つの実行能力を複数のTool、SubFlowその他の能力提供手段が提供してよい（MAY）。
+
+### 3.3 依存関係
+
+Practical Capabilityは、その遂行に必要なExecution Capabilityをrequiredまたはoptionalとして関連付けてよい。
+
+実行能力を持つことと、現在の処理でその操作を実行してよいことを同一視してはならない（MUST NOT）。実際の実行可否は有効なRestriction Context(制限コンテキスト)その他の実行条件によって別途検証する。
 
 ## 4. 検証
 
@@ -55,11 +80,18 @@ canonical_document: true
 
 ## 5. 判定
 
-各能力は少なくとも次のいずれかとして扱う。
+Execution Capabilityは、その能力を提供する手段が現在利用可能かを検証する。
 
-- AVAILABLE: 必要条件を確認でき、利用可能。
-- UNAVAILABLE: 能力は定義されているが、必要条件を満たさない。
+Practical Capabilityは、必要なExecution Capabilityその他の成立条件を基に判定する。
+
+各Practical Capabilityは少なくとも次のいずれかとして扱う。
+
+- AVAILABLE: requiredな成立条件を満たし、想定する実務を遂行できる。
+- DEGRADED: 基本的な実務は遂行できるが、optionalな実行能力の不足等により一部機能が利用できない。
+- UNAVAILABLE: requiredな成立条件を満たさず、実務を遂行できない。
 - UNKNOWN: 利用可能性を安全に確認できない。
+
+DEGRADEDまたはUNAVAILABLEの場合、原因となったExecution Capabilityまたは成立条件を識別できるようにする。
 
 未登録の能力を、存在する能力としてNOT_REGISTERED一覧へ網羅的に推測してはならない（MUST NOT）。
 
