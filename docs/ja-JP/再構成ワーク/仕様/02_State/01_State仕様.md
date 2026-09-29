@@ -23,13 +23,36 @@ State個別仕様は、少なくとも必要に応じて次を定義する。
 
 - State識別子または名称
 - Stateの目的
+- plan_owner
+- work_acceptance
 - available_workflows
 - default_workflow_plan
 - restriction_sets
 
 Stateは処理を実行する主体ではない。
 
-## 3. available_workflows
+## 3. plan_owner
+
+plan_ownerは、当該Stateでdefault_workflow_planから生成するWorkflow Plan(ワークフロー計画)のOwnerを宣言する。
+
+- SYSTEM: HLDocS自身の通常運転処理
+- WORK: 利用者Work(作業)に属する処理
+
+plan_ownerがWORKの場合、対象Work IDをWorkflow Planへ関連付ける。plan_ownerがSYSTEMの場合、Plan所有のためだけにWorkを生成してはならない（MUST NOT）。
+
+default_workflow_planを持たないStateではplan_ownerを省略してよい（MAY）。
+
+## 4. work_acceptance
+
+work_acceptanceは、当該Stateが処理対象として受け入れられるWorkまたはWork Candidate(作業候補)の範囲を宣言する。
+
+利用者Workを処理するStateは、State選択に必要な範囲でwork_acceptanceを定義しなければならない（MUST）。
+
+work_acceptanceはState選択の候補抽出根拠であり、State遷移許可そのものではない。
+
+SYSTEM専用StateまたはWorkを処理しないStateではwork_acceptanceを省略してよい（MAY）。
+
+## 5. available_workflows
 
 available_workflowsは、当該Stateで利用可能なWorkflowを定義する。
 
@@ -37,7 +60,7 @@ available_workflowsは、当該Stateで利用可能なWorkflowを定義する。
 
 available_workflowsへの登録は、そのWorkflowが現在のWorkflow Planに含まれること、または直ちに実行してよいことを意味しない。
 
-## 4. default_workflow_plan
+## 6. default_workflow_plan
 
 default_workflow_planは、当該Stateで新たにWorkflow Planを生成する場合の標準構成を宣言する。
 
@@ -50,7 +73,7 @@ default_workflow_planから生成されたWorkflow PlanはExecution Contextに�
 
 同一Workで当該State用の既存Workflow Planを復元すべき場合、default_workflow_planから新しいPlanを重複生成してはならない（MUST NOT）。
 
-## 5. restriction_sets
+## 7. restriction_sets
 
 restriction_setsは、当該Stateで適用するRestriction Setを宣言する。
 
@@ -58,7 +81,7 @@ restriction_setsは、当該Stateで適用するRestriction Setを宣言する�
 
 宣言されたRestriction Setを適用できない場合、当該Stateで通常処理を開始してはならない（MUST NOT）。
 
-## 6. Stateが行ってはならないこと
+## 8. Stateが行ってはならないこと
 
 Stateは次を行ってはならない（MUST NOT）。
 
@@ -70,7 +93,7 @@ Stateは次を行ってはならない（MUST NOT）。
 - 利用者と直接対話する。
 - Toolを実行する。
 
-## 7. State Machineとの境界
+## 9. State Machineとの境界
 
 Stateは自身の実行環境を定義する。  
 State間の遷移関係、Initial Stateおよび遷移可否はState Machineが定義する。
