@@ -24,7 +24,7 @@ canonical_document: true
 
 ## 3. 処理
 
-1. Target Listの各項目について現在状態を再取得する。
+1. Target Listの各項目について現在状態を再取得する。Target Listが空の場合は、空である根拠と対処結果を確認する。
 2. 対処結果と現在状態を照合する。
 3. Work Purposeに対して必要な変更が成立したか確認する。
 4. 未対処、失敗、不整合または新たなIssue(課題)を識別する。
@@ -38,7 +38,7 @@ Work Purposeに対する変更が成立していない場合、少なくとも�
 - `RESEARCH_REQUIRED(再調査必要)`: Target Listの前提、対象、現在状態または必要な対処を再確認する必要がある。
 - `RETREATMENT_REQUIRED(再対処必要)`: Target Listは現在も有効だが、対処が未実行、失敗または不完全である。
 - `USER_DECISION_REQUIRED(利用者判断必要)`: Work Purposeの範囲、追加変更、制限その他について利用者判断が必要である。
-- `NO_RERUN_REQUIRED(再実行不要)`: 要求は成立しており、再実行を必要としない。
+- `NO_RERUN_REQUIRED(再実行不要)`: 要求は成立している、または変更対象が存在しないこと自体がWork Purposeに対する正しい結果であり、再実行を必要としない。
 
 `RESEARCH_REQUIRED`の場合は変更調査Workflow(ワークフロー)を、`RETREATMENT_REQUIRED`の場合は変更対処WorkflowをRe-run候補とする。
 
