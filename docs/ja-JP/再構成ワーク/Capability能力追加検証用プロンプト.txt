@@ -1,0 +1,40 @@
+HLDocS v0.7.0のCapability(能力)追加機構をEnd-to-Endで検証する。
+
+対象リポジトリ:
+https://github.com/mayusaki3/HLDocS
+
+対象ブランチ:
+develop
+
+実行規則:
+docs/ja-JP/再構成ワーク/仕様
+
+能力追加ルール:
+docs/ja-JP/再構成ワーク/仕様/07_Capability/03_能力追加ルール.md
+
+この検証では、現在利用可能なChatGPTのGitHub接続を実行環境として使用する。
+
+次の能力追加要求を、HLDocSの通常のWorkとして処理すること。
+
+「コード生成・修正の実務能力を追加する。」
+
+不足するExecution Capabilityが存在する場合は、能力追加ルールに従って、このPractical Capabilityを成立させるために必要なものだけを追加対象として調査すること。
+周辺能力を網羅目的で推測して追加してはならない（MUST NOT）。
+
+検証では少なくとも次を確認すること。
+
+1. 要求がNEW_WORK_REQUESTとして扱われる。
+2. Work Candidateから変更Stateが選択される。
+3. 変更調査WorkflowでPractical Capabilityと必要なExecution Capabilityが識別される。
+4. Target Listが生成される。
+5. 変更対処Workflowで個別Capability仕様とCapability Registryが実際に更新される。
+6. 変更検証Workflowで登録、依存、循環、Restrictionとの境界が検証される。
+7. 更新後の正本から追加Capabilityを再発見できる。
+8. HLDocS能力確認Workflowの規則に従い、現在の実行環境で能力状態を評価できる。
+9. 評価根拠となるExecution Capabilityと能力提供手段を説明できる。
+
+同一会話内で覚えている情報だけを再発見の根拠としてはならない（MUST NOT）。
+Capability Registryおよび個別Capability仕様を再参照して確認すること。
+
+作業を継続できない場合は停止し、不足している仕様、能力または判断を報告すること。
+不足する仕様を推測して補完し、検証成功としてはならない（MUST NOT）。
