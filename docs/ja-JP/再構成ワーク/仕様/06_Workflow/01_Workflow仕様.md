@@ -112,6 +112,23 @@ Re-run対象Workflowが完了した後、Re-run要求に復帰先として記録
 
 Re-runは過去のArtifact(作業成果物)を最新状態として保証しない。再実行Workflowは必要な対象状態を再取得し、Artifactを更新しなければならない（MUST）。
 
+### 11.1 Re-runの進展確認
+
+Re-run回数だけを理由として処理を打ち切ってはならない（MUST NOT）。
+
+一方、同一または実質的に同一の原因に対するRe-run後も、対象状態、Artifact、実行結果その他のWork Purpose達成に必要な条件に有意な進展がない場合、同じRe-runを無条件に繰り返してはならない（MUST NOT）。
+
+進展がないと判断した場合、Re-run要求元は少なくとも次を整理する。
+
+- Re-run対象
+- Re-run理由
+- 前回から変化した情報
+- 改善しなかった条件
+- 自動継続可能か
+- 利用者判断が必要か
+
+Owner=`WORK`で自動継続の根拠を確定できない場合は、Interaction(対話窓口)を介して利用者判断を要求しなければならない（MUST）。
+
 ## 12. State遷移
 
 WorkflowはState遷移候補を提示できるが、自らCurrent Stateを変更してはならない（MUST NOT）。
