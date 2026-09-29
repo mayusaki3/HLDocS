@@ -71,7 +71,11 @@ default_workflow_planから生成されたWorkflow PlanはExecution Contextに�
 
 実行中のWorkflow Planを変更してもStateのdefault_workflow_planを変更してはならない（MUST NOT）。
 
-同一Workで当該State用の既存Workflow Planを復元すべき場合、default_workflow_planから新しいPlanを重複生成してはならない（MUST NOT）。
+State進入時にCurrent Workflow Planが存在する場合、Core(中核)はそのPlanが当該State、plan_ownerおよび対象Workとの関係で再利用可能か検証しなければならない（MUST）。
+
+再利用可能と確認できない既存Planを暗黙に復元してはならない（MUST NOT）。
+
+同一目的の有効なCurrent Workflow Planが既に存在する場合、default_workflow_planから重複Planを生成してはならない（MUST NOT）。
 
 ## 7. restriction_sets
 
