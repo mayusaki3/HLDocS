@@ -99,6 +99,10 @@ DEGRADEDまたはUNAVAILABLEの場合、原因となったExecution Capability�
 
 未登録の能力を、存在する能力としてNOT_REGISTERED一覧へ網羅的に推測してはならない（MUST NOT）。
 
+判定結果はCapability Context(能力コンテキスト)仕様に従い、status、evidence、checked_atおよびvalidityを含む能力確認結果としてCore(中核)へ更新要求できる。
+
+既存Capability Context Entryが現在も有効であることを確認できる場合は再利用してよい（MAY）。失効している、または有効性を安全に確認できないEntryを`AVAILABLE`の根拠として再利用してはならない（MUST NOT）。
+
 ## 6. 通知
 
 検証結果はInteractionを通じて利用者へ通知する。
