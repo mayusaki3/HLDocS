@@ -52,6 +52,7 @@ Execution Context(実行コンテキスト)は、少なくとも次を表現で�
 - Suspended Workflow
 - Current Work
 - Work Contexts
+- Capability Context
 
 Current Workflow PlanはWorkの有無に依存しない現在の実行Planとする。
 
@@ -79,6 +80,10 @@ Work Statusは、少なくとも次を扱う。
 同時に`ACTIVE(実行中)`となるWorkflowは最大1件とする（MUST）。`SUSPENDED(中断中)` Workflowが存在していても別WorkflowをACTIVEにできるが、その組み合わせが対応Workflow仕様で許可され、復帰先を一意に管理できなければならない（MUST）。
 
 Workflow Planの実行状態とIssueの状態を同一の状態として扱ってはならない（MUST NOT）。
+
+Capability Context(能力コンテキスト)は登録済みCapabilityについて現在の実行環境で確認した利用可能性を保持する。詳細はCapability Context仕様に従う。
+
+Capability Contextの`AVAILABLE`を、現在の処理における実行許可またはRestriction Contextの代替として扱ってはならない（MUST NOT）。
 
 ## 5. Execution Contextの変更
 
