@@ -40,7 +40,9 @@ Work Purposeに対する変更が成立していない場合、少なくとも�
 - `USER_DECISION_REQUIRED(利用者判断必要)`: Work Purposeの範囲、追加変更、制限その他について利用者判断が必要である。
 - `NO_RERUN_REQUIRED(再実行不要)`: 要求は成立している、または変更対象が存在しないこと自体がWork Purposeに対する正しい結果であり、再実行を必要としない。
 
-`RESEARCH_REQUIRED`の場合は変更調査Workflow(ワークフロー)を、`RETREATMENT_REQUIRED`の場合は変更対処WorkflowをRe-run候補とする。
+`RESEARCH_REQUIRED`の場合は、更新されたTarget Listに基づく再対処まで必要となるため、Re-run Sequence(再実行列)として`[変更調査Workflow, 変更対処Workflow]`を候補とする。
+
+`RETREATMENT_REQUIRED`の場合は、Re-run Sequenceとして`[変更対処Workflow]`を候補とする。
 
 原因を一意に分類できない場合、推測してRe-run先を選択してはならない（MUST NOT）。必要な追加確認を行うか、利用者判断が必要なら`USER_DECISION_REQUIRED`として扱う。
 
@@ -54,7 +56,9 @@ Re-runが現在のWork Purpose達成に必要であり、既存Workflow仕様の
 
 Re-runによってWork Purposeを拡張したり、利用者が要求していない追加変更を実行したりしてはならない（MUST NOT）。その必要がある場合はInteraction(対話窓口)へ利用者判断を要求する。
 
-Re-run対象が完了した後、本Workflowの開始条件を再度満たす場合、Coreは本Workflowを`ACTIVE(実行中)`へ復帰させてよい（MAY）。
+Re-run Sequenceの全要素が完了した後、本Workflowの開始条件を再度満たす場合、Coreは本Workflowを`ACTIVE(実行中)`へ復帰させてよい（MAY）。
+
+`RESEARCH_REQUIRED`で変更調査だけを再実行して本Workflowへ直接復帰してはならない（MUST NOT）。更新されたTarget Listに対する変更対処を経てから検証を再開する。
 
 ## 6. 終了
 
