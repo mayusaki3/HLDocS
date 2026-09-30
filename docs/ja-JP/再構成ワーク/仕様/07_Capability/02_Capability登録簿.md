@@ -40,7 +40,18 @@ Capabilityを登録する場合は、個別Capability仕様と登録簿の対応
 
 登録簿だけを追加して個別仕様が存在しない状態、または個別仕様だけを追加して登録簿へ反映されない状態を、能力追加完了として扱ってはならない（MUST NOT）。
 
-## 5. 初期登録
+## 5. 登録済みCapability
+
+### 5.1 Practical Capability
+
+- [コード生成修正](./Practical/コード生成修正.md)
+
+### 5.2 Execution Capability
+
+- [ファイル参照](./Execution/ファイル参照.md)
+- [ファイル書込](./Execution/ファイル書込.md)
+
+## 6. 段階的登録
 
 再構成中のため、具体的なCapability一覧は個別能力仕様の追加と検証に合わせて段階的に登録する。
 
