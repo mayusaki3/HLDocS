@@ -87,6 +87,16 @@ Providerが複数存在する場合、一つが利用可能であれば他のPro
 
 能力確認後にProviderの接続、認証、提供状態その他の利用可能性が変化したことを検出した場合、以前のAVAILABLE判定を現在も有効と仮定してはならない（MUST NOT）。Capability Context(能力コンテキスト)仕様に従って再確認する。
 
+## 8. Provider選択と失敗
+
+複数Providerが同じExecution Capabilityを提供する場合、特定Providerの優先選択結果とCapability全体の利用可能性を同一視してはならない（MUST NOT）。
+
+選択したProviderのExecution Attempt(実行試行)が失敗した場合は、観測された失敗をCapability Context仕様に従って分類し、利用可能な代替Providerがある場合は独立に評価する。
+
+Providerの優先順位または選択規則が不適切だったことだけを理由として、Execution Capability自体をUNAVAILABLEとしてはならない（MUST NOT）。
+
+外部サービスが明示したrate limit、quota、retry-afterその他の制限情報はProviderの一時的状態として扱い、Capability定義そのものへ恒久的制限として書き戻してはならない（MUST NOT）。
+
 ---
 
 [目次](../../目次.md) > 仕様 > Capability > Capability Provider仕様
