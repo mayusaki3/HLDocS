@@ -62,9 +62,11 @@ Execution Capabilityは少なくとも次を定義する。
 - purpose: 実行できる操作の意味
 - provided_by: 能力提供手段 1..N
 
-能力提供手段はTool(ツール)、SubFlow(サブフロー)その他の登録済み実行手段を参照できる。
+能力提供手段はCapability Provider(能力提供手段)仕様に従うProvider Referenceとして定義する。
 
-Execution Capabilityは特定実装そのものではない。同じ能力を複数の能力提供手段が提供してよい（MAY）。
+Capability ProviderはTool(ツール)、SubFlow(サブフロー)、LLM実行環境から提供されるToolまたはConnectorその他の実行手段を参照できる。
+
+Execution Capabilityは特定実装そのものではない。同じ能力を複数のCapability Providerが提供してよい（MAY）。
 
 ## 5. 依存方向
 
