@@ -85,6 +85,8 @@ Execution CapabilityをAVAILABLEと判定するには、少なくとも一つの
 
 Providerが複数存在する場合、一つが利用可能であれば他のProviderが利用不能であることだけを理由にExecution CapabilityをUNAVAILABLEとしてはならない（MUST NOT）。
 
+能力確認後にProviderの接続、認証、提供状態その他の利用可能性が変化したことを検出した場合、以前のAVAILABLE判定を現在も有効と仮定してはならない（MUST NOT）。Capability Context(能力コンテキスト)仕様に従って再確認する。
+
 ---
 
 [目次](../../目次.md) > 仕様 > Capability > Capability Provider仕様
