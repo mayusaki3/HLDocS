@@ -45,6 +45,8 @@ Capabilityを登録する場合は、個別Capability仕様と登録簿の対応
 ### 5.1 Practical Capability
 
 - [コード生成修正](./Practical/コード生成修正.md)
+- [仕様調査](./Practical/仕様調査.md)
+- [仕様変更](./Practical/仕様変更.md)
 
 ### 5.2 Execution Capability
 
