@@ -110,9 +110,33 @@ Re-runが承認された場合、Coreは対象Workflowを`COMPLETED(完了)`か�
 
 Re-run対象Workflowが完了した後、Re-run要求に復帰先として記録された`SUSPENDED(中断中)` Workflowが開始条件を再び満たす場合、CoreはそのWorkflowを`ACTIVE(実行中)`へ復帰させてよい（MAY）。
 
+単一WorkflowのRe-runだけでは復帰条件を成立させられず、Current Workflow Plan内の複数Workflowを順番に再実行する必要がある場合は、Re-run Sequence(再実行列)を使用する。
+
 Re-runは過去のArtifact(作業成果物)を最新状態として保証しない。再実行Workflowは必要な対象状態を再取得し、Artifactを更新しなければならない（MUST）。
 
-### 11.1 Re-runの進展確認
+### 11.1 Re-run Sequence(再実行列)
+
+Re-run Sequenceは、Current Workflow Planに既に存在するWorkflowを、現在のWork Purpose達成に必要な順序で再実行し、一つの中断元Workflowへ復帰するための実行制御である。
+
+Re-run Sequenceは少なくとも次を識別できなければならない（MUST）。
+
+- sequence: 再実行するWorkflowの順序付き列
+- reason: 再実行理由
+- return_to: 全Sequence完了後に復帰するSUSPENDED Workflow
+
+Re-run SequenceによってWorkflowをPlanへ追加、削除または並べ替えてはならない（MUST NOT）。sequenceに指定できるのはCurrent Workflow Planに既に存在するWorkflowだけとする。
+
+Core(中核)はSequence開始時に要求元WorkflowをSUSPENDEDとし、sequenceの先頭WorkflowをRe-run可能状態へ変更する。各WorkflowがCOMPLETEDとなった後、次のWorkflowの開始条件を検証し、成立する場合に次要素をRe-runする。
+
+Sequenceの途中で中間Workflowへ復帰してから再度別WorkflowをSUSPENDEDにする方式を必須としてはならない（MUST NOT）。Sequence全体について復帰先は一つとし、全要素が正常に完了した後にreturn_toを復帰候補とする。
+
+Sequenceの次要素を開始できない場合、Coreは残りを強制実行せず、原因を要求元またはInteraction(対話窓口)へ引き渡さなければならない（MUST）。
+
+Re-run Sequence自体を新しいWorkflowまたはWorkflow Planとして扱ってはならない（MUST NOT）。
+
+Re-run Sequenceの各要素も通常のRe-runと同じく、最新状態を再取得し、必要なArtifactを更新しなければならない（MUST）。
+
+### 11.2 Re-runの進展確認
 
 Re-run回数だけを理由として処理を打ち切ってはならない（MUST NOT）。
 
