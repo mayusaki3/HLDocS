@@ -80,7 +80,11 @@ Practical Capabilityは、その遂行に必要なExecution Capabilityをrequire
 
 ## 5. 判定
 
-Execution Capabilityは、その能力を提供する手段が現在利用可能かを検証する。
+Execution Capabilityは、その能力のprovided_byに定義されたCapability Provider(能力提供手段)を現在の実行環境またはHLDocS登録情報と照合し、少なくとも一つのProviderが利用可能かを検証する。
+
+実行環境ProviderはCapability Provider仕様の意味条件で照合し、一時的なTool名または製品名の一致だけを根拠としてはならない（MUST NOT）。
+
+Execution Capabilityの判定は少なくともAVAILABLE、UNAVAILABLEまたはUNKNOWNを区別できるものとする。
 
 Practical Capabilityは、必要なExecution Capabilityその他の成立条件を基に判定する。
 
