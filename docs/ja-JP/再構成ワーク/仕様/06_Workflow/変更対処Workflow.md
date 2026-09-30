@@ -58,7 +58,7 @@ Target Listの内容と実体が不一致の場合、調査結果を正しいも
 - 変更対処Workflow内部で変更調査処理を代行する。
 - Core(中核)を介さずWorkflow状態を変更する。
 
-再調査が現在のWork Purpose達成に必要であり、変更調査Workflow仕様の範囲内である場合、変更対処Workflowは自身を`SUSPENDED(中断中)`とする要求と、変更調査WorkflowのRe-run(再実行)要求をCoreへ提示してよい（MAY）。
+再調査が現在のWork Purpose達成に必要であり、変更調査Workflow仕様の範囲内である場合、変更対処Workflowは自身を`SUSPENDED(中断中)`とする要求と、`[変更調査Workflow]`からなるRe-run Sequence(再実行列)要求をCoreへ提示してよい（MAY）。
 
 再調査のためにWork Purposeを拡張したり、利用者が要求していない追加変更を対象へ含めたりしてはならない（MUST NOT）。その必要がある場合はInteraction(対話窓口)による利用者判断を要求する。
 
