@@ -41,6 +41,18 @@ Execution Capabilityではevidenceに、確認できたCapability Provider(能�
 
 Practical Capabilityではevidenceに、判定に使用したrequiredおよびoptionalなExecution Capabilityの結果を含められるものとする。
 
+Capability Entryは必要に応じて、ProviderごとのAvailability Condition(利用可能性条件)を保持できる。
+
+Availability Conditionは少なくとも次を表現できるものとする。
+
+- affected_provider: 影響を受けたProvider
+- failure_class: 観測した失敗の分類
+- retryable: 再試行可能と判断できるか
+- retry_after: サービス等から明示された再試行可能時点。判明する場合のみ
+- alternative_providers: 同じExecution Capabilityを提供する代替Provider候補
+
+これらは観測結果または明示されたサービス情報を記録するものであり、根拠なく原因、復旧時刻または再試行可否を推測してはならない（MUST NOT）。
+
 ## 4. Status
 
 Execution Capabilityは少なくとも次を扱う。
@@ -89,7 +101,31 @@ Capability Entryは永続的な事実として扱ってはならない（MUST NO
 
 Provider利用可能性を安全に確認できない場合は、古い`AVAILABLE`を維持したまま実行せず、能力再確認または`UNKNOWN`への更新を行う。
 
-## 7. 更新
+## 7. Execution Attempt(実行試行)
+
+Capability(能力)、Capability Provider(能力提供手段)、Execution Attempt(実行試行)は別の概念として扱う。
+
+Execution Attemptは、特定Providerを今回実行した結果であり、その失敗だけをCapability全体の恒常的なUNAVAILABLEと同一視してはならない（MUST NOT）。
+
+Provider実行に失敗した場合、確認できる範囲で少なくとも次を区別する。
+
+- `TRANSIENT_ERROR`: 通信失敗、タイムアウト、一時的サービス障害等、再試行で変化し得ることを確認できる。
+- `TEMPORARILY_LIMITED`: rate limit、quota、cooldown等、一定期間または条件が変わるまで利用を制限されていることを確認できる。
+- `PROVIDER_MISMATCH`: 選択したProviderが要求操作を満たさない、またはProvider選択が不適切であることを確認できる。
+- `PERMANENT_UNAVAILABLE`: Provider不存在、恒常的権限不足等、同条件での再試行では改善しないことを確認できる。
+- `UNKNOWN`: 原因を安全に分類できない。
+
+一時的な失敗を根拠なくPERMANENT_UNAVAILABLEへ昇格してはならない（MUST NOT）。
+
+一つのProviderが失敗しても、同じExecution Capabilityを提供する別Providerが存在する場合は、そのProviderを独立に評価しなければならない（MUST）。
+
+`TEMPORARILY_LIMITED`でretry_afterが明示されている場合、その時点より前に同一条件で同じProviderを無条件に反復実行してはならない（MUST NOT）。
+
+retry_afterが明示されていない場合、復旧時刻を推測してはならない（MUST NOT）。
+
+同一条件で進展のない自動再試行を無制限に継続してはならない（MUST NOT）。
+
+## 8. 更新
 
 HLDocS能力確認Workflowその他の仕様上認められた処理は、能力確認結果をCoreへ提示できる。
 
@@ -97,7 +133,7 @@ Coreは登録済みCapabilityとの対応、status、evidenceおよび現在のE
 
 再確認により結果が変化した場合、以前のstatusを優先してはならない（MUST NOT）。
 
-## 8. 利用
+## 9. 利用
 
 Capabilityを必要とするWorkflowは、Capability Contextに現在有効なEntryが存在する場合、その結果を能力確認の入力として再利用してよい（MAY）。
 
