@@ -109,7 +109,9 @@ Stateのdefault_workflow_planから新規Planを生成する場合、そのState
 
 SYSTEM Planの変更は、対応するStateまたはシステム仕様に明示された規則なしに確定してはならない（MUST NOT）。
 
-既存Plan内WorkflowのRe-run(再実行)はPlan構成変更として扱わない。CoreはRe-run要求について、対象WorkflowがCurrent Planに存在すること、再実行理由が対応仕様に適合すること、同時ACTIVE制約およびRestriction Context(制限コンテキスト)を満たすことを検証しなければならない（MUST）。
+既存Plan内WorkflowのRe-run(再実行)およびRe-run Sequence(再実行列)はPlan構成変更として扱わない。CoreはRe-run要求について、対象WorkflowがCurrent Planに存在すること、再実行理由が対応仕様に適合すること、同時ACTIVE制約およびRestriction Context(制限コンテキスト)を満たすことを検証しなければならない（MUST）。
+
+Re-run Sequenceでは、Coreは一つのSUSPENDED Workflowをreturn_toとして保持し、Sequence内Workflowを順番に再実行する。Sequenceの中間Workflowを新たなSUSPENDED復帰先として積み重ねてはならない（MUST NOT）。
 
 ## 7. Restriction Context
 
