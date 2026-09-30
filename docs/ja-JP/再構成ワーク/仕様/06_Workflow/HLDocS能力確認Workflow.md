@@ -103,6 +103,10 @@ DEGRADEDまたはUNAVAILABLEの場合、原因となったExecution Capability�
 
 既存Capability Context Entryが現在も有効であることを確認できる場合は再利用してよい（MAY）。失効している、または有効性を安全に確認できないEntryを`AVAILABLE`の根拠として再利用してはならない（MUST NOT）。
 
+直前のExecution Attempt(実行試行)が失敗していても、その事実だけでExecution Capability全体をUNAVAILABLEとしてはならない（MUST NOT）。Provider単位の状態、代替Provider、および失敗が一時的か恒常的かを確認できる範囲で評価する。
+
+原因を安全に分類できない外的エラーは、推測で恒常障害とせずUNKNOWNとして扱えるようにする。
+
 ## 6. 通知
 
 検証結果はInteractionを通じて利用者へ通知する。
