@@ -25,6 +25,7 @@ canonical_document: true
   - HLDocS能力確認
 - default_workflow_plan:
   1. HLDocS能力確認
+- system_plan_changes: なし
 - restriction_sets: 現時点では追加定義なし
 
 Core基本制限は能力確認Stateでも常時適用する。
