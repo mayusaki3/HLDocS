@@ -27,6 +27,7 @@ State個別仕様は、少なくとも必要に応じて次を定義する。
 - work_acceptance
 - available_workflows
 - default_workflow_plan
+- system_plan_changes
 - restriction_sets
 
 Stateは処理を実行する主体ではない。
@@ -70,6 +71,12 @@ default_workflow_planが存在しないStateへ進入したことだけを理由
 default_workflow_planから生成されたWorkflow PlanはExecution Contextに属する実行インスタンスであり、State定義そのものではない。
 
 実行中のWorkflow Planを変更してもStateのdefault_workflow_planを変更してはならない（MUST NOT）。
+
+plan_ownerがSYSTEMであり、実行中Planの構成変更を許可する必要があるStateは、`system_plan_changes`として許可する変更条件と変更内容を宣言できる（MAY）。
+
+`system_plan_changes`が未定義の場合、そのStateのSYSTEM Planについて追加、削除、並べ替えまたはSKIPPED化を許可してはならない（MUST NOT）。
+
+plan_ownerがWORKの場合、`system_plan_changes`をPlan変更承認の代替として使用してはならない（MUST NOT）。
 
 State進入時にCurrent Workflow Planが存在する場合、Core(中核)はそのPlanが当該State、plan_ownerおよび対象Workとの関係で再利用可能か検証しなければならない（MUST）。
 
