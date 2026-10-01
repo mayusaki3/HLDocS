@@ -94,6 +94,27 @@ Owner=WORKのPlanについて、追加、削除、並べ替え、SKIPPED化は�
 
 Owner=SYSTEMのPlanは対応仕様に明示された規則なしに変更してはならない（MUST NOT）。
 
+### 10.1 SYSTEM Plan変更
+
+SYSTEM Workflow Plan(システムワークフロー計画)は、HLDocS内部処理のためのPlanであり、利用者承認をPlan変更の一般条件とはしない。
+
+ただし、SYSTEM Planの追加、削除、並べ替えまたはSKIPPED化は、当該Planを定義したState仕様またはそのSYSTEM処理を定義する仕様に、変更条件と変更内容が明示されている場合に限り許可する（MUST）。
+
+Core(中核)はSYSTEM Planの処理効率、推測した必要性、エラー回避その他の独自判断だけを根拠としてPlan構成を変更してはならない（MUST NOT）。
+
+SYSTEM Plan変更要求は少なくとも次を識別できなければならない（MUST）。
+
+- 変更対象Plan
+- 変更内容
+- 変更を許可する仕様上の根拠
+- 変更条件が現在成立している根拠
+
+対応仕様に変更規則が存在しない場合、初期Plan構成を維持する。
+
+SYSTEM Planの変更によって利用者Workを暗黙に生成、変更または拡張してはならない（MUST NOT）。
+
+SYSTEM Plan内のWorkflow Re-run(ワークフロー再実行)またはRe-run Sequence(再実行列)はPlan構成変更ではないが、対応WorkflowまたはSYSTEM処理仕様に再実行根拠がなければ実行してはならない（MUST NOT）。
+
 Workflow Re-run(ワークフロー再実行)は、Current Workflow Plan(ワークフロー計画)に既に存在するWorkflowを再度実行する実行制御であり、Plan内のWorkflow追加、削除、並べ替えまたはSKIPPED化を伴わないためPlan構成変更として扱わない。
 
 完了済みWorkflowを再実行する場合、通常の状態遷移として暗黙に`COMPLETED(完了)`から`PENDING(未実行)`へ戻してはならない（MUST NOT）。Core(中核)がRe-run要求を検証し、再実行可能な場合に対象Workflowを再実行可能状態へ戻す。
