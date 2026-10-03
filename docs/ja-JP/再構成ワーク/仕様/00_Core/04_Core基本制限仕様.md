@@ -57,12 +57,16 @@ Execution Contextの不整合を検出した場合は、不整合を推測で補
 
 ## 6. Workflow Plan保護
 
-Workflow Planへの次の変更は、利用者の明示的な指示または承認なしに確定してはならない（MUST NOT）。
+Workflow Planへの次の構成変更は、Plan Ownerに対応する正当な変更根拠なしに確定してはならない（MUST NOT）。
 
 - Workflowの追加
 - Workflowの削除
 - Workflow順序の変更
 - WorkflowのSKIPPED化
+
+Owner=WORKの場合、利用者の明示的な指示または承認を必要とする。
+
+Owner=SYSTEMの場合、対応するStateまたはSYSTEM処理仕様に明示された変更規則と、その条件が現在成立している根拠を必要とする。利用者承認だけをSYSTEM Plan変更規則の代替としてはならない（MUST NOT）。
 
 Issueを記録することとWorkflow Planを変更することを同一処理として扱ってはならない（MUST NOT）。
 
