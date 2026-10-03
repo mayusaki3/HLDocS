@@ -23,7 +23,8 @@ Capability Providerは少なくとも次を扱える。
 
 - `ENVIRONMENT_TOOL`: LLM実行環境から提供されるTool(ツール)、Connectorその他の実行手段。
 - `HLDOCS_TOOL`: HLDocSが個別仕様として定義するTool。
-- `SUBFLOW`: 登録済みSubFlow(サブフロー)がExecution Capabilityを提供する場合。
+
+SubFlow(サブフロー)はCapability Providerとして扱わない。SubFlowはExecution Capabilityを利用して再利用可能な処理を構成する層であり、Provider化によって `Execution Capability → SubFlow → Execution Capability` の循環依存を形成してはならない（MUST NOT）。
 
 実装製品名だけをProviderの意味としてはならない（MUST NOT）。
 
