@@ -64,7 +64,9 @@ Execution Capabilityは少なくとも次を定義する。
 
 能力提供手段はCapability Provider(能力提供手段)仕様に従うProvider Referenceとして定義する。
 
-Capability ProviderはTool(ツール)、SubFlow(サブフロー)、LLM実行環境から提供されるToolまたはConnectorその他の実行手段を参照できる。
+Capability ProviderはHLDocS定義のTool(ツール)、またはLLM実行環境から提供されるTool、Connectorその他の実行手段を参照できる。
+
+SubFlow(サブフロー)はExecution Capabilityを利用して処理を構成する側であり、Execution CapabilityのProviderとして参照してはならない（MUST NOT）。
 
 Execution Capabilityは特定実装そのものではない。同じ能力を複数のCapability Providerが提供してよい（MAY）。
 
