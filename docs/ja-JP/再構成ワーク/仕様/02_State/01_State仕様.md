@@ -78,11 +78,15 @@ plan_ownerがSYSTEMであり、実行中Planの構成変更を許可する必要
 
 plan_ownerがWORKの場合、`system_plan_changes`をPlan変更承認の代替として使用してはならない（MUST NOT）。
 
-State進入時にCurrent Workflow Planが存在する場合、Core(中核)はそのPlanが当該State、plan_ownerおよび対象Workとの関係で再利用可能か検証しなければならない（MUST）。
+State進入時にCurrent Workflow Planが存在する場合、Core(中核)はそのPlanの生成元State、plan_owner、対象Work、Plan内Workflowおよび実行状態を検証し、当該Stateで継続可能か確認しなければならない（MUST）。
 
 再利用可能と確認できない既存Planを暗黙に復元してはならない（MUST NOT）。
 
-同一目的の有効なCurrent Workflow Planが既に存在する場合、default_workflow_planから重複Planを生成してはならない（MUST NOT）。
+再利用不能であることと、安全に解除可能であることを同一視してはならない（MUST NOT）。未完了Plan、Active/Suspended Workflowを含むPlan、所有関係を確認できないPlanその他の安全な解除を確認できないPlanを破棄または上書きしてはならない（MUST NOT）。
+
+完了済みPlanについて、Plan終了に依存する処理が完了し安全に解除可能である場合は、CoreがCurrent Workflow Planから解除した後にdefault_workflow_planからの新規生成を評価してよい（MAY）。
+
+同一State、同一Ownerおよび同一対象Workに対して継続可能なCurrent Workflow Planが既に存在する場合、default_workflow_planから重複Planを生成してはならない（MUST NOT）。
 
 ## 7. restriction_sets
 
