@@ -103,6 +103,14 @@ Workflow(ワークフロー)がWork Context内のArtifactを生成または更�
 
 Stateのdefault_workflow_planから新規Planを生成する場合、そのState仕様で定義されたPlanを初期Planとして生成してよい（MAY）。
 
+State進入時にCurrent Workflow Planが存在する場合、Coreは新規Plan生成より先に既存Planの再利用可能性と解除可能性を別々に検証しなければならない（MUST）。
+
+再利用可能なPlanが存在する場合、同一State、Ownerおよび対象Workに対する重複Planを生成してはならない（MUST NOT）。
+
+再利用不能でも安全に解除できないPlanが存在する場合、そのPlanを破棄、上書きまたは別Planで置換してState進入を強行してはならない（MUST NOT）。
+
+Planの解除と新規生成を伴うState進入では、Current State、Current Workflow Plan、Current WorkおよびActive/Suspended Workflowの関係に矛盾する確定途中状態を残してはならない（MUST NOT）。
+
 承認済みまたはState仕様により確定したWorkflow Plan内の通常の実行状態遷移は、各仕様の条件を満たす場合に適用してよい（MAY）。
 
 実行中Planに対する次の変更は、利用者WorkをOwnerとする場合、利用者による明示的な指示または承認なしに確定してはならない（MUST NOT）。
