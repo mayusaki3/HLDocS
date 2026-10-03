@@ -49,11 +49,32 @@ COMPLETEDとSKIPPEDを同一の意味として扱ってはならない（MUST NO
 
 `SKIPPED`、`COMPLETED`その他の終了済み状態から、仕様に定義されていない通常遷移を行ってはならない（MUST NOT）。
 
-## 5. Plan生成
+## 5. Plan生成とState進入
 
-Stateへ進入し、対応するCurrent Workflow Planが存在せず、default_workflow_planが定義されている場合、Coreはdefault_workflow_planからPlanを生成してよい（MAY）。
+Stateへ進入する場合、Core(中核)はdefault_workflow_planから新規Planを生成する前にCurrent Workflow Plan(現在のワークフロー計画)を評価しなければならない（MUST）。
+
+Current Workflow Planが存在しない場合、進入先Stateにdefault_workflow_planが定義されていれば、Coreはその定義からPlanを生成してよい（MAY）。
 
 SYSTEM用StateではOwner=SYSTEM、利用者Work用StateではOwner=WORKとする。
+
+Current Workflow Planが存在する場合、Coreは少なくとも次を確認する。
+
+- Planの生成元Stateを識別でき、進入先Stateと一致する。
+- Ownerが進入先Stateのplan_ownerと一致する。
+- Owner=WORKの場合、PlanのWork IDが進入対象のCurrent Workと一致する。
+- Plan内Workflowが進入先Stateのavailable_workflowsおよび適用済みPlan変更規則と整合する。
+- Active/Suspended Workflowを含む実行状態が現在のExecution Contextと矛盾しない。
+- Planが解除済み、完了後処理済み、または別State用の残存Planではない。
+
+すべてを満たし、現在のState進入を継続するPlanであると確認できる場合に限り、既存Planを再利用してよい（MAY）。
+
+既存Planが再利用不能であっても、Coreはそれだけを理由としてPlanを破棄または上書きしてはならない（MUST NOT）。
+
+既存Planが完了済みで、Plan終了に依存するWork完了、State遷移その他の検証が完了しており、現在実行位置から安全に解除できる場合は、Coreは既存Planを解除した後に進入先StateのPlan生成を評価してよい（MAY）。
+
+既存Planが未完了、Active/Suspended Workflowを保持する、所有関係が不明、または安全に解除できることを確認できない場合は、新しいdefault Planを重ねて生成してはならない（MUST NOT）。State進入処理を確定せず、既存実行状態の解決を優先する。
+
+Current Planの再利用、解除、新規生成は、State遷移とExecution Contextの整合性が途中状態として外部から確定しないように適用しなければならない（MUST）。
 
 ## 6. Workflow開始
 
