@@ -66,7 +66,9 @@ Execution Capabilityは少なくとも次を定義する。
 
 Capability ProviderはHLDocS定義のTool(ツール)、またはLLM実行環境から提供されるTool、Connectorその他の実行手段を参照できる。
 
-SubFlow(サブフロー)はExecution Capabilityを利用して処理を構成する側であり、Execution CapabilityのProviderとして参照してはならない（MUST NOT）。
+SubFlow(サブフロー)はExecution Capabilityを利用して処理を構成する側であり、Execution CapabilityのCapability Providerとして参照してはならない（MUST NOT）。
+
+この禁止は、SubFlowが再利用可能な処理として能力的価値を持つこと、またはPractical Capabilityの実現に利用されることを禁止するものではない。SubFlowの実行可能性を評価する場合は、そのSubFlowが必要とするExecution Capabilityその他の開始条件を評価する。
 
 Execution Capabilityは特定実装そのものではない。同じ能力を複数のCapability Providerが提供してよい（MAY）。
 
