@@ -17,23 +17,37 @@ canonical_document: true
 
 外的要因はHLDocSだけでは制御できないため、正常時だけの検証でCapability機構が成立したと判断してはならない（MUST NOT）。
 
-## 2. 検証の種類
+## 2. 検証独立性
+
+本検証は、過去のチャット、LLM_WORKSPACEその他の一時情報が存在しない新しいLLMセッションから再実行できなければならない（MUST）。
+
+検証開始時は、現在採用するCapability、Capability Context、Capability Providerおよび関連Core仕様を現在の正本から取得しなければならない（MUST）。
+
+過去の検証結果は比較資料として利用してよいが、現在のPASS判定の根拠としてそのまま再利用してはならない（MUST NOT）。
+
+検証に必要な前提、外的状態、期待結果または判定規則を現在の正本から確定できない場合、過去チャットまたはLLM_WORKSPACEから推測して補ってはならない（MUST NOT）。その項目は検証不能または仕様不足として記録する。
+
+LLM_WORKSPACEに保存されたCapability Entry、Provider状態、Execution Attemptその他の情報は、現在も有効であることを現在の正本および実行環境から確認できない限り、現在の検証入力または確定結果として扱ってはならない（MUST NOT）。
+
+既知シナリオの確認だけで検証を終了してはならない（MUST NOT）。検証時に、既存分類で安全に扱えない外的要因、Provider切替経路、古いevidenceの再利用経路、無限再試行またはFail-openとなる経路がないかも探索する。
+
+## 3. 検証の種類
 
 検証は次を区別する。
 
-### 2.1 Observed Validation(実環境観測検証)
+### 3.1 Observed Validation(実環境観測検証)
 
 現在の実行環境で実際に観測できるProvider状態およびExecution Attempt(実行試行)を使用する。
 
 実際に発生していないrate limit、quota制限、サービス障害等を発生済みとして記録してはならない（MUST NOT）。
 
-### 2.2 Scenario Validation(シナリオ検証)
+### 3.2 Scenario Validation(シナリオ検証)
 
 外的状態を検証入力として明示的に模擬し、HLDocSの判定・切替・停止動作を確認する。
 
 Scenario Validationの結果を、外部サービスそのものの挙動を実証した結果として扱ってはならない（MUST NOT）。
 
-## 3. 必須シナリオ
+## 4. 必須シナリオ
 
 少なくとも次を検証対象とする。
 
@@ -67,7 +81,7 @@ Scenario Validationの結果を、外部サービスそのものの挙動を実�
    - Capability Context(能力コンテキスト)がAVAILABLEの後にProvider状態変化を観測する。
    - 古いAVAILABLEだけを根拠に実行しない。
 
-## 4. 検証記録
+## 5. 検証記録
 
 検証結果では少なくとも次を区別して記録する。
 
@@ -82,7 +96,7 @@ Scenario Validationの結果を、外部サービスそのものの挙動を実�
 - 自動再試行の判断
 - 利用者判断が必要となったか
 
-## 5. 成立条件
+## 6. 成立条件
 
 外的要因対応は、少なくとも次を確認できた場合に仕様上の基本成立候補とする。
 
@@ -95,7 +109,7 @@ Scenario Validationの結果を、外部サービスそのものの挙動を実�
 
 Scenario Validationだけで外部サービス固有の挙動まで検証済みとしてはならない（MUST NOT）。
 
-## 6. 継続検証
+## 7. 継続検証
 
 実運用中に外的要因による新しい失敗形態を観測した場合は、観測事実を既存分類と照合する。
 
