@@ -136,12 +136,21 @@ Re-run Sequenceでは、Coreは一つのSUSPENDED Workflowをreturn_toとして�
 
 ## 7. Restriction Context
 
-Coreは、常時適用する安全側の基本制御を保持しなければならない（MUST）。
+Coreは、常時適用する安全側の基本制御を保持しなければならない（MUST）。Core基本制限は通常運転用Restriction Setではなく、Restriction Contextの構築可否にかかわらず適用する。
 
-通常運転では、現在の実行位置に応じてState、Workflow、SubFlowのRestriction Setを必要な範囲で読み込み、Restriction Contextを構築する。
+通常運転では、現在の実行位置に応じてState、Workflow、SubFlowが宣言するRestriction Set(制限セット)を必要な範囲で読み込み、Restriction Contextを構築する。
 
-下位のRestriction Setは上位の制限を緩和してはならない（MUST NOT）。  
-必要なRestriction Setを取得または解釈できない場合は、制限なしとして処理を継続してはならない（MUST NOT）。
+Coreは宣言されたRestriction Setについて、Restriction Set登録簿で登録を確認した後、登録された個別仕様を参照しなければならない（MUST）。登録されていないRestriction Setを名称または類似仕様から推測して適用してはならない（MUST NOT）。
+
+Restriction Contextは概念上、Core基本制限にState、Workflow、SubFlowの制限を順次追加したものとする。
+
+下位のRestriction Setは上位の制限を解除または緩和してはならない（MUST NOT）。複数の制限が同じ操作へ適用される場合はすべてを満たさなければならず（MUST）、禁止規則と許容規則が競合する場合は、禁止またはより厳しい制限を適用する。
+
+必要と宣言されたRestriction Setを登録確認、取得、解釈または適用できない場合は、制限なしとして処理を継続してはならない（MUST NOT）。
+
+Capability Provider(能力提供手段)その他の副作用を伴う操作を実行する直前に、Coreは現在のRestriction Contextに対して対象Capability、操作、対象範囲および必要な承認条件を再評価しなければならない（MUST）。
+
+Restriction Setの共通構造、登録および参照規則の詳細はRestriction Set仕様に従う。
 
 ## 8. 正本候補と正本競合
 
