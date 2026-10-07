@@ -13,7 +13,7 @@ canonical_document: true
 
 ## 1. 目的
 
-本書は、HLDocS Core(中核)の責務と、通常運転および復旧に共通する実行制御を定義する。
+本書は、HLDocS Core(中核)の責務と、通常運転に共通する実行制御、およびState Machine(状態遷移機構)へ移譲できない場合の復旧への移行を定義する。
 
 ## 2. Coreの責務
 
@@ -87,7 +87,30 @@ Capability Context(能力コンテキスト)は登録済みCapabilityについ�
 
 Capability Contextの`AVAILABLE`を、現在の処理における実行許可またはRestriction Contextの代替として扱ってはならない（MUST NOT）。
 
-## 5. Execution Contextの変更
+## 5. LLM_WORKSPACE
+
+LLM_WORKSPACEは、CoreがHLDocS実行中の作業継続および復元を補助するために利用できる一時記憶領域である。
+
+LLM_WORKSPACEは独立した実行主体ではなく、Coreの補助機構として扱う。
+
+LLM_WORKSPACEは次のいずれも代替してはならない（MUST NOT）。
+
+- HLDocS仕様/規約（正本）
+- 作業対象正本
+- Execution Context(実行コンテキスト)
+- Work Context内Artifactの正本性を持つ実体参照先
+
+Coreは、LLM_WORKSPACEへ作業継続または復元に必要な補助情報を保持してよい（MAY）。
+
+LLM_WORKSPACEに保存された情報だけを根拠としてExecution Contextの確定状態を復元してはならない（MUST NOT）。
+
+LLM_WORKSPACEから情報を再利用する場合、Coreは現在採用する正本、現在の実体および現在の実行環境と整合することを必要な範囲で再確認しなければならない（MUST）。
+
+保存後に失効し得る情報は、現在も有効であることを確認できない場合、そのまま確定情報として再利用してはならない（MUST NOT）。Capability Context(能力コンテキスト)の復元または再利用はCapability Context仕様のValidity(有効性)規則にも従う。
+
+LLM_WORKSPACEが存在しない、失われた、読み取れない、または内容を安全に再利用できないことだけを理由として、正本または現在の実体を推測で補完してはならない（MUST NOT）。
+
+## 6. Execution Contextの変更
 
 State Machine、選択ルール、Workflowその他のSubsystemは、Execution Contextを直接変更してはならない（MUST NOT）。  
 Execution Contextを変更する場合は、Coreへ変更要求を行わなければならない（MUST）。
@@ -101,7 +124,7 @@ Coreは変更要求について、少なくとも次を確認しなければな�
 
 Workflow(ワークフロー)がWork Context内のArtifactを生成または更新する場合もExecution Context変更要求として扱い、Coreが対象Work、要求元および変更内容を検証して適用しなければならない（MUST）。
 
-## 6. Workflow Plan変更
+## 7. Workflow Plan変更
 
 Stateのdefault_workflow_planから新規Planを生成する場合、そのState仕様で定義されたPlanを初期Planとして生成してよい（MAY）。
 
@@ -134,7 +157,7 @@ SYSTEM Plan変更によってWork(作業)を暗黙に生成または変更して
 
 Re-run Sequenceでは、Coreは一つのSUSPENDED Workflowをreturn_toとして保持し、Sequence内Workflowを順番に再実行する。Sequenceの中間Workflowを新たなSUSPENDED復帰先として積み重ねてはならない（MUST NOT）。
 
-## 7. Restriction Context
+## 8. Restriction Context
 
 Coreは、常時適用する安全側の基本制御を保持しなければならない（MUST）。Core基本制限は通常運転用Restriction Setではなく、Restriction Contextの構築可否にかかわらず適用する。
 
@@ -152,7 +175,7 @@ Tool(ツール)その他の副作用を伴う操作を実行する直前に、Co
 
 Restriction Setの共通構造、登録および参照規則の詳細はRestriction Set仕様に従う。
 
-## 8. 正本候補と正本競合
+## 9. 正本候補と正本競合
 
 Coreは、HLDocS仕様/規約または作業対象正本を参照するとき、同一の意味上の対象について複数の正本候補が存在し得ることを前提としなければならない（MUST）。
 
@@ -180,19 +203,22 @@ Canonical Conflictが現在の処理に影響しない場合、無関係な競�
 
 Version Up中に旧版を比較資料として保持する場合、旧版を物理削除または`canonical_document: false`へ変更することを一律に要求しない。現在採用する版または情報源を別の明示的根拠で一意に識別できればよい。
 
-## 9. State Machineへの移譲
+## 10. State Machineへの移譲
 
 Coreは起動後、State Machine仕様を必要な範囲で参照し、制御移譲を試行する。
 
 移譲成功後は、通常のState遷移判断をState Machineへ委ねなければならない（MUST）。  
 CoreはState Machineが許可した遷移要求について、Execution ContextおよびRestriction Context上の整合性を確認した後にCurrent Stateへ適用する。
 
-## 10. 復旧
+## 11. Core復旧への移行
 
-State Machineへの移譲に失敗した場合、Coreは通常運転を開始してはならない（MUST NOT）。  
-復旧処理の詳細はCore復旧仕様に従う。
+State Machineへの制御移譲に失敗した場合、Coreは通常運転を開始してはならず（MUST NOT）、Core復旧へ移行しなければならない（MUST）。
 
-## 11. Interactionとの関係
+Core仕様が規定する復旧責務は、復旧へ安全に移行するまでとする。
+
+復旧開始後の実行状態、制限、調査、変更、利用者判断、再検証およびState Machineへの再移譲はCore復旧仕様に従う。
+
+## 12. Interactionとの関係
 
 Coreは利用者との自然言語対話を直接担当しない。  
 利用者への情報提示および判断要求はInteractionを介して行う。
