@@ -43,7 +43,6 @@ HLDocSは、少なくとも次の責務領域によって構成する。
 - Tool(ツール)
 - Restriction Set(制限セット)
 - Interaction(対話窓口)
-- LLM_WORKSPACE
 
 各責務領域は、実行時に常にすべての詳細仕様を参照することを要求しない。  
 現在の処理に必要な仕様を必要な時点で参照しなければならない（MUST）。
@@ -71,16 +70,15 @@ Workflow(ワークフロー)は作業進行、SubFlow(サブフロー)は再利�
 ## 6. Core
 
 Core(中核)は、HLDocSの整合性を維持するための共通実行機構である。  
-Coreは、システム起動、Execution Context(実行コンテキスト)の管理、変更適用、制限制御、登録要素参照および復旧を担当する。
+Coreは、システム起動、Execution Context(実行コンテキスト)の管理、変更適用、制限制御、登録要素参照およびState Machine(状態遷移機構)へ移譲できない場合の復旧への移行を担当する。
 
 Coreは、通常作業における次のWorkflowを決定してはならない（MUST NOT）。  
 Coreは、WorkflowまたはSubFlowの処理内容を決定してはならない（MUST NOT）。
 
-## 7. LLM_WORKSPACE
+## 7. Coreの補助記憶
 
-LLM_WORKSPACEは、HLDocS実行中の作業継続および復元を補助する一時記憶領域である。  
-LLM_WORKSPACEはExecution Contextそのものではなく、正本でもない。  
-LLM_WORKSPACEからExecution Contextを復元する場合は、現在の正本および実体との整合性を確認しなければならない（MUST）。
+Coreは、HLDocS実行中の作業継続および復元を補助する一時記憶領域としてLLM_WORKSPACEを利用できる。  
+LLM_WORKSPACEは独立した実行責務領域ではなく、Coreが利用する補助機構として扱う。詳細はCore仕様に従う。
 
 ## 8. 起動
 
