@@ -148,7 +148,7 @@ Restriction Contextは概念上、Core基本制限にState、Workflow、SubFlow�
 
 必要と宣言されたRestriction Setを登録確認、取得、解釈または適用できない場合は、制限なしとして処理を継続してはならない（MUST NOT）。
 
-Capability Provider(能力提供手段)その他の副作用を伴う操作を実行する直前に、Coreは現在のRestriction Contextに対して対象Capability、操作、対象範囲および必要な承認条件を再評価しなければならない（MUST）。
+Tool(ツール)その他の副作用を伴う操作を実行する直前に、Coreは現在のRestriction Contextに対して対象Capability、選択されたCapability Provider、操作、対象範囲および必要な承認条件を再評価しなければならない（MUST）。
 
 Restriction Setの共通構造、登録および参照規則の詳細はRestriction Set仕様に従う。
 
