@@ -39,6 +39,7 @@ HLDocSは、少なくとも次の責務領域によって構成する。
 - 選択ルール
 - Workflow(ワークフロー)
 - SubFlow(サブフロー)
+- Capability(能力)
 - Tool(ツール)
 - Restriction Set(制限セット)
 - Interaction(対話窓口)
@@ -64,7 +65,7 @@ HLDocS仕様/規約（正本）と作業対象正本を混同してはならな�
 HLDocSは、Core(中核)の起動後にState Machine(状態遷移機構)へ制御を移譲して通常運転を開始する。
 
 通常運転では、Work(作業)を利用者から見た作業単位として扱い、WorkはState Machine(状態遷移機構)上のState(状態)を移動しながらWorkflow Plan(ワークフロー計画)に従って処理される。  
-Workflow(ワークフロー)は作業進行、SubFlow(サブフロー)は再利用可能な単一目的処理、Tool(ツール)は能力提供を担当する。  
+Workflow(ワークフロー)は作業進行、SubFlow(サブフロー)は再利用可能な単一目的処理、Capability(能力)は実現可能な能力、Tool(ツール)は具体的な操作インターフェースを担当する。  
 利用者との入出力はInteraction(対話窓口)を介して行う。
 
 ## 6. Core
