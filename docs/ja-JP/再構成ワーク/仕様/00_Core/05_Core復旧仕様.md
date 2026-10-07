@@ -13,7 +13,9 @@ canonical_document: true
 
 ## 1. 目的
 
-本書は、Core起動後にState Machineへ制御を移譲できない場合の復旧方法を定義する。
+本書は、Core起動後にState Machineへ制御を移譲できず、Core仕様に従ってCore復旧へ移行した後の復旧方法を定義する。
+
+Core仕様は復旧への移行までを規定し、復旧開始後の実行状態、制限、調査、変更、利用者判断、再検証およびState Machineへの再移譲は本仕様の責務とする。
 
 復旧は通常運転用Workflowではなく、Coreが通常運転を成立させるために実施する限定処理である。
 
