@@ -21,7 +21,7 @@ Core(中核)が異常または不確定な実行状態を検出した場合に�
 | FC-04 | 旧Stateの未完了Planが残存 | 破棄・上書きせず新Planを生成しない | PASS |
 | FC-05 | WORK Plan構成変更に承認なし | 変更を確定しない | PASS |
 | FC-06 | SYSTEM Plan構成変更に仕様根拠なし | 利用者承認でも代替せず変更しない | PASS |
-| FC-07 | Capability AVAILABLEだがRestriction不成立 | Providerを実行しない | PASS |
+| FC-07 | Capability AVAILABLEだがRestriction不成立 | Providerに対応するToolを実行しない | PASS |
 | FC-08 | Capability evidence失効・再確認不能 | 古いAVAILABLEで実行せずUNKNOWN/再確認 | PASS |
 | FC-09 | Re-run Sequenceの次要素を開始不能 | 残りを強制実行せず停止理由を引き渡す | PASS |
 | FC-10 | State Machineへの起動時移譲失敗 | 通常運転を開始せずCore復旧へ入る | PASS |
@@ -111,7 +111,7 @@ Capability = AVAILABLE
  ↓
 Restriction Context = 不許可
  ↓
-Provider実行禁止
+Providerに対応するTool実行禁止
 ```
 
 能力存在を実行許可として扱わない。
