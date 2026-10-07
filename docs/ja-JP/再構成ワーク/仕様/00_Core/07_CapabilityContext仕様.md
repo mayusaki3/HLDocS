@@ -81,7 +81,7 @@ Capability Entryは永続的な事実として扱ってはならない（MUST NO
 - Capability仕様または依存Capability定義が変更された。
 - Capability Provider定義が変更された。
 - 実行環境のTool、Connector、接続または認証状態が変化したことを検出した。
-- 過去のProvider実行が利用不能、認証失敗その他の能力状態変化を示した。
+- 過去のProviderに対応するTool実行が利用不能、認証失敗その他の能力状態変化を示した。
 - 現在の処理に必要な能力について、既存evidenceが現在も成立するか安全に確認できない。
 
 この場合、Entryを失効扱いとし、必要なCapabilityを再確認する。
@@ -90,7 +90,7 @@ Capability Entryは永続的な事実として扱ってはならない（MUST NO
 
 ## 6. 実行直前の再確認
 
-副作用を伴う操作を提供するExecution Capabilityについて、Capability Contextの`AVAILABLE`だけを根拠にProviderを実行してはならない（MUST NOT）。
+副作用を伴う操作を提供するExecution Capabilityについて、Capability Contextの`AVAILABLE`だけを根拠に、Providerに対応するToolを実行してはならない（MUST NOT）。
 
 実行直前には少なくとも次を確認する。
 
@@ -105,9 +105,9 @@ Provider利用可能性を安全に確認できない場合は、古い`AVAILABL
 
 Capability(能力)、Capability Provider(能力提供手段)、Execution Attempt(実行試行)は別の概念として扱う。
 
-Execution Attemptは、特定Providerを今回実行した結果であり、その失敗だけをCapability全体の恒常的なUNAVAILABLEと同一視してはならない（MUST NOT）。
+Execution Attemptは、特定Providerに対応するToolを今回実行した結果であり、その失敗だけをCapability全体の恒常的なUNAVAILABLEと同一視してはならない（MUST NOT）。
 
-Provider実行に失敗した場合、確認できる範囲で少なくとも次を区別する。
+Providerに対応するTool実行に失敗した場合、確認できる範囲で少なくとも次を区別する。
 
 - `TRANSIENT_ERROR`: 通信失敗、タイムアウト、一時的サービス障害等、再試行で変化し得ることを確認できる。
 - `TEMPORARILY_LIMITED`: rate limit、quota、cooldown等、一定期間または条件が変わるまで利用を制限されていることを確認できる。
