@@ -88,7 +88,7 @@ Coreは、現在のState、Active Workflowおよび実行中SubFlowに対応す�
 
 ## 9. Toolおよび能力実行の保護
 
-Toolその他の外部能力を実行する前に、Coreは実行しようとする能力または操作がRestriction Contextで許容されることを確認しなければならない（MUST）。
+Toolその他の実行手段を実行する前に、Coreは実行しようとするCapability(能力)、操作、対象範囲および選択されたCapability Provider(能力提供手段)がRestriction Contextで許容されることを確認しなければならない（MUST）。
 
 同じ能力を別のToolで実行できることを、制限回避の理由としてはならない（MUST NOT）。
 
