@@ -29,8 +29,8 @@
 | CR-10 | Execution Context | PASS | 確定状態の変更主体をCoreへ限定している |
 | CR-11 | Restriction | PASS | Core基本制限と通常Restriction Setが分離され、下位から緩和できない |
 | CR-12 | Capability | PASS | AVAILABLEと実行許可が分離されている |
-| CR-13 | LLM_WORKSPACE | OPEN | 基本構成から参照されるが、新構造側の個別仕様は未再構成 |
-| CR-14 | 復旧Restriction Set | OPEN | Core復旧固有の追加制限と通常Restriction Set登録機構の関係を後続Restriction設計で確認する |
+| CR-13 | LLM_WORKSPACE | RESOLVED | 独立責務領域ではなくCoreの補助記憶としてCore仕様へ統合 |
+| CR-14 | 復旧責務境界 | RESOLVED | Core仕様は復旧への移行まで、復旧開始後はCore復旧仕様の責務として分離 |
 
 ## 3. 現在のCore境界
 
@@ -82,29 +82,26 @@ Version Up、移行、再構成、比較その他の理由で候補が併存し�
 
 現在採用する正本を利用者指定、対象版、ブランチ、配置先、登録情報その他の明示的根拠で一意に確定できない場合のみCanonical Conflict(正本競合)とする。
 
-## 5. 未解決事項
+## 5. 解決した境界
 
 ### 5.1 LLM_WORKSPACE
 
-`01_HLDocSとは.md`では基本責務領域として定義されているが、新構造側にはまだ個別仕様がない。
+LLM_WORKSPACEはHLDocSの独立した実行責務領域とせず、Core(中核)が作業継続および復元を補助するために利用できる一時記憶領域とした。
 
-旧仕様を暗黙利用せず、後続再構成で必要性、責務およびExecution Contextとの境界を再確認する。
+LLM_WORKSPACEは正本またはExecution Context(実行コンテキスト)を代替しない。保存情報を再利用する場合は、現在採用する正本、現在の実体および現在の実行環境との整合性を必要な範囲で再確認する。
 
-### 5.2 復旧Restriction Set
+### 5.2 Core復旧
 
-Core復旧仕様では任意の「復旧Restriction Set」を利用できる。
+Core仕様の復旧責務は、State Machine(状態遷移機構)への制御移譲失敗を検出し、通常運転を開始せずCore復旧へ移行するまでとした。
 
-新Restriction Set仕様では通常運転中にState、Workflow、SubFlowから参照する登録モデルを定義しているため、Core復旧固有Restriction Setについて次のどちらとするかをRestriction層確定時に明示する必要がある。
+復旧開始後の実行状態、制限、調査、変更、利用者判断、再検証およびState Machineへの再移譲はCore復旧仕様の責務とする。
 
-- 通常Restriction Set登録簿を利用する。
-- Core復旧専用の制限として別経路で定義する。
-
-どちらかを現時点で推測確定しない。
+このため、復旧Restriction Setの具体的な取得・登録方式はCore基本モデルの未解決事項として扱わない。
 
 ## 6. 判定
 
 Core仕様群の起動、実行状態管理、Fail-closed、正本競合、Capability/Restriction境界について、現時点で重大な循環依存または責務逆転は確認していない。
 
-CR-13およびCR-14は後続仕様への未解決参照であり、Core基本モデルそのものを不成立とする問題とは判定しない。
+前回OPENであったLLM_WORKSPACEおよび復旧責務境界も解決したため、Core仕様群について現時点で未解決の責務境界は確認していない。
 
-後続層の再構成でCore境界に変更が生じた場合は、本確認を再実施する。
+Core復旧仕様内部の詳細設計および後続層の再構成でCore境界に変更が生じた場合は、本確認を再実施する。
