@@ -3,7 +3,7 @@ HLDocS:LLM-MANAGED
 doc_id: doc-20261007-CORE-VALIDATION
 lang: ja-JP
 canonical_title: Core検証仕様
-document_type: testspec
+document_type: spec
 canonical_document: true
 -->
 
