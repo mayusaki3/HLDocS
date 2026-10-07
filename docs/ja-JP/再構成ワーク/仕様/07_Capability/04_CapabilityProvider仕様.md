@@ -15,14 +15,16 @@ canonical_document: true
 
 本書は、Execution Capability(実行能力)を実際に提供するCapability Provider(能力提供手段)の識別、登録および実行時照合を定義する。
 
-Capability ProviderはCapabilityそのものではなく、現在のLLM実行環境またはHLDocS定義によってExecution Capabilityを実現する手段である。
+Capability ProviderはCapabilityそのものでもTool(ツール)そのものでもなく、現在のLLM実行環境またはHLDocS定義に存在する実行手段をExecution Capabilityへ対応付ける意味上の提供関係である。
+
+具体的な実行インターフェースはTool仕様に従う。
 
 ## 2. Providerの種類
 
 Capability Providerは少なくとも次を扱える。
 
-- `ENVIRONMENT_TOOL`: LLM実行環境から提供されるTool(ツール)、Connectorその他の実行手段。
-- `HLDOCS_TOOL`: HLDocSが個別仕様として定義するTool。
+- `ENVIRONMENT_TOOL`: LLM実行環境から提供されるTool(ツール)、Connectorその他の実行インターフェースへ照合するProvider。
+- `HLDOCS_TOOL`: HLDocSが個別仕様として定義するToolへ照合するProvider。
 
 SubFlow(サブフロー)はExecution CapabilityのCapability Providerとして扱わない。SubFlowはExecution Capabilityを利用して再利用可能な処理を構成する層であり、Execution CapabilityのProvider化によって `Execution Capability → SubFlow → Execution Capability` の循環依存を形成してはならない（MUST NOT）。
 
@@ -74,7 +76,17 @@ Provider ReferenceはExecution Capabilityの個別仕様内に局所的に定義
 
 共有の必要がない段階で、網羅的なProvider Registryを先行作成してはならない（MUST NOT）。
 
-## 6. Restrictionとの境界
+## 6. Toolとの境界
+
+Capability Provider Referenceは具体的Toolの固定呼出名ではなく、Execution Capabilityを実現する実行手段を意味条件で識別する。
+
+一つのProvider Referenceに複数の現在Toolが適合してよい（MAY）。一つのToolが複数Execution CapabilityのProvider条件へ適合してよい（MAY）。
+
+Provider Referenceの照合に成功したことは、Tool実行許可を意味しない。
+
+Environment Toolの網羅的な一覧をHLDocS正本へ保持することを要求しない。
+
+## 7. Restrictionとの境界
 
 Providerが現在利用可能であっても、そのProviderを現在のWork(作業)で実行してよいとは限らない。
 
@@ -82,7 +94,7 @@ Provider実行前にはCore(中核)がRestriction Context(制限コンテキス�
 
 Provider照合はRestriction判定を代替してはならない（MUST NOT）。
 
-## 7. 検証
+## 8. 検証
 
 Execution CapabilityをAVAILABLEと判定するには、少なくとも一つの`provided_by`について、現在の実行環境またはHLDocS登録情報から利用可能性を確認できなければならない（MUST）。
 
@@ -90,7 +102,7 @@ Providerが複数存在する場合、一つが利用可能であれば他のPro
 
 能力確認後にProviderの接続、認証、提供状態その他の利用可能性が変化したことを検出した場合、以前のAVAILABLE判定を現在も有効と仮定してはならない（MUST NOT）。Capability Context(能力コンテキスト)仕様に従って再確認する。
 
-## 8. Provider選択と失敗
+## 9. Provider選択と失敗
 
 複数Providerが同じExecution Capabilityを提供する場合、特定Providerの優先選択結果とCapability全体の利用可能性を同一視してはならない（MUST NOT）。
 
