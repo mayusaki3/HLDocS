@@ -92,7 +92,7 @@ SubFlow候補は次の単一目的単位とする。これらは登録済みSubF
 | 識別子 | doc_idを維持し、翻訳では同一doc_id | 維持候補 | 未検証 |
 | メタデータ | lang、canonical_title、document_type、canonical_document等 | 維持候補。ただし許容キーと値域は別途照合 | 未検証 |
 | template/prompt | 独立document_typeとしても規定 | 常設ファイルは不要。利用者要求時の派生成果物との区別が必要 | 要再設計 |
-| mode | meta/applyごとにsupported_modesとrequired inputsを規定 | Workflowによる処理選択に置換する場合、旧モードの利用者向け機能を漏れなく対応付ける | 要再設計 |
+| mode | meta/applyごとにsupported_modesとrequired inputsを規定 | meta/applyモードは廃止。HLDocS自身の仕様更新と外部文書生成はWork・Workflow・適用仕様で区別する | 方針確定・検証未了 |
 | 必須入力 | 種別・mode別にbody templateとtype promptの存在を要求 | ファイルの存在ではなく必要な正本仕様・入力が充足するか判定する | 要再設計 |
 | 出力 | Transport Encoding、ui_copy等に依存 | 出力経路の互換性を別途確認する | 未検証 |
 | Traceability | doc_id、sec_id、ref_idを用途別に使用 | 検証参照と派生参照を分離して規則化する | 要再設計 |
@@ -101,7 +101,7 @@ SubFlow候補は次の単一目的単位とする。これらは登録済みSubF
 
 1. v0.6.1のLLM-MANAGED規約はtemplate/promptの常設入力を前提とするが、v0.7.0ではWorkflowが必要時に生成指示を構成する。入力不足は「正本仕様または利用者入力の不足」として判定し、常設ファイル欠落だけで停止しない。
 2. template/promptを独立した文書として利用者が保存・管理する場合と、Workflow内部の一時的な生成指示・テンプレート断片を区別する。既存文書の互換性を保つため、document_typeの廃止はこの時点では確定しない。
-3. 旧版のmeta/applyは利用者から見た振る舞いを抽出してからWorkflowへ対応付ける。名称だけを削除して機能互換とみなさない。
+3. 旧版のmeta/applyモード区分は廃止する。HLDocS自身の仕様更新と外部文書生成の双方をWork・Workflow・適用仕様によって扱い、必要な変更権限・正本取得・検査を維持する。
 4. Traceability規約の機械参照は検証関係（doc_id#sec_id）と派生関係（doc_id#ref_id）を分けて定義し、Markdownの人間向けリンクとは区別する。
 5. 旧版の厳密な構造空行・固定プレースホルダのうち、生成される通常文書の互換性に必要なものと、旧テンプレート文書専用のものを分離する。
 
@@ -111,8 +111,12 @@ SubFlow候補は次の単一目的単位とする。これらは登録済みSubF
 - DOC-02: 既存spec更新時にdoc_idを維持する。
 - DOC-03: 同一文書の翻訳時にlangのみ変更し、doc_idを維持する。
 - DOC-04: testspecの検証参照とnote/minutesの派生参照を混同しない。
-- DOC-05: 旧modeで可能だった利用者操作をWorkflow経由で再現する。
+- DOC-05: meta/applyの指定なしでHLDocS自身の仕様更新と外部文書生成をWorkflow経由で行える。
 - DOC-06: 正本仕様が取得可能なときは取得を優先し、常設テンプレート欠落を理由に停止しない。
 - DOC-07: 利用者が明示要求したときだけ、確認用テンプレートまたは生成指示を提示する。
 
 いずれも設計段階のシナリオであり、PASSではない。
+
+## meta/applyモード廃止の確定方針
+
+`meta/apply`はv0.7.0で廃止し、独立した実行モードとして再構成しない。旧版の`supported_modes`とmode別の常設テンプレート・生成プロンプト必須判定は継承しない。HLDocS自身の仕様を更新するWorkと、HLDocSを使用して外部文書を生成するWorkは、Work Purpose、Workflow、適用仕様、変更権限で識別する。既存機能の受入検証は残すが、旧モード名の再現は検証対象外とする。
