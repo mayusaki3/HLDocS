@@ -15,7 +15,7 @@ canonical_document: true
 
 本書は文書生成Workflowが使用する単一目的SubFlowの入出力、処理境界、失敗時の返却条件を定義する。SubFlowはWorkflowからのみ呼び出し、利用者との対話、State遷移、Workflow Plan変更を行ってはならない（MUST NOT）。
 
-本書に定義するSubFlowは仕様案としての定義であり、実行登録・Stateからの到達性が確認されるまで稼働可能と判断してはならない（MUST NOT）。
+本書に定義するSubFlowは仕様定義であり、呼出し元Workflowの到達性、適用制限、必要な正本の取得、呼出し条件が確認されるまで稼働可能と判断してはならない（MUST NOT）。
 
 ## 2. 共通呼出し契約
 
@@ -71,11 +71,11 @@ Workflowは規則取得、構造組立、内容生成、整合性検査の順で
 
 SubFlowの返却結果だけでWorkflowをCOMPLETEDへ変更してはならない（MUST NOT）。完了要求はWorkflowがCoreへ行う。
 
-## 9. 登録・整合性に関する未完了事項
+## 9. SubFlowの発見と利用条件
 
-現行の共通「Workflow・SubFlow仕様」には、SubFlowは共通仕様成立条件の仕様要素一覧へ登録される必要がある旨の規定がある。一方、現行の共通仕様成立条件の一覧は起動に必要な仕様要素を列挙しており、個別SubFlowの登録簿として扱うかは未確定である。この矛盾は登録方式を確認して解消する必要がある。
+個別SubFlowは共通仕様成立条件の仕様要素一覧へ登録しない。Workflowは必要な処理に対応するSubFlow仕様を特定し、目的・入出力・適用Restriction・参照先を確認してから呼び出す（MUST）。仕様の存在のみを実行可能性の証拠としてはならない（MUST NOT）。
 
-本書の作成だけではSubFlowの登録、実行可能性、Workflow Planへの組込み、セルフ検証完了を意味しない。
+本書の作成だけでは、呼出し元WorkflowのStateからの到達性、実行可能性、Workflow Planへの組込み、セルフ検証完了を意味しない。
 
 ---
 
