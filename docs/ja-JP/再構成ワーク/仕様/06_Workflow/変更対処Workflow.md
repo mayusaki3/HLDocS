@@ -32,6 +32,14 @@ canonical_document: true
 5. 各項目の実行結果をTarget Listに対応付けたArtifact(作業成果物)として記録する。
 6. `RESEARCH_REQUIRED(再調査必要)`が存在する場合、変更対処Workflow内で調査をやり直さず、後続判断へ引き渡す。
 
+### 3.1 文書生成・更新の対処
+
+Target Listの対処がHLDocS文書の新規生成・更新・翻訳である場合、必要に応じて文書規則取得、文書構造組立、文書内容生成、文書整合性検査の各SubFlowを呼び出してよい（MAY）。呼出し前に各SubFlow仕様と適用Restrictionを確認する（MUST）。
+
+SubFlowの結果はTarget Listの対象項目に対応付けた対処結果Artifactとして記録し、保存・反映の許可と結果を区別する（MUST）。草稿の整合性検査が合格しても、変更権限や反映先が未確認なら保存してはならない（MUST NOT）。
+
+SubFlowの実行は変更調査・変更検証Workflowの責務を代替しない。変更検証Workflowは反映後の対象状態を独立に確認する（MUST）。
+
 ## 4. 空のTarget List
 
 Target List(対処対象リスト)が空の場合も、本Workflowを自動的に`SKIPPED(スキップ)`としてはならない（MUST NOT）。
