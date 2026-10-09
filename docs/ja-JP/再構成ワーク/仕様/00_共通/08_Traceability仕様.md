@@ -25,7 +25,7 @@ canonical_document: true
 
 `sec_id`はtestspecで検証単位を定義する際に初出・確定する（MUST）。spec単体の生成時に`sec_id`を自律生成してはならない（MUST NOT）。testspecの各検証ケースは見出し直下に`<!-- hldocs:sec_id=sec_<random> -->`を持つ（MUST）。
 
-testspecから対応specへの検証参照は、実在する`doc_id#sec_id`を使用する（MUST）。参照先specに対応する識別子が未配置の場合、存在しない参照を捏造してはならない（MUST NOT）。testspec側で確定した識別子をspecへ反映する工程を実施し、両側の整合性を確認する（MUST）。
+testspecから対応specへの検証参照は、実在する`doc_id#sec_id`を使用する（MUST）。参照先specに対応する識別子が未配置の場合、存在しない参照を捏造してはならない（MUST NOT）。testspec側で確定した識別子をspecの対応する検証対象箇所へ反映する工程を実施し、両側の整合性を確認する（MUST）。spec側の対応箇所にも同じ`<!-- hldocs:sec_id=sec_<random> -->`アンカーを配置する（MUST）。同一`sec_id`のtestspec/spec間の対応出現は許可するが、同一文書内の重複、および異なる検証単位への再利用は禁止する（MUST NOT）。参照先`doc_id#sec_id`の実在判定は、対象`doc_id`の文書内に対応アンカーが存在することを確認する（MUST）。
 
 テスト番号は表示用ラベルであり恒久識別子ではない（MUST）。実装・テストコードは対応するtestspecの`doc_id#sec_id`をコメント等で参照する（MUST）。
 
