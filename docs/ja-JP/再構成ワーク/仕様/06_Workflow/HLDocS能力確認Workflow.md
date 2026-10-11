@@ -52,7 +52,7 @@ HLDocSの能力は、Practical Capability(実務能力)とExecution Capability(�
 - Gitへ変更を書き込める。
 - テストを実行できる。
 
-Execution Capabilityは特定のTool名と同一視してはならない（MUST NOT）。一つの実行能力を複数のTool、SubFlowその他の能力提供手段が提供してよい（MAY）。
+Execution Capabilityは特定のTool名と同一視してはならない（MUST NOT）。一つの実行能力に複数のCapability Providerが対応してよい（MAY）。ただし、SubFlowをExecution CapabilityのCapability Providerとして扱ってはならない（MUST NOT）。SubFlowはExecution Capabilityを利用して処理を構成する層であり、Providerの定義・照合はCapability Provider仕様に従う。
 
 ### 3.3 依存関係
 
