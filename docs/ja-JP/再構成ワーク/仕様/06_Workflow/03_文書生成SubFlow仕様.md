@@ -13,7 +13,7 @@ canonical_document: true
 
 ## 1. 目的と適用条件
 
-本書は文書生成Workflowが使用する単一目的SubFlowの入出力、処理境界、失敗時の返却条件を定義する。SubFlowはWorkflowからのみ呼び出し、利用者との対話、State遷移、Workflow Plan変更を行ってはならない（MUST NOT）。
+本書は文書生成処理に用いる単一目的SubFlowの入出力、処理境界、失敗時の返却条件を定義する。現行の呼出し元は変更対処Workflowおよび情報参照Workflowであり、独立した文書生成WorkflowはState/Planへ登録されていない。接続方式は文書生成接続仕様に従う。SubFlowはWorkflowからのみ呼び出し、利用者との対話、State遷移、Workflow Plan変更を行ってはならない（MUST NOT）。
 
 本書に定義するSubFlowは仕様定義であり、呼出し元Workflowの到達性、適用制限、必要な正本の取得、呼出し条件が確認されるまで稼働可能と判断してはならない（MUST NOT）。
 
