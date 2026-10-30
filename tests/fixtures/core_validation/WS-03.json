@@ -1,0 +1,16 @@
+{
+  "case_id": "WS-03",
+  "target_sha": "48f1e5e7181c47707e1617312b317aa3ac036fd5",
+  "mode": "STATIC",
+  "initial_state": "fixture:provider_changed",
+  "preconditions": [
+    "contract-only:provider_changed"
+  ],
+  "stimulus": {
+    "operation": "authorize_provider",
+    "fault": "evidence_invalidated"
+  },
+  "expected": {
+    "decision": "require_recheck"
+  }
+}
