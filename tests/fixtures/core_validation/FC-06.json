@@ -1,0 +1,16 @@
+{
+  "case_id": "FC-06",
+  "target_sha": "48f1e5e7181c47707e1617312b317aa3ac036fd5",
+  "mode": "STATIC",
+  "initial_state": "fixture:system_plan_unsupported",
+  "preconditions": [
+    "contract-only:system_plan_unsupported"
+  ],
+  "stimulus": {
+    "operation": "modify_system_plan",
+    "fault": "specification_basis_missing"
+  },
+  "expected": {
+    "decision": "deny_plan_change"
+  }
+}
