@@ -1,0 +1,16 @@
+{
+  "case_id": "FC-04",
+  "target_sha": "48f1e5e7181c47707e1617312b317aa3ac036fd5",
+  "mode": "STATIC",
+  "initial_state": "fixture:old_plan_active",
+  "preconditions": [
+    "contract-only:old_plan_active"
+  ],
+  "stimulus": {
+    "operation": "enter_new_state",
+    "fault": "incomplete_old_plan"
+  },
+  "expected": {
+    "decision": "deny_new_plan"
+  }
+}
