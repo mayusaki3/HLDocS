@@ -1,0 +1,16 @@
+{
+  "case_id": "FC-01",
+  "target_sha": "48f1e5e7181c47707e1617312b317aa3ac036fd5",
+  "mode": "STATIC",
+  "initial_state": "fixture:restriction_missing",
+  "preconditions": [
+    "contract-only:restriction_missing"
+  ],
+  "stimulus": {
+    "operation": "execute_restricted_operation",
+    "fault": "restriction_not_found"
+  },
+  "expected": {
+    "decision": "deny"
+  }
+}
