@@ -1,0 +1,16 @@
+{
+  "case_id": "WS-02",
+  "target_sha": "48f1e5e7181c47707e1617312b317aa3ac036fd5",
+  "mode": "STATIC",
+  "initial_state": "fixture:stale_context",
+  "preconditions": [
+    "contract-only:stale_context"
+  ],
+  "stimulus": {
+    "operation": "restore_context",
+    "fault": "stale_snapshot"
+  },
+  "expected": {
+    "decision": "reject_unverified_restore"
+  }
+}
