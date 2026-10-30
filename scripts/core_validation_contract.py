@@ -86,6 +86,9 @@ def main() -> int:
                     errors.extend(f"{path.name}: {problem}" for problem in problems)
                 except (OSError, json.JSONDecodeError) as exc:
                     errors.append(f"{path.name}: {exc}")
+            for case_id in CASE_IDS:
+                if case_id not in seen:
+                    errors.append(f"missing fixture for case_id: {case_id}")
     result = {
         "tool": "core_validation_contract",
         "validation_mode": "STATIC",
