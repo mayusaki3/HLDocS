@@ -1,0 +1,16 @@
+{
+  "case_id": "FC-08",
+  "target_sha": "48f1e5e7181c47707e1617312b317aa3ac036fd5",
+  "mode": "STATIC",
+  "initial_state": "fixture:evidence_expired",
+  "preconditions": [
+    "contract-only:evidence_expired"
+  ],
+  "stimulus": {
+    "operation": "invoke_provider",
+    "fault": "evidence_expired"
+  },
+  "expected": {
+    "decision": "require_recheck"
+  }
+}
