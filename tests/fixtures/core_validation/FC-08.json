@@ -2,15 +2,22 @@
   "case_id": "FC-08",
   "target_sha": "48f1e5e7181c47707e1617312b317aa3ac036fd5",
   "mode": "STATIC",
-  "initial_state": "fixture:evidence_expired",
+  "initial_state": "fixture:provider_definition_changed",
   "preconditions": [
-    "contract-only:evidence_expired"
+    "contract-only:previous_capability_evidence_available",
+    "provider_definition_changed_since_evidence_checked"
   ],
   "stimulus": {
     "operation": "invoke_provider",
-    "fault": "evidence_expired"
+    "fault": "provider_definition_changed"
   },
   "expected": {
-    "decision": "require_recheck"
+    "decision": "require_recheck",
+    "state_constraints": [
+      "previous_available_evidence_must_not_authorize_execution"
+    ],
+    "side_effect_constraints": [
+      "provider_tool_must_not_execute_before_recheck"
+    ]
   }
 }
