@@ -4,13 +4,22 @@
   "mode": "STATIC",
   "initial_state": "fixture:state_machine_handoff_failed",
   "preconditions": [
-    "contract-only:state_machine_handoff_failed"
+    "contract-only:system_startup_conditions_satisfied",
+    "state_machine_initial_state_spec_unavailable"
   ],
   "stimulus": {
     "operation": "initialize_state_machine",
     "fault": "initial_state_unavailable"
   },
   "expected": {
-    "decision": "recover_without_normal_operation"
+    "decision": "recover_without_normal_operation",
+    "state_constraints": [
+      "enter_core_recovery",
+      "do_not_enter_normal_state",
+      "do_not_start_normal_workflow"
+    ],
+    "side_effect_constraints": [
+      "normal_workflow_execution_must_not_occur"
+    ]
   }
 }
