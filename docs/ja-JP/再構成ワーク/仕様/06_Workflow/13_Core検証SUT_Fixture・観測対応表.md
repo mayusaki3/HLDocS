@@ -36,9 +36,9 @@ Core正常性確認ケース定義のWS-01〜04、FC-01〜10について、実Co
 | FC-05 | Owner=WORK／承認記録なし | Plan追加要求を供給 | 承認判定・Plan構成差分 | Plan構成不変 |
 | FC-06 | Owner=SYSTEM／変更根拠なし | Plan並べ替え要求を供給 | 仕様根拠検証・Plan構成差分 | Plan構成不変 |
 | FC-07 | Capability AVAILABLE／Restriction拒否 | Provider実行要求を供給 | Restriction判定・Tool呼出し回数 | Tool呼出しゼロ |
-| FC-08 | Capability evidence期限切れ | Provider実行前に失効を通知 | 再確認イベント・実行可否 | 旧証跡で実行しない |
+| FC-08 | Provider定義変更前のCapability evidenceが残存 | Provider定義変更を検出した状態で実行要求 | 再確認イベント・実行可否・Tool呼出し | 旧証跡で実行せず、再確認前にToolを呼ばない |
 | FC-09 | Re-run Sequence進行中／次要素不成立 | 次Workflow開始条件を拒否 | Sequence位置・ACTIVE数・停止理由 | 残要素未実行、ACTIVE最大1 |
-| FC-10 | Initial State仕様取得不能 | State Machine初期化時に取得失敗 | 制御移譲・復旧遷移・通常運転開始 | 通常運転未開始 |
+| FC-10 | システム起動条件成立／Initial State仕様取得不能 | State Machine初期化時にInitial State仕様取得失敗 | 制御移譲失敗・Core復旧移行・通常Workflow開始有無 | Core復旧へ移行し、通常State・通常Workflowを開始しない |
 
 ## 4. Fixture構成契約
 
