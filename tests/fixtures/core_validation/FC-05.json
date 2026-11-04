@@ -12,5 +12,30 @@
   },
   "expected": {
     "decision": "deny_plan_change"
-  }
+  },
+  "fixture_id": "core-validation-fc-05",
+  "canonical_snapshot": {
+    "status": "UNRESOLVED",
+    "reason": "隔離SUTの正本スナップショット取得方式が未確定"
+  },
+  "initial_context": {
+    "status": "UNRESOLVED",
+    "reason": "隔離SUTのExecution Context初期化方式が未確定"
+  },
+  "provider_stub": {
+    "status": "UNRESOLVED",
+    "reason": "Provider境界注入方式が未確定（不要なケースも実行前に適用可否を判定）"
+  },
+  "restriction_stub": {
+    "status": "UNRESOLVED",
+    "reason": "Restriction境界注入方式が未確定（不要なケースも実行前に適用可否を判定）"
+  },
+  "fault_injection": {
+    "status": "UNRESOLVED",
+    "reason": "FC-05のSUT境界注入APIが未確定",
+    "scenario": "approval_missing"
+  },
+  "expected_invariants": [
+    "case:FC-05:Core正常性確認ケース定義およびFixture・観測対応表の不変条件を満たす"
+  ]
 }
