@@ -13,7 +13,9 @@ import re
 import sys
 
 CASE_IDS = tuple([f"WS-{i:02d}" for i in range(1, 5)] + [f"FC-{i:02d}" for i in range(1, 11)])
-REQUIRED = ("case_id", "target_sha", "mode", "initial_state", "preconditions", "stimulus", "expected")
+REQUIRED = ("fixture_id", "case_id", "target_sha", "mode", "initial_state", "preconditions", "stimulus", "expected", "canonical_snapshot", "initial_context", "provider_stub", "restriction_stub", "fault_injection", "expected_invariants")
+BOUNDARY_FIELDS = ("canonical_snapshot", "initial_context", "provider_stub", "restriction_stub", "fault_injection")
+UNRESOLVED = "UNRESOLVED"
 MODES = {"STATIC", "SIMULATED", "EXECUTED"}
 SHA_RE = re.compile(r"^[0-9a-f]{40}$")
 
@@ -30,6 +32,8 @@ def validate_fixture(obj: object, expected_case: str | None = None) -> list[str]
         errors.append(f"unknown case_id: {case_id!r}")
     if expected_case is not None and case_id != expected_case:
         errors.append(f"case_id mismatch: {case_id!r} != {expected_case!r}")
+    if not isinstance(obj.get("fixture_id"), str) or not obj.get("fixture_id"):
+        errors.append("fixture_id must be a nonempty string")
     sha = obj.get("target_sha")
     if not isinstance(sha, str) or SHA_RE.fullmatch(sha) is None:
         errors.append("target_sha must be a fixed 40-character lowercase commit SHA")
@@ -42,6 +46,15 @@ def validate_fixture(obj: object, expected_case: str | None = None) -> list[str]
     for key in ("stimulus", "expected"):
         if not isinstance(obj.get(key), dict) or not obj.get(key):
             errors.append(f"{key} must be a nonempty object")
+    for key in BOUNDARY_FIELDS:
+        value = obj.get(key)
+        if not isinstance(value, dict) or not value:
+            errors.append(f"{key} must be a nonempty object")
+        elif value.get("status") == UNRESOLVED and not isinstance(value.get("reason"), str):
+            errors.append(f"{key}: UNRESOLVED requires a reason")
+    invariants = obj.get("expected_invariants")
+    if not isinstance(invariants, list) or not invariants or not all(isinstance(x, str) and x for x in invariants):
+        errors.append("expected_invariants must be a nonempty list of strings")
     return errors
 
 
@@ -69,6 +82,7 @@ def main() -> int:
     except OSError as exc:
         errors.append(f"catalog: {exc}")
     checked = 0
+    unresolved = 0
     if args.fixtures is not None:
         if not args.fixtures.is_dir():
             errors.append(f"fixture directory missing: {args.fixtures}")
@@ -79,6 +93,8 @@ def main() -> int:
                 try:
                     obj = json.loads(path.read_text(encoding="utf-8"))
                     problems = validate_fixture(obj)
+                    if isinstance(obj, dict):
+                        unresolved += sum(isinstance(obj.get(key), dict) and obj[key].get("status") == UNRESOLVED for key in BOUNDARY_FIELDS)
                     if isinstance(obj, dict) and obj.get("case_id") in seen:
                         problems.append("duplicate case_id across fixtures")
                     if isinstance(obj, dict) and isinstance(obj.get("case_id"), str):
@@ -96,6 +112,8 @@ def main() -> int:
         "core_normality_verdict": "UNDETERMINED",
         "catalog_cases_expected": len(CASE_IDS),
         "fixtures_checked": checked,
+        "unresolved_boundary_fields": unresolved,
+        "sut_execution_ready": False,
         "contract_check": "FAIL" if errors else "PASS",
         "errors": errors,
     }
