@@ -24,6 +24,13 @@ def fixture(case_id: str) -> dict:
         "preconditions": [],
         "stimulus": {"operation": "contract-check-only"},
         "expected": {"decision": "deny"},
+        "fixture_id": f"core-validation-{case_id.lower()}",
+        "canonical_snapshot": {"status": "UNRESOLVED", "reason": "not configured"},
+        "initial_context": {"status": "UNRESOLVED", "reason": "not configured"},
+        "provider_stub": {"status": "UNRESOLVED", "reason": "not configured"},
+        "restriction_stub": {"status": "UNRESOLVED", "reason": "not configured"},
+        "fault_injection": {"status": "UNRESOLVED", "reason": "not configured"},
+        "expected_invariants": ["do_not_execute_core"],
     }
 
 
@@ -58,6 +65,7 @@ class ContractCliTests(unittest.TestCase):
         status, result = self.run_checker(with_fixtures=False)
         self.assertEqual(status, 0)
         self.assertEqual(result["contract_check"], "PASS")
+        self.assertFalse(result["sut_execution_ready"])
         self.assertFalse(result["runtime_executed"])
         self.assertEqual(result["core_normality_verdict"], "UNDETERMINED")
 
@@ -101,6 +109,39 @@ class ContractCliTests(unittest.TestCase):
         status, result = self.run_checker()
         self.assertEqual(status, 1)
         self.assertTrue(any("target_sha" in e for e in result["errors"]))
+
+    def test_missing_formal_field_fails(self) -> None:
+        # CV-CONTRACT-008: A formal field required by the SUT contract must exist.
+        for case in CASES:
+            self.add_fixture(case)
+        bad = fixture(CASES[0])
+        del bad["canonical_snapshot"]
+        self.add_fixture(CASES[0], data=bad)
+        status, result = self.run_checker()
+        self.assertEqual(status, 1)
+        self.assertTrue(any("canonical_snapshot" in e for e in result["errors"]))
+
+    def test_unresolved_boundary_requires_reason(self) -> None:
+        # CV-CONTRACT-009: Unresolved injection points cannot omit rationale.
+        for case in CASES:
+            self.add_fixture(case)
+        bad = fixture(CASES[0])
+        bad["fault_injection"] = {"status": "UNRESOLVED"}
+        self.add_fixture(CASES[0], data=bad)
+        status, result = self.run_checker()
+        self.assertEqual(status, 1)
+        self.assertTrue(any("UNRESOLVED requires a reason" in e for e in result["errors"]))
+
+    def test_empty_invariants_fails(self) -> None:
+        # CV-CONTRACT-010: Expected invariants cannot be omitted.
+        for case in CASES:
+            self.add_fixture(case)
+        bad = fixture(CASES[0])
+        bad["expected_invariants"] = []
+        self.add_fixture(CASES[0], data=bad)
+        status, result = self.run_checker()
+        self.assertEqual(status, 1)
+        self.assertTrue(any("expected_invariants" in e for e in result["errors"]))
 
     def test_missing_catalog_case_fails(self) -> None:
         self.catalog.write_text(
