@@ -276,7 +276,7 @@ class ContractCliTests(unittest.TestCase):
         # @hldocs.ref doc-20261107-021500Z-CVT1#sec_7b952decc77572e585e934d6b87c3638
         # @hldocs.label CV-CONTRACT-021
         with self.catalog.open("a", encoding="utf-8") as stream:
-            stream.write("| WS-99 | unexpected |\\n")
+            stream.write("| WS-99 | unexpected |\n")
         status, result = self.run_checker(with_fixtures=False)
         self.assertEqual(status, 1)
         self.assertTrue(any("unexpected case: WS-99" in e for e in result["errors"]))
@@ -285,7 +285,7 @@ class ContractCliTests(unittest.TestCase):
         # @hldocs.ref doc-20261107-021500Z-CVT1#sec_7ba87397c79a901e8603f8c7b8905c1f
         # @hldocs.label CV-CONTRACT-022
         with self.catalog.open("a", encoding="utf-8") as stream:
-            stream.write("| WS-01 | duplicate |\\n")
+            stream.write("| WS-01 | duplicate |\n")
         status, result = self.run_checker(with_fixtures=False)
         self.assertEqual(status, 1)
         self.assertTrue(any("WS-01: expected once, found 2" in e for e in result["errors"]))
