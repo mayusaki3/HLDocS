@@ -143,7 +143,7 @@ HEADの変更を検出した場合は差分を確認し、影響する検証項�
 
 Core検証は少なくとも次の区分を実施する。
 
-### 4.1 責務境界検証
+### 5.1 責務境界検証
 
 次を確認する。
 
@@ -156,7 +156,7 @@ Core検証は少なくとも次の区分を実施する。
 - LLM_WORKSPACEが正本またはExecution Contextを代替していない。
 - Core仕様の復旧責務がCore復旧への移行までであり、復旧開始後の責務がCore復旧仕様へ分離されている。
 
-### 4.2 起動・通常運転境界検証
+### 5.2 起動・通常運転境界検証
 
 次を確認する。
 
@@ -165,7 +165,7 @@ Core検証は少なくとも次の区分を実施する。
 - State Machineへの制御移譲成功後にのみ通常運転へ進む。
 - 制御移譲失敗時は通常運転へ進まずCore復旧へ移行する。
 
-### 4.3 Execution Context整合性検証
+### 5.3 Execution Context整合性検証
 
 次を確認する。
 
@@ -175,7 +175,7 @@ Core検証は少なくとも次の区分を実施する。
 - WORK PlanとSYSTEM Planの構成変更根拠を混同しない。
 - Re-runおよびRe-run SequenceをPlan構成変更と混同しない。
 
-### 4.4 Restriction検証
+### 5.4 Restriction検証
 
 次を確認する。
 
@@ -185,7 +185,7 @@ Core検証は少なくとも次の区分を実施する。
 - CapabilityがAVAILABLEでもRestriction Context不成立時にToolを実行しない。
 - 代替Toolまたは代替ProviderによってRestrictionを迂回できない。
 
-### 4.5 Canonical Conflict検証
+### 5.5 Canonical Conflict検証
 
 次を確認する。
 
@@ -195,7 +195,7 @@ Core検証は少なくとも次の区分を実施する。
 - 更新日時、列挙順、検索順位または版番号らしさだけで暗黙選択しない。
 - 競合候補を推測統合しない。
 
-### 4.6 LLM_WORKSPACE検証
+### 5.6 LLM_WORKSPACE検証
 
 少なくとも次のシナリオを確認する。
 
@@ -204,7 +204,7 @@ Core検証は少なくとも次の区分を実施する。
 3. 保存後にCapability Providerまたは実行環境が変化した場合、古いAVAILABLEを無条件に再利用しない。
 4. LLM_WORKSPACEの内容と現在の正本が競合した場合、現在採用する正本を優先し、LLM_WORKSPACEで正本を上書きしない。
 
-### 4.7 Fail-closed検証
+### 5.7 Fail-closed検証
 
 少なくとも次のシナリオを再実行する。
 
