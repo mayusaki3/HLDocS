@@ -20,6 +20,9 @@ canonical_document: true
 Coreは次を担当する。
 
 - HLDocSシステム起動制御
+- 起動時Core完全性検証の実施および検証管理
+- 検証結果の有効性確認と必要範囲の再検証
+- 起動時Core完全性検証に失敗した場合の復旧制御
 - Execution Contextの正本管理
 - Execution Contextに対する変更要求の検証および適用
 - Restriction Context(制限コンテキスト)の構築および強制
@@ -203,22 +206,42 @@ Canonical Conflictが現在の処理に影響しない場合、無関係な競�
 
 Version Up中に旧版を比較資料として保持する場合、旧版を物理削除または`canonical_document: false`へ変更することを一律に要求しない。現在採用する版または情報源を別の明示的根拠で一意に識別できればよい。
 
-## 10. State Machineへの移譲
+## 10. Core完全性検証の管理
 
-Coreは起動後、State Machine仕様を必要な範囲で参照し、制御移譲を試行する。
+Coreは、起動時Core完全性検証をState Machineへの制御移譲前に実施しなければならない（MUST）。
+
+検証管理情報はExecution Contextとは独立して管理しなければならない（MUST）。
+
+検証管理情報には、少なくとも検証対象コミットSHA、参照仕様、依存関係、検証条件、判定、証跡および検証時点を関連付ける。
+
+検証管理情報は現在のチャット内の一時情報として扱い、Execution ContextまたはLLM_WORKSPACEに保存してはならない（MUST NOT）。
+
+検証管理情報を根拠として、Current State、Current Workflow Plan、Current Workその他のExecution Contextを直接変更してはならない（MUST NOT）。
+
+検証管理情報の一部または全部が失われた場合は、現在採用する正本と取得可能な証跡から有効性を確認し、必要な範囲を再検証しなければならない（MUST）。
+
+影響範囲を特定できない場合は、Core完全性検証全体を再実施しなければならない（MUST）。
+
+検証の詳細は「Coreセルフ検証仕様」に従う。
+
+## 11. State Machineへの移譲
+
+Coreは起動時Core完全性検証の成立後、State Machine仕様を必要な範囲で参照し、制御移譲を試行する。
+
+起動時Core完全性検証が成立していない場合、State Machineへの制御移譲を試行してはならない（MUST NOT）。
 
 移譲成功後は、通常のState遷移判断をState Machineへ委ねなければならない（MUST）。  
 CoreはState Machineが許可した遷移要求について、Execution ContextおよびRestriction Context上の整合性を確認した後にCurrent Stateへ適用する。
 
-## 11. Core復旧への移行
+## 12. Core復旧への移行
 
-State Machineへの制御移譲に失敗した場合、Coreは通常運転を開始してはならず（MUST NOT）、Core復旧へ移行しなければならない（MUST）。
+起動時Core完全性検証が成立しない場合、またはState Machineへの制御移譲に失敗した場合、Coreは通常運転を開始してはならず（MUST NOT）、Core復旧へ移行しなければならない（MUST）。
 
 Core仕様が規定する復旧責務は、復旧へ安全に移行するまでとする。
 
 復旧開始後の実行状態、制限、調査、変更、利用者判断、再検証およびState Machineへの再移譲はCore復旧仕様に従う。
 
-## 12. Interactionとの関係
+## 13. Interactionとの関係
 
 Coreは利用者との自然言語対話を直接担当しない。  
 利用者への情報提示および判断要求はInteractionを介して行う。
