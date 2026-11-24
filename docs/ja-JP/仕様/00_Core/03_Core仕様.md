@@ -13,7 +13,7 @@ canonical_document: true
 
 ## 1. 目的
 
-本書は、HLDocS Core(中核)の責務と、通常運転に共通する実行制御、およびState Machine(状態遷移機構)へ移譲できない場合の復旧への移行を定義する。
+本書は、HLDocS Core(中核)の責務と、通常運転に共通する実行制御、および起動時Core完全性検証が成立しない場合またはState Machine(状態遷移機構)へ移譲できない場合の復旧への移行を定義する。
 
 ## 2. Coreの責務
 
@@ -22,14 +22,14 @@ Coreは次を担当する。
 - HLDocSシステム起動制御
 - 起動時Core完全性検証の実施および検証管理
 - 検証結果の有効性確認と必要範囲の再検証
-- 起動時Core完全性検証に失敗した場合の復旧制御
+- 起動時Core完全性検証が成立しない場合の復旧への移行
 - Execution Contextの正本管理
 - Execution Contextに対する変更要求の検証および適用
 - Restriction Context(制限コンテキスト)の構築および強制
 - 登録済み仕様要素の参照機構
 - HLDocS仕様/規約の正本候補および正本競合の管理
 - State Machineへの制御移譲
-- State Machineへ移譲できない場合の復旧制御
+- State Machineへ移譲できない場合の復旧への移行
 
 Coreは、作業の意味上の処理内容を決定する機構ではない。
 
